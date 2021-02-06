@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WeekFlex</string>
+    <string name="kakao_app_key">a6e7d1dfcdab3e23056bbced8c2e7097</string>
 </resources>
