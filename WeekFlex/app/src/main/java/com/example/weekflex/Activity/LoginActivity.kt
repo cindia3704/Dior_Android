@@ -58,20 +58,17 @@ class LoginActivity : AppCompatActivity() {
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if (acct != null) {
             login_google.visibility = View.GONE
-            val userName = acct.displayName
-            val userEmail = acct.email
+            val googleUserName = acct.displayName
+            val googleUserEmail = acct.email
+            val token = acct?.idToken
             //val personId = acct.id
             //val personPhoto: Uri? = acct.photoUrl
         }
 
         fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) = try {
             val account = completedTask.getResult(ApiException::class.java);
-
-            // Signed in successfully, show authenticated UI.
             login_google.visibility = View.GONE
         } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             login_google.visibility = View.VISIBLE
         }
 
