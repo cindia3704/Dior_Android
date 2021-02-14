@@ -1,5 +1,6 @@
 package com.example.weekflex.Fragment
 
+
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -31,7 +32,6 @@ class TodoMainFragment : Fragment(){
     private var weekOfDay=arrayOf("일요일","월요일","화요일","수요일","목요일","금요일","토요일")
     private var dfDate : SimpleDateFormat=  SimpleDateFormat("yyyy-MM-dd",Locale.KOREA)
 //    var weekHeaderAdapter = TodoWeekDateAdapter(calendar.get(Calendar.DATE),calendar.get(Calendar.DAY_OF_WEEK),weekOfDay,this)
-
     companion object{
         fun newInstance(userId:Int):TodoMainFragment{
             var bundle=Bundle()
@@ -107,5 +107,4 @@ class TodoMainFragment : Fragment(){
         }
         return thisWeek.toArray()
     }
-
 }
