@@ -1,14 +1,19 @@
 package com.example.weekflex.Activity
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.ViewPager
 import com.example.weekflex.Adapter.NavigationTabAdapter
 import com.example.weekflex.R
 import com.google.android.material.tabs.TabLayout
+import java.time.LocalDate
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     var userId: Int =1
@@ -31,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         fragmentView.adapter=fragmentAdapter
         navigationBar.setupWithViewPager(fragmentView)
         fragmentView.currentItem=0
+
     }
 
     private fun makeNavigationBar(){
