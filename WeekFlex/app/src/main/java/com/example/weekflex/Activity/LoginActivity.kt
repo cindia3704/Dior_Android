@@ -2,23 +2,34 @@ package com.example.weekflex.Activity
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weekflex.R
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.Task
 import com.kakao.sdk.auth.LoginClient
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause
-import com.kakao.sdk.common.model.AuthErrorCause.*
-import com.kakao.sdk.user.UserApiClient
 import com.kakao.sdk.common.util.Utility
+import com.kakao.sdk.user.UserApiClient
+import kotlinx.android.synthetic.main.activity_login.*
 
+
+const val RC_SIGN_IN = 123
 
 class LoginActivity : AppCompatActivity() {
     lateinit var kakaoLogin : ImageView
-    lateinit var googleLogin: ImageView
+    lateinit var googleLogin: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +38,56 @@ class LoginActivity : AppCompatActivity() {
         setupListener()
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
+
+
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        login_google.visibility = View.VISIBLE
+        login_google.setSize(SignInButton.SIZE_ICON_ONLY)
+
+        googleLogin.setOnClickListener {
+            val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
+
+        val acct = GoogleSignIn.getLastSignedInAccount(this)
+        if (acct != null) {
+            login_google.visibility = View.GONE
+            val userName = acct.displayName
+            val userEmail = acct.email
+            //val personId = acct.id
+            //val personPhoto: Uri? = acct.photoUrl
+        }
+
+        fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) = try {
+            val account = completedTask.getResult(ApiException::class.java);
+
+            // Signed in successfully, show authenticated UI.
+            login_google.visibility = View.GONE
+        } catch (e: ApiException) {
+            // The ApiException status code indicates the detailed failure reason.
+            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+            login_google.visibility = View.VISIBLE
+        }
+
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent ) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
+            if (requestCode == RC_SIGN_IN) {
+                // The Task returned from this call is always completed, no need to attach
+                // a listener.
+                val task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
+            }
+        }
+
+
     }
 
 
@@ -38,10 +99,6 @@ class LoginActivity : AppCompatActivity() {
     fun setupListener(){
         kakaoLogin.setOnClickListener{
             kakaoLogin()
-        }
-
-        googleLogin.setOnClickListener {
-
         }
     }
     private fun kakaoLogin(){
