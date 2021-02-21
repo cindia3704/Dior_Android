@@ -100,10 +100,14 @@ class TodoMainFragment : Fragment(){
 
     private fun getThisWeek(): Array<Any> {
         var thisWeek = ArrayList<String>(7)
-        thisWeek.add(dfDate.format(calendar.getTime()).toString())
-        for( i in 1..6){
-            calendar.add(Calendar.DATE,1)
+        var todayDay = calendar.get(Calendar.DAY_OF_WEEK)-1
+        if(todayDay != 0){
+            val differenceInDay = 0-todayDay
+            calendar.add(Calendar.DATE,differenceInDay)
+        }
+        for ( i in 0..6){
             thisWeek.add(dfDate.format(calendar.getTime()).toString())
+            calendar.add(Calendar.DATE,1)
         }
         return thisWeek.toArray()
     }
