@@ -6,4 +6,17 @@
     <color name="gray">#C1BFBF</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
+
+    <string-array name="colors">
+        <item>#FB4F55</item>
+        <item>#FECF35</item>
+        <item>#27A5EC</item>
+        <item>#A167FE</item>
+        <item>#6B4CFF</item>
+        <item>#20D004</item>
+        <item>#FD8B34</item>
+        <item>#7B91FE</item>
+        <item>#23ACA0</item>
+        <item>#FD6D71</item>
+    </string-array>
 </resources>
