@@ -2,6 +2,8 @@ package com.example.weekflex.Network
 
 import android.app.Application
 import android.content.Context
+import com.example.weekflex.Data.Category
+import com.example.weekflex.Data.Todo
 import com.kakao.sdk.common.KakaoSdk
 
 
@@ -28,6 +30,8 @@ class GlobalApplication : Application(){
 
     companion object {
         var instance: GlobalApplication? = null
+        var currentCategory: ArrayList<Category> = ArrayList() //Category("",0)
+        var currentTodo: ArrayList<Todo> = ArrayList()
     }
 
 
