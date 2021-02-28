@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="8dp">
+    android:layout_marginBottom="8dp"
+    android:background="@color/black">
+    <ImageView
+        android:id="@+id/routinelist_item_routineImg"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/yellowstar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="16dp"/>
     <TextView
         android:id="@+id/routineList_item_addRoutine"
-        android:layout_width="130dp"
-        android:layout_height="170dp"
-        android:background="@drawable/routine_list_rectangle"
-        android:text="루틴이름"
-        android:textSize="25dp"
-        android:textColor="@color/black"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Design Master"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:letterSpacing="-0.01"
+        android:lineSpacingExtra="6sp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/routinelist_item_routineImg"
+        android:layout_marginLeft="4dp"
+       />
+    <TextView
+        android:id="@+id/routineList_item_numTodo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12개의 할 일"
+        android:textStyle="normal"
+        android:textSize="13sp"
+        android:textColor="@color/gray_2"
+        android:letterSpacing="-0.01"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="16dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

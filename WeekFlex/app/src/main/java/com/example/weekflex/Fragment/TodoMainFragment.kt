@@ -7,11 +7,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.R
+import kotlinx.android.synthetic.main.navibation_bar.*
 import kotlinx.android.synthetic.main.todo_main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,12 +66,20 @@ class TodoMainFragment : Fragment(){
         addBtn_todo.setOnClickListener {
             addClicked = !addClicked
             if(addClicked) {
+                addBtnImg_todo.rotation=45F
+                blackOpacityView_todo.visibility=View.VISIBLE
                 addTodoBtn_todo.visibility = View.VISIBLE
+                addTodoBtnImg_todo.visibility=View.VISIBLE
                 addRoutineBtn_todo.visibility = View.VISIBLE
+                addRoutineBtnImg_todo.visibility=View.VISIBLE
             }
             else{
+                addBtnImg_todo.rotation=90F
+                blackOpacityView_todo.visibility=View.GONE
                 addTodoBtn_todo.visibility = View.GONE
+                addTodoBtnImg_todo.visibility=View.GONE
                 addRoutineBtn_todo.visibility = View.GONE
+                addRoutineBtnImg_todo.visibility=View.GONE
             }
         }
         addTodoBtn_todo.setOnClickListener {
