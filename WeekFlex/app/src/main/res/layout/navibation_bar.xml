@@ -7,18 +7,27 @@
     android:layout_gravity="bottom"
     android:orientation="horizontal">
 
+
     <RelativeLayout
         android:id="@+id/mainTab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+        <View
+            android:elevation="10dp"
+            android:id="@+id/navigationBar_opacityView_home"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:visibility="invisible"
+            android:alpha="0.5"/>
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="메인"
+            android:src="@drawable/home"
             android:textSize="20dp"
             />
 
@@ -29,29 +38,43 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
-        <TextView
+        <View
+            android:elevation="10dp"
+            android:id="@+id/navigationBar_opacityView_calendar"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:visibility="invisible"
+            android:alpha="0.5"/>
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="달력"
-            android:textSize="20dp"/>
+            android:src="@drawable/calendar"
+            />
 
     </RelativeLayout>
 
     <RelativeLayout
-
         android:id="@+id/routineTab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
-        <TextView
+        <View
+            android:elevation="10dp"
+            android:id="@+id/navigationBar_opacityView_profile"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="match_parent"
+            android:background="@color/black"
+            android:visibility="invisible"
+            android:alpha="0.5"/>
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="루틴관리"
-            android:textSize="20dp"
+            android:src="@drawable/profile"
             />
 
     </RelativeLayout>

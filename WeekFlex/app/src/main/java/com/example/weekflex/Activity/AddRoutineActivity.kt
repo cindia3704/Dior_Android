@@ -49,8 +49,9 @@ class AddRoutineActivity : AppCompatActivity() {
         routineList.add(Routine("운동집중"))
         routineList.add(Routine("영어공부"))
         routineList.add(Routine("취업"))
+
         val adapter = RoutineListAdapter(LayoutInflater.from(this@AddRoutineActivity),routineList)
         recyclerview_addRoutine.adapter = adapter
-        recyclerview_addRoutine.layoutManager= GridLayoutManager(this@AddRoutineActivity,2,GridLayoutManager.VERTICAL,false)
+        recyclerview_addRoutine.layoutManager= GridLayoutManager(this@AddRoutineActivity,1,GridLayoutManager.VERTICAL,false)
     }
 }

@@ -102,42 +102,132 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/addTodoImg_todo" />
 
-        <Button
-            android:id="@+id/addBtn_todo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/black_circle_btn"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+<!--        <Button-->
+<!--            android:id="@+id/addBtn_todo"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_marginRight="24dp"-->
+<!--            android:layout_marginBottom="32dp"-->
+<!--            android:background="@drawable/black_circle_btn"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent" />-->
 
-        <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/plusbutton"
-            app:layout_constraintLeft_toLeftOf="@id/addBtn_todo"
-            app:layout_constraintRight_toRightOf="@id/addBtn_todo"
-            app:layout_constraintTop_toTopOf="@id/addBtn_todo"
-            app:layout_constraintBottom_toBottomOf="@id/addBtn_todo"
-            android:elevation="10dp"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/addBtnImg_todo"-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:src="@drawable/plusbutton"-->
+<!--            app:layout_constraintLeft_toLeftOf="@id/addBtn_todo"-->
+<!--            app:layout_constraintRight_toRightOf="@id/addBtn_todo"-->
+<!--            app:layout_constraintTop_toTopOf="@id/addBtn_todo"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/addBtn_todo"-->
+<!--            android:elevation="10dp"/>-->
+<!--        <Button-->
+<!--            android:id="@+id/addTodoBtn_todo"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:layout_marginBottom="12dp"-->
+<!--            android:background="@drawable/black_addtodo_btn"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/addBtn_todo"-->
+<!--            app:layout_constraintRight_toRightOf="@id/addBtn_todo" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/addTodoBtnImg_todo"-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:src="@drawable/plusbutton"-->
+<!--            app:layout_constraintLeft_toLeftOf="@id/addTodoBtn_todo"-->
+<!--            app:layout_constraintRight_toRightOf="@id/addTodoBtn_todo"-->
+<!--            app:layout_constraintTop_toTopOf="@id/addTodoBtn_todo"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/addTodoBtn_todo"-->
+<!--            android:elevation="10dp"/>-->
 
-        <Button
-            android:id="@+id/addTodoBtn_todo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="할 일 추가하기"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/addBtn_todo"
-            app:layout_constraintRight_toRightOf="@id/addBtn_todo" />
-
-        <Button
-            android:id="@+id/addRoutineBtn_todo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="루틴 추가하기"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/addTodoBtn_todo"
-            app:layout_constraintRight_toRightOf="@id/addBtn_todo" />
+<!--        <Button-->
+<!--            android:id="@+id/addRoutineBtn_todo"-->
+<!--            android:layout_width="60dp"-->
+<!--            android:layout_height="60dp"-->
+<!--            android:background="@drawable/black_getroutine_btn"-->
+<!--            android:visibility="visible"-->
+<!--            android:layout_marginBottom="12dp"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/addTodoBtn_todo"-->
+<!--            app:layout_constraintRight_toRightOf="@id/addBtn_todo" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/addRoutineBtnImg_todo"-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:src="@drawable/getroutinebutton"-->
+<!--            app:layout_constraintLeft_toLeftOf="@id/addRoutineBtn_todo"-->
+<!--            app:layout_constraintRight_toRightOf="@id/addRoutineBtn_todo"-->
+<!--            app:layout_constraintTop_toTopOf="@id/addRoutineBtn_todo"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/addRoutineBtn_todo"-->
+<!--            android:elevation="10dp"/>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/blackOpacityView_todo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:alpha="0.5"
+        android:visibility="invisible"/>
+    <Button
+        android:id="@+id/addBtn_todo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/black_circle_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageView
+        android:id="@+id/addBtnImg_todo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/plusbutton"
+        app:layout_constraintLeft_toLeftOf="@id/addBtn_todo"
+        app:layout_constraintRight_toRightOf="@id/addBtn_todo"
+        app:layout_constraintTop_toTopOf="@id/addBtn_todo"
+        app:layout_constraintBottom_toBottomOf="@id/addBtn_todo"
+        android:elevation="10dp"/>
+    <Button
+        android:id="@+id/addTodoBtn_todo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/black_addtodo_btn"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/addBtn_todo"
+        app:layout_constraintRight_toRightOf="@id/addBtn_todo" />
+    <ImageView
+        android:id="@+id/addTodoBtnImg_todo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/plusbutton"
+        android:visibility="invisible"
+        app:layout_constraintLeft_toLeftOf="@id/addTodoBtn_todo"
+        app:layout_constraintRight_toRightOf="@id/addTodoBtn_todo"
+        app:layout_constraintTop_toTopOf="@id/addTodoBtn_todo"
+        app:layout_constraintBottom_toBottomOf="@id/addTodoBtn_todo"
+        android:elevation="10dp"/>
+
+    <Button
+        android:id="@+id/addRoutineBtn_todo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/black_getroutine_btn"
+        android:visibility="gone"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/addTodoBtn_todo"
+        app:layout_constraintRight_toRightOf="@id/addBtn_todo" />
+    <ImageView
+        android:id="@+id/addRoutineBtnImg_todo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:visibility="invisible"
+        android:src="@drawable/getroutinebutton"
+        app:layout_constraintLeft_toLeftOf="@id/addRoutineBtn_todo"
+        app:layout_constraintRight_toRightOf="@id/addRoutineBtn_todo"
+        app:layout_constraintTop_toTopOf="@id/addRoutineBtn_todo"
+        app:layout_constraintBottom_toBottomOf="@id/addRoutineBtn_todo"
+        android:elevation="10dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
