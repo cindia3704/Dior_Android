@@ -12,7 +12,7 @@
         android:id="@+id/tabLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#000000"
+        android:background="@color/mainActLine"
         app:layout_constraintBottom_toTopOf="@id/navigationBar"
         />
     <com.google.android.material.tabs.TabLayout
