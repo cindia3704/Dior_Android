@@ -23,6 +23,7 @@
             android:alpha="0.5"/>
 
         <ImageView
+            android:id="@+id/mainTab_img"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_centerInParent="true"
@@ -47,6 +48,7 @@
             android:visibility="invisible"
             android:alpha="0.5"/>
         <ImageView
+            android:id="@+id/calendarTab_img"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_centerInParent="true"
@@ -70,6 +72,7 @@
             android:visibility="invisible"
             android:alpha="0.5"/>
         <ImageView
+            android:id="@+id/routineTab_img"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_centerInParent="true"
