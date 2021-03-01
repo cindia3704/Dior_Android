@@ -45,7 +45,7 @@ class TodoWeekDateAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Log.d("msg","weekday: "+(weekDays.get(position)).toString())
-        if((weekDays.get(position)).toString().subSequence(8,10) == today){
+        if((weekDays.get(position)).toString().subSequence(8,10) == today || (weekDays.get(position)).toString().subSequence(8,10) == "0"+today){
             holder.underline.visibility = View.VISIBLE
         }else{
             holder.underline.visibility = View.INVISIBLE
