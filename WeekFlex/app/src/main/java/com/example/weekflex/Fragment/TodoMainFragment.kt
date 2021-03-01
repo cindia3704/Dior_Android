@@ -14,6 +14,7 @@ import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.R
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.todo_main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,7 +66,6 @@ class TodoMainFragment : Fragment(){
 
     fun setListener(){
         addBtn_todo.setOnClickListener {
-            addClicked = !addClicked
             if(addClicked) {
                 addBtnImg_todo.animate().rotation(45F).setDuration(1000)
                 blackOpacityView_todo.visibility=View.VISIBLE
