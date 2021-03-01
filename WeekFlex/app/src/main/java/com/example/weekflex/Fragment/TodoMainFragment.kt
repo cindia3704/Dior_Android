@@ -7,23 +7,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.view.animation.Animation
+import android.view.animation.TranslateAnimation
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.R
-import kotlinx.android.synthetic.main.navibation_bar.*
 import kotlinx.android.synthetic.main.todo_main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class TodoMainFragment : Fragment(){
     private var userId : Int? =1
     private var calendar= Calendar.getInstance()
     private var addClicked = false
-    private var weekOfDayEnglish=arrayOf("Sunday","Tuesday","Wednesday","Thursday","Friday","Saturday","Monday")
-    private var weekOfDay=arrayOf("월요일","화요일","수요일","목요일","금요일","토요일","일요일")
+    private var weekOfDayEnglish=arrayOf("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
+    private var weekOfDay=arrayOf("월","화","수","목","금","토","일")
     private var dfDate : SimpleDateFormat=  SimpleDateFormat("yyyy-MM-dd",Locale.KOREA)
 //    var weekHeaderAdapter = TodoWeekDateAdapter(calendar.get(Calendar.DATE),calendar.get(Calendar.DAY_OF_WEEK),weekOfDay,this)
     companion object{
@@ -59,27 +60,32 @@ class TodoMainFragment : Fragment(){
         Log.d("msg","오늘: "+day.toString())
         weekHeader_recylerview.setHasFixedSize(true)
         weekHeader_recylerview.adapter =TodoWeekDateAdapter(days,weekOfDay,this,day.toString())
-        weekHeader_recylerview.addItemDecoration(RecyclerDecoration(100))
+        weekHeader_recylerview.addItemDecoration(RecyclerDecoration(120))
     }
 
     fun setListener(){
         addBtn_todo.setOnClickListener {
             addClicked = !addClicked
             if(addClicked) {
-                addBtnImg_todo.rotation=45F
+                addBtnImg_todo.animate().rotation(45F).setDuration(1000)
                 blackOpacityView_todo.visibility=View.VISIBLE
+
                 addTodoBtn_todo.visibility = View.VISIBLE
-                addTodoBtnImg_todo.visibility=View.VISIBLE
-                addRoutineBtn_todo.visibility = View.VISIBLE
-                addRoutineBtnImg_todo.visibility=View.VISIBLE
+                addTodoView_todo.visibility=View.VISIBLE
+                addTodoView_todo.translationY=-132F
+                addTodoView_todo.animate().alpha(1f).translationYBy(-132F).setDuration(1000)
+
+
+                addRoutineView_todo.visibility=View.VISIBLE
+                addRoutineView_todo.translationY=-264F
+                addRoutineView_todo.animate().alpha(1f).translationYBy(-264F).setDuration(1000)
+
             }
             else{
-                addBtnImg_todo.rotation=90F
+                addBtnImg_todo.animate().rotation(0F).setDuration(1000)
                 blackOpacityView_todo.visibility=View.GONE
-                addTodoBtn_todo.visibility = View.GONE
-                addTodoBtnImg_todo.visibility=View.GONE
-                addRoutineBtn_todo.visibility = View.GONE
-                addRoutineBtnImg_todo.visibility=View.GONE
+                addRoutineView_todo.visibility=View.GONE
+                addTodoView_todo.visibility=View.GONE
             }
         }
         addTodoBtn_todo.setOnClickListener {
@@ -106,7 +112,7 @@ class TodoMainFragment : Fragment(){
 
     private fun getThisWeek(): Array<Any> {
         var thisWeek = ArrayList<String>(7)
-        var todayDay = calendar.get(Calendar.DAY_OF_WEEK)+5
+        var todayDay = calendar.get(Calendar.DAY_OF_WEEK)-2
         Log.d("msg","todayDay: "+todayDay.toString())
         if(todayDay != 0){
             val differenceInDay = 0-todayDay
