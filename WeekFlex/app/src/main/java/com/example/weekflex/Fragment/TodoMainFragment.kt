@@ -66,6 +66,8 @@ class TodoMainFragment : Fragment(){
 
     fun setListener(){
         addBtn_todo.setOnClickListener {
+            addClicked = !addClicked
+            Log.d("msg","clicked")
             if(addClicked) {
                 addBtnImg_todo.animate().rotation(45F).setDuration(1000)
                 blackOpacityView_todo.visibility=View.VISIBLE
