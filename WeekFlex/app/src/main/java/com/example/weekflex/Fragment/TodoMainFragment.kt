@@ -7,14 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.TranslateAnimation
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
+import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.R
-import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.todo_main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,6 +22,7 @@ class TodoMainFragment : Fragment(){
     private var userId : Int? =1
     private var calendar= Calendar.getInstance()
     private var addClicked = false
+    private var monthEnglish = arrayOf("Jan","Feb","Mar","Apr","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
     private var weekOfDayEnglish=arrayOf("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday")
     private var weekOfDay=arrayOf("월","화","수","목","금","토","일")
     private var dfDate : SimpleDateFormat=  SimpleDateFormat("yyyy-MM-dd",Locale.KOREA)
@@ -69,6 +68,7 @@ class TodoMainFragment : Fragment(){
             addClicked = !addClicked
             Log.d("msg","clicked")
             if(addClicked) {
+                (activity as MainActivity?)?.makeDarkTabView()
                 addBtnImg_todo.animate().rotation(45F).setDuration(1000)
                 blackOpacityView_todo.visibility=View.VISIBLE
 
@@ -82,8 +82,11 @@ class TodoMainFragment : Fragment(){
                 addRoutineView_todo.translationY=-264F
                 addRoutineView_todo.animate().alpha(1f).translationYBy(-264F).setDuration(1000)
 
+
+
             }
             else{
+                (activity as MainActivity?)?.undoDarkTabView()
                 addBtnImg_todo.animate().rotation(0F).setDuration(1000)
                 blackOpacityView_todo.visibility=View.GONE
                 addRoutineView_todo.visibility=View.GONE
@@ -108,7 +111,13 @@ class TodoMainFragment : Fragment(){
         Log.d("msg","월: "+month)
         Log.d("msg","일: "+day)
         Log.d("msg","요일: "+dayOfWeek)
-        val todayDate=""+(month+1)+"월 "+day+"일, "+weekOfDayEnglish[(dayOfWeek-1)]
+        val dayStyle = when(day){
+            1->"st"
+            2->"nd"
+            3->"rd"
+            else->"th"
+        }
+        val todayDate=""+monthEnglish[(month)]+" "+day+dayStyle+", "+weekOfDayEnglish[(dayOfWeek-1)]
         return todayDate
     }
 

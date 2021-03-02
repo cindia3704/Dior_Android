@@ -11,6 +11,8 @@ import com.example.weekflex.Adapter.NavigationTabAdapter
 import com.example.weekflex.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.navibation_bar.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -76,6 +78,21 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
+
+    public fun makeDarkTabView(){
+//        navigationBar_opacityView_home.visibility=View.VISIBLE
+//        navigationBar_opacityView_calendar.visibility=View.VISIBLE
+//        navigationBar_opacityView_profile.visibility=View.VISIBLE
+        navigationOpacity.visibility=View.VISIBLE
+    }
+
+    public fun undoDarkTabView(){
+//        navigationBar_opacityView_home.visibility=View.GONE
+//        navigationBar_opacityView_calendar.visibility=View.GONE
+//        navigationBar_opacityView_profile.visibility=View.GONE
+        navigationOpacity.visibility=View.GONE
+
     }
 
 
