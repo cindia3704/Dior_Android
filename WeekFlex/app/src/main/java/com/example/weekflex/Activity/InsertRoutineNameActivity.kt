@@ -67,7 +67,7 @@ class InsertRoutineNameActivity : AppCompatActivity() {
                 routineNameCommentView.setText("멋진 이름이에요! *-*")
             }
         }
-        
+
         checkImg.setOnClickListener {
             hideKeyboard()
                     val intent = Intent(this@InsertRoutineNameActivity,CompleteMakeRoutineActivity::class.java)
