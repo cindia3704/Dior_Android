@@ -30,6 +30,7 @@ class GlobalApplication : Application(){
         var instance: GlobalApplication? = null
         var currentCategory: ArrayList<Category> = ArrayList() //Category("",0)
         var currentTodo: ArrayList<Todo> = ArrayList()
+        var selectCategory: ArrayList<Category> = ArrayList()
     }
 
 
