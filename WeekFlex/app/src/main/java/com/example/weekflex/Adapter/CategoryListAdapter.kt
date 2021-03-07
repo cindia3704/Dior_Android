@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Data.Category
+import com.example.weekflex.Network.GlobalApplication
 import com.example.weekflex.R
 
 
@@ -31,6 +32,7 @@ class CategoryListAdapter(val context: Context): RecyclerView.Adapter<CategoryLi
         holder.categoryColor.setBackgroundColor(CategoryList.get(position).categoryColor)
         holder.itemView.setOnClickListener {
             selectedCategory = CategoryList.get(position)
+            GlobalApplication.selectCategory.add(selectedCategory)
             Toast.makeText(context,"${selectedCategory.categoryName}",Toast.LENGTH_LONG).show()
         }
     }

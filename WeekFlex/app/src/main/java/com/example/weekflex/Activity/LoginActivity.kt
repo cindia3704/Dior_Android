@@ -3,7 +3,6 @@ package com.example.weekflex.Activity
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -38,53 +37,6 @@ class LoginActivity : AppCompatActivity() {
         setupListener()
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
-
-
-        val gso =
-            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build()
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        login_google.visibility = View.VISIBLE
-        login_google.setSize(SignInButton.SIZE_ICON_ONLY)
-
-        googleLogin.setOnClickListener {
-            val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-
-        val acct = GoogleSignIn.getLastSignedInAccount(this)
-        if (acct != null) {
-            login_google.visibility = View.GONE
-            val googleUserName = acct.displayName
-            val googleUserEmail = acct.email
-            val token = acct?.idToken
-            //val personId = acct.id
-            //val personPhoto: Uri? = acct.photoUrl
-        }
-
-        fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) = try {
-            val account = completedTask.getResult(ApiException::class.java);
-            login_google.visibility = View.GONE
-        } catch (e: ApiException) {
-            login_google.visibility = View.VISIBLE
-        }
-
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent ) {
-            super.onActivityResult(requestCode, resultCode, data);
-
-            // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-            if (requestCode == RC_SIGN_IN) {
-                // The Task returned from this call is always completed, no need to attach
-                // a listener.
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data);
-                handleSignInResult(task);
-            }
-        }
-
-
     }
 
 
@@ -96,6 +48,9 @@ class LoginActivity : AppCompatActivity() {
     fun setupListener(){
         kakaoLogin.setOnClickListener{
             kakaoLogin()
+        }
+        googleLogin.setOnClickListener {
+            googleLogin()
         }
     }
     private fun kakaoLogin(){
@@ -152,6 +107,47 @@ class LoginActivity : AppCompatActivity() {
             LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
         }else{
             LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
+        }
+    }
+
+    private fun googleLogin(){
+
+        val gso =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("849170160003-arrpbh8jee6dhgqfhvuiereb2pf44mbn.apps.googleusercontent.com")
+                .requestEmail()
+                .build()
+
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        login_google.visibility = View.VISIBLE
+        login_google.setSize(SignInButton.SIZE_ICON_ONLY)
+
+        val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+
+    }
+
+    fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) = try {
+        val account = completedTask.getResult(ApiException::class.java)
+        val googleUserName = account?.getDisplayName()
+        val googleUserEmail = account?.getEmail()
+        val token = account?.getIdToken()
+        Log.d("msg","user name: "+ googleUserName)
+        Log.d("msg","user email: "+ googleUserEmail)
+        Log.d("msg","token: "+ (token))
+        login_google.visibility = View.GONE
+    } catch (e: ApiException) {
+        Log.w("failed","signInResult:failed code="+e.statusCode)
+        login_google.visibility = View.VISIBLE
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            handleSignInResult(task);
         }
     }
 

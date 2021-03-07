@@ -2,16 +2,18 @@ package com.example.weekflex.Activity
 
 import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weekflex.Adapter.CategoryListAdapter
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Todo
 import com.example.weekflex.Fragment.BottomSheetFragment
 import com.example.weekflex.Network.GlobalApplication
 import com.example.weekflex.Network.GlobalApplication.Companion.currentTodo
+import com.example.weekflex.Network.GlobalApplication.Companion.selectCategory
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_add_todo.*
 import java.util.ArrayList
@@ -19,6 +21,7 @@ import java.util.ArrayList
 
 class AddTodoActivity : AppCompatActivity() {
     private lateinit var categoryChoose_tv:TextView
+    private lateinit var categoryChoose_color:ImageView
     private lateinit var todoNameView: EditText
 
     private lateinit var mon_btn:Button
@@ -58,6 +61,7 @@ class AddTodoActivity : AppCompatActivity() {
 
     private fun initView(){
         categoryChoose_tv= findViewById(R.id.btn_categoryChoose)
+        categoryChoose_color =  findViewById(R.id.categoryColor)
         todoNameView=findViewById(R.id.insertTodoName)
 
         todoSave_btn = findViewById(R.id.save_todo)
@@ -90,6 +94,15 @@ class AddTodoActivity : AppCompatActivity() {
             val bottomSheet=BottomSheetFragment()
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
 
+            var arraySelectCategory = selectCategory.toArray()
+            if (arraySelectCategory.size!=0){
+                var newtext = arraySelectCategory[0].toString()
+                var token = newtext.split("=",",")
+                Log.d("msg","$newtext")
+                Log.d("msg","$token")
+                categoryChoose_tv.setText(token[1]) // bottom sheet에서 선택한 selectCategory(GlobalApplication에 선언된 변수 사용) 중 카테고리 이름
+                categoryChoose_color.setBackgroundColor(token[3].replace(")","").toInt())// 색상 int 값을 얻어서 해당 카테고리 색 넣어줌
+            }
         }
 
         mon_btn.setOnClickListener {
@@ -155,7 +168,7 @@ class AddTodoActivity : AppCompatActivity() {
 
         todoSave_btn.setOnClickListener {
             todo.todoTitle = todoNameView.getText().toString()
-            todo.todoCategory = categoryChoose_tv.text as String
+            todo.todoCategory = selectCategory.toString()
             todo.todoStart = startTime.text as String
             todo.todoEnd = endTime.text as String
 
@@ -164,8 +177,6 @@ class AddTodoActivity : AppCompatActivity() {
             finish()
 
         }
-
-
 
     }
 
