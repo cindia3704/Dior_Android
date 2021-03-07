@@ -71,6 +71,7 @@ class InsertRoutineNameActivity : AppCompatActivity() {
         checkImg.setOnClickListener {
             hideKeyboard()
                     val intent = Intent(this@InsertRoutineNameActivity,CompleteMakeRoutineActivity::class.java)
+                    intent.putExtra("name",""+routineNameView.text.toString())
                     startActivity(intent)
         }
     }

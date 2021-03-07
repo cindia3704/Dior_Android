@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/mainTab_img"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:src="@drawable/home"
@@ -49,8 +49,8 @@
             android:alpha="0.5"/>
         <ImageView
             android:id="@+id/calendarTab_img"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:src="@drawable/calendar"
@@ -73,8 +73,8 @@
             android:alpha="0.5"/>
         <ImageView
             android:id="@+id/routineTab_img"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_centerInParent="true"
             android:gravity="center"
             android:src="@drawable/profile"
