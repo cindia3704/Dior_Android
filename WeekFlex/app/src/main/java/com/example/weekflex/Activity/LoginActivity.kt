@@ -114,6 +114,7 @@ class LoginActivity : AppCompatActivity() {
 
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("849170160003-arrpbh8jee6dhgqfhvuiereb2pf44mbn.apps.googleusercontent.com")
                 .requestEmail()
                 .build()
 
@@ -131,9 +132,9 @@ class LoginActivity : AppCompatActivity() {
         val account = completedTask.getResult(ApiException::class.java)
         val googleUserName = account?.getDisplayName()
         val googleUserEmail = account?.getEmail()
-        val token = account?.idToken
-        Log.d("msg","useremail: "+ googleUserName)
-        Log.d("msg","user name: "+ googleUserEmail)
+        val token = account?.getIdToken()
+        Log.d("msg","user name: "+ googleUserName)
+        Log.d("msg","user email: "+ googleUserEmail)
         Log.d("msg","token: "+ (token))
         login_google.visibility = View.GONE
     } catch (e: ApiException) {
