@@ -69,25 +69,25 @@ class TodoMainFragment : Fragment(){
             Log.d("msg","clicked")
             if(addClicked) {
                 (activity as MainActivity?)?.makeDarkTabView()
-                addBtnImg_todo.animate().rotation(45F).setDuration(1000)
+                addBtnImg_todo.animate().rotation(-45F).setDuration(200)
                 blackOpacityView_todo.visibility=View.VISIBLE
 
                 addTodoBtn_todo.visibility = View.VISIBLE
                 addTodoView_todo.visibility=View.VISIBLE
                 addTodoView_todo.translationY=-132F
-                addTodoView_todo.animate().alpha(1f).translationYBy(-132F).setDuration(1000)
+                addTodoView_todo.animate().alpha(1f).translationYBy(-132F).setDuration(200)
 
 
                 addRoutineView_todo.visibility=View.VISIBLE
                 addRoutineView_todo.translationY=-264F
-                addRoutineView_todo.animate().alpha(1f).translationYBy(-264F).setDuration(1000)
+                addRoutineView_todo.animate().alpha(1f).translationYBy(-264F).setDuration(200)
 
 
 
             }
             else{
                 (activity as MainActivity?)?.undoDarkTabView()
-                addBtnImg_todo.animate().rotation(0F).setDuration(1000)
+                addBtnImg_todo.animate().rotation(0F).setDuration(200)
                 blackOpacityView_todo.visibility=View.GONE
                 addRoutineView_todo.visibility=View.GONE
                 addTodoView_todo.visibility=View.GONE
@@ -113,6 +113,7 @@ class TodoMainFragment : Fragment(){
         Log.d("msg","요일: "+dayOfWeek)
         val dayStyle = when(day){
             1->"st"
+            31->"st"
             2->"nd"
             3->"rd"
             else->"th"
@@ -123,13 +124,15 @@ class TodoMainFragment : Fragment(){
 
     private fun getThisWeek(): Array<Any> {
         var thisWeek = ArrayList<String>(7)
-        var todayDay = calendar.get(Calendar.DAY_OF_WEEK)-2
+        var todayDay = calendar.get(Calendar.DAY_OF_WEEK)
         Log.d("msg","todayDay: "+todayDay.toString())
-        if(todayDay != 0){
-            val differenceInDay = 0-todayDay
+        if(todayDay != 7){
+            Log.d("msg","calday: "+calendar.get(Calendar.DAY_OF_WEEK).toString())
+            val differenceInDay = todayDay-7
             calendar.add(Calendar.DATE,differenceInDay)
         }
         for ( i in 0..6){
+            Log.d("msg","calday: "+i+""+calendar.get(Calendar.DAY_OF_WEEK).toString())
             thisWeek.add(dfDate.format(calendar.getTime()).toString())
             calendar.add(Calendar.DATE,1)
         }

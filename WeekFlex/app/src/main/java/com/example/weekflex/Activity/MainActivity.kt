@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mainTabImg : ImageView
     private lateinit var calendarTabImg : ImageView
     private lateinit var routineTabImg : ImageView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -92,7 +91,6 @@ class MainActivity : AppCompatActivity() {
 //        navigationBar_opacityView_calendar.visibility=View.GONE
 //        navigationBar_opacityView_profile.visibility=View.GONE
         navigationOpacity.visibility=View.GONE
-
     }
 
 
