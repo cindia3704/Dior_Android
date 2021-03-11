@@ -84,21 +84,19 @@ class GlobalApplication : Application(){
         val sharedPreference = getSharedPreferences("login_token",Context.MODE_PRIVATE)
         val token = sharedPreference.getString("login_token","")
         Log.d("checkisLogin: ",token.toString())
-        if (token != null) {
-            return token.isNotBlank()
-        }else{
-            return false
-        }
+        return !token.isNullOrBlank()
     }
 
     // nullable -- b/c 로그인 안된경우 그냥 null로 할 수 있도록
     fun getUserToken():String?{
         val sharedPreference = getSharedPreferences("login_token",Context.MODE_PRIVATE)
-        val token = sharedPreference.getString("login_token","")
-        Log.d("getuserToken: ",token.toString())
-        return if(token!=""){
-            token
-        } else null
+        val token = sharedPreference.getString("login_token",null)
+        if(token.isNullOrBlank()) {
+            Log.d("getuserToken: ", "token is null")
+        }else{
+            Log.d("getuserToken: ", token.toString())
+        }
+        return token
     }
 
 }

@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.weekflex.Data.RegisterRequest
 import com.example.weekflex.Data.RegisterResponse
 import com.example.weekflex.Network.GlobalApplication
-import com.example.weekflex.Network.RetrofitService
 import com.example.weekflex.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -168,7 +167,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // sharedPreference에 토큰 저장하는 함수
-    fun saveUserToken(token:String, activity: Activity){
+    fun saveUserToken(token: String?, activity: Activity){
         val sp = activity.getSharedPreferences("login_token", Context.MODE_PRIVATE)
         val editor = sp.edit()
         editor.putString("login_token",token)
@@ -176,7 +175,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun tryLogin(registerRequest:RegisterRequest){
-        saveUserToken("",this@LoginActivity)
+        saveUserToken(null,this@LoginActivity)
         (application as GlobalApplication).retrofitService.register(
             registerRequest
         ).enqueue(object : Callback<RegisterResponse> {
