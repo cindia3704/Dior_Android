@@ -11,17 +11,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Activity.MainActivity
+import com.example.weekflex.Activity.routineList
+import com.example.weekflex.Adapter.TodoMainRoutineViewAdapter
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.todo_main_fragment.*
+import kotlinx.android.synthetic.main.todo_routine_home_view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class TodoMainFragment : Fragment(){
+    private lateinit var inflater: LayoutInflater
+
     private var userId : Int? =1
     private var calendar= Calendar.getInstance()
     private var addClicked = false
@@ -46,6 +52,9 @@ class TodoMainFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         userId = arguments?.getInt("userId")
+
+        this.inflater = inflater
+
         return inflater.inflate(R.layout.todo_main_fragment,container,false)
     }
 
@@ -66,6 +75,7 @@ class TodoMainFragment : Fragment(){
         val display = (this.resources.displayMetrics.xdpi+(24*7))/6
         val deco = RecyclerDecoration(display.toInt())
         weekHeader_recylerview.addItemDecoration(deco)
+        body_todo_routineRecyclerView.adapter = TodoMainRoutineViewAdapter(inflater, routineList)
     }
 
     fun setListener(){
