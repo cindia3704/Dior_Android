@@ -13,7 +13,14 @@ class RecyclerDecoration(private val divWidth : Int) : RecyclerView.ItemDecorati
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        outRect.right = divWidth
+        val LAST_ITEM_POSITION = 6
+        if(parent.getChildAdapterPosition(view) == LAST_ITEM_POSITION){
+            outRect.right=0
+        }else {
+            outRect.right += divWidth
+        }
+
+
     }
 
 }
