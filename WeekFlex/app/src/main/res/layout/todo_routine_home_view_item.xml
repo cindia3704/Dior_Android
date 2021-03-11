@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:maxHeight="51dp"
+    android:minHeight="51dp">
+
+    <ImageView
+        android:id="@+id/todo_routine_home_view_item_starImageView"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bluestar" />
+
+    <TextView
+        android:id="@+id/todo_routine_home_view_item_routineNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/maaxbold"
+        android:text="스피킹"
+        android:textAlignment="viewStart"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintStart_toEndOf="@+id/todo_routine_home_view_item_starImageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/todo_routine_home_view_item_routineTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="10:00am-1:00pm"
+        android:textColor="@color/gray_3"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="@+id/todo_routine_home_view_item_routineNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/todo_routine_home_view_item_routineNameTextView" />
+
+    <ImageButton
+        android:id="@+id/todo_routine_home_view_item_Menu"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+</androidx.constraintlayout.widget.ConstraintLayout>
