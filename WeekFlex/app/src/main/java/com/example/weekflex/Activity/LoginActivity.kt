@@ -9,6 +9,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weekflex.Data.RegisterResponse
+import com.example.weekflex.Network.GlobalApplication
+import com.example.weekflex.Network.RetrofitService
 import com.example.weekflex.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -22,6 +25,9 @@ import com.kakao.sdk.common.model.AuthErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 const val RC_SIGN_IN = 123
@@ -92,12 +98,45 @@ class LoginActivity : AppCompatActivity() {
                     if (user != null) {
                         val kakaoUserEmail = user.kakaoAccount?.email?: "null"
                         val kakaoUsername = user.kakaoAccount?.profile?.nickname?:"null"
-                        val signupType = "kakao"
-                        val accessToken = token
+                        val signupType = "KAKAO"
+                        val accessToken = token.accessToken
                         Log.d("msg","useremail: "+ kakaoUserEmail)
                         Log.d("msg","user name: "+ kakaoUsername)
-                        Log.d("msg","token: "+ (token))
+                        Log.d("msg","token: "+ (token).accessToken)
 //                        checkIsRegisteredSocialLogin(kakaoUserEmail,token.toString())
+                        (application as GlobalApplication).retrofitService.register(
+                            accessToken,
+                            kakaoUserEmail,
+                            kakaoUsername,
+                            signupType
+                        ).enqueue(object : Callback<RegisterResponse> {
+                            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                                Log.d("msg","failed!")
+                                Toast.makeText(this@LoginActivity,"회원가입 실패",Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(
+                                call: Call<RegisterResponse>,
+                                response: Response<RegisterResponse>
+                            ) {
+                                if(response.isSuccessful){
+                                    Log.d("msg","successful!")
+                                    val responseFromServer = response.body()
+                                    val token = responseFromServer!!.data!!
+                                    Log.d("response token: ",token.toString())
+                                    saveUserToken(token,this@LoginActivity)
+                                    val intentToMain = Intent(this@LoginActivity,MainActivity::class.java)
+                                    startActivity(intentToMain)
+                                    finish()
+                                }
+                                else{
+                                    Log.d("response msg: ",response.message())
+                                    Log.d("response err body: ", response.errorBody().toString())
+                                    Log.d("response code: ", response.code().toString())
+                                    Toast.makeText(this@LoginActivity,"아이디와 비밀번호를 다시 확인해주세요",Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        })
                     }
                 }
             }
@@ -158,4 +197,5 @@ class LoginActivity : AppCompatActivity() {
         editor.putString("login_token",token)
         editor.commit()
     }
+
 }
