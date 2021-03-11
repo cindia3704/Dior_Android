@@ -3,11 +3,13 @@ package com.example.weekflex.Fragment
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
@@ -125,15 +127,15 @@ class TodoMainFragment : Fragment(){
         return todayDate
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun getThisWeek(): Array<Any> {
         var thisWeek = ArrayList<String>(7)
         var todayDay = calendar.get(Calendar.DAY_OF_WEEK)
         Log.d("msg","todayDay: "+todayDay.toString())
-        if(todayDay != 7){
-            Log.d("msg","calday: "+calendar.get(Calendar.DAY_OF_WEEK).toString())
-            val differenceInDay = -(todayDay-2)
-            calendar.add(Calendar.DATE,differenceInDay)
-        }
+        val differenceInDay = Math.floorMod(todayDay-Calendar.MONDAY,7)
+        Log.d("diff: ",differenceInDay.toString())
+        calendar.add(Calendar.DATE,-differenceInDay)
+
         for ( i in 0..6){
             Log.d("msg","calday: "+i+""+calendar.get(Calendar.DAY_OF_WEEK).toString())
             thisWeek.add(dfDate.format(calendar.getTime()).toString())
