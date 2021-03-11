@@ -12,7 +12,7 @@ import com.example.weekflex.R
 
 class RoutineListAdapter (
     val inflater: LayoutInflater,
-    val routineList: ArrayList<Routine>
+    val routineList: List<Routine>
 ):RecyclerView.Adapter<RoutineListAdapter.ViewHolder>(){
 //    val routineList: ArrayList<Routine> = ArrayList()
 
