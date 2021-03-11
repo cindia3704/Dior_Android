@@ -46,12 +46,16 @@ class AddRoutineActivity : AppCompatActivity() {
         //TODO: 서버랑 연결해서 루틴 리스트 받아오기
         val routineList = ArrayList<Routine>()
         routineList.add(Routine("면접집중"))
+        routineList.add(Routine("면접집중"))
+        routineList.add(Routine("면접집중"))
+        routineList.add(Routine("면접집중"))
         routineList.add(Routine("운동집중"))
         routineList.add(Routine("영어공부"))
         routineList.add(Routine("취업"))
 
         val adapter = RoutineListAdapter(LayoutInflater.from(this@AddRoutineActivity),routineList)
+//        recyclerview_addRoutine.layoutManager= LinearLayoutManager(this@AddRoutineActivity)
         recyclerview_addRoutine.adapter = adapter
-        recyclerview_addRoutine.layoutManager= GridLayoutManager(this@AddRoutineActivity,1,GridLayoutManager.VERTICAL,false)
+
     }
 }

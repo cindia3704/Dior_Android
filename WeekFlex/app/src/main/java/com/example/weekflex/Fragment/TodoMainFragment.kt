@@ -1,6 +1,7 @@
 package com.example.weekflex.Fragment
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -60,7 +61,9 @@ class TodoMainFragment : Fragment(){
         Log.d("msg","오늘: "+day.toString())
         weekHeader_recylerview.setHasFixedSize(true)
         weekHeader_recylerview.adapter =TodoWeekDateAdapter(days,weekOfDay,this,day.toString())
-        weekHeader_recylerview.addItemDecoration(RecyclerDecoration(120))
+        val display = (this.resources.displayMetrics.xdpi+(24*7))/6
+        val deco = RecyclerDecoration(display.toInt())
+        weekHeader_recylerview.addItemDecoration(deco)
     }
 
     fun setListener(){
@@ -128,7 +131,7 @@ class TodoMainFragment : Fragment(){
         Log.d("msg","todayDay: "+todayDay.toString())
         if(todayDay != 7){
             Log.d("msg","calday: "+calendar.get(Calendar.DAY_OF_WEEK).toString())
-            val differenceInDay = todayDay-7
+            val differenceInDay = todayDay-8
             calendar.add(Calendar.DATE,differenceInDay)
         }
         for ( i in 0..6){

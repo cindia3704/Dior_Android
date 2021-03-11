@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.weekflex.Data.RegisterRequest
 import com.example.weekflex.Data.RegisterResponse
 import com.example.weekflex.Network.GlobalApplication
 import com.example.weekflex.Network.RetrofitService
@@ -44,7 +45,6 @@ class LoginActivity : AppCompatActivity() {
         val keyHash = Utility.getKeyHash(this)
         Log.d("Hash", keyHash)
     }
-
 
     fun initView(){
         kakaoLogin = findViewById(R.id.login_kakao)
@@ -104,39 +104,9 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("msg","user name: "+ kakaoUsername)
                         Log.d("msg","token: "+ (token).accessToken)
 //                        checkIsRegisteredSocialLogin(kakaoUserEmail,token.toString())
-                        (application as GlobalApplication).retrofitService.register(
-                            accessToken,
-                            kakaoUserEmail,
-                            kakaoUsername,
-                            signupType
-                        ).enqueue(object : Callback<RegisterResponse> {
-                            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                                Log.d("msg","failed!")
-                                Toast.makeText(this@LoginActivity,"회원가입 실패",Toast.LENGTH_SHORT).show()
-                            }
+                        val registerRequest = RegisterRequest(accessToken,kakaoUserEmail,kakaoUsername,signupType)
+                        tryLogin(registerRequest)
 
-                            override fun onResponse(
-                                call: Call<RegisterResponse>,
-                                response: Response<RegisterResponse>
-                            ) {
-                                if(response.isSuccessful){
-                                    Log.d("msg","successful!")
-                                    val responseFromServer = response.body()
-                                    val token = responseFromServer!!.data!!
-                                    Log.d("response token: ",token.toString())
-                                    saveUserToken(token,this@LoginActivity)
-                                    val intentToMain = Intent(this@LoginActivity,MainActivity::class.java)
-                                    startActivity(intentToMain)
-                                    finish()
-                                }
-                                else{
-                                    Log.d("response msg: ",response.message())
-                                    Log.d("response err body: ", response.errorBody().toString())
-                                    Log.d("response code: ", response.code().toString())
-                                    Toast.makeText(this@LoginActivity,"아이디와 비밀번호를 다시 확인해주세요",Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        })
                     }
                 }
             }
@@ -172,9 +142,12 @@ class LoginActivity : AppCompatActivity() {
         val googleUserName = account?.getDisplayName()
         val googleUserEmail = account?.getEmail()
         val token = account?.getIdToken()
+        val signupType = "GOOGLE"
         Log.d("msg","user name: "+ googleUserName)
         Log.d("msg","user email: "+ googleUserEmail)
         Log.d("msg","token: "+ (token))
+        val registerRequest = RegisterRequest(token!!,googleUserEmail!!,googleUserName!!,signupType)
+        tryLogin(registerRequest)
         login_google.visibility = View.GONE
     } catch (e: ApiException) {
         Log.w("failed","signInResult:failed code="+e.statusCode)
@@ -196,6 +169,44 @@ class LoginActivity : AppCompatActivity() {
         val editor = sp.edit()
         editor.putString("login_token",token)
         editor.commit()
+    }
+
+    fun tryLogin(registerRequest:RegisterRequest){
+        saveUserToken("null",this@LoginActivity)
+        (application as GlobalApplication).retrofitService.register(
+            registerRequest
+        ).enqueue(object : Callback<RegisterResponse> {
+            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
+                Log.d("msg","failed!")
+                Toast.makeText(this@LoginActivity,"회원가입 실패",Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
+
+                if(response.isSuccessful){
+                    Log.d("msg","successful!")
+                    val responseFromServer = response.body()
+                    val token = responseFromServer!!.data!!
+                    Log.d("response token: ",token.toString())
+                    saveUserToken(token,this@LoginActivity)
+                    val intentToMain = Intent(this@LoginActivity,MainActivity::class.java)
+                    startActivity(intentToMain)
+                    finish()
+                }
+                else{
+                    Toast.makeText(this@LoginActivity,call.request().headers().toString(),Toast.LENGTH_SHORT).show()
+                    Log.e("request header : ", call.request().headers().toString())
+                    Log.e("request body : ", call.request().body().toString())
+                    Log.d("response msg: ",response.message())
+                    Log.d("response err body: ", response.errorBody().toString())
+                    Log.d("response code: ", response.code().toString())
+                    Toast.makeText(this@LoginActivity,"아이디와 비밀번호를 다시 확인해주세요",Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
 
 }
