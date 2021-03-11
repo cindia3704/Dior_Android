@@ -103,7 +103,6 @@ class LoginActivity : AppCompatActivity() {
                         Log.d("msg","useremail: "+ kakaoUserEmail)
                         Log.d("msg","user name: "+ kakaoUsername)
                         Log.d("msg","token: "+ (token).accessToken)
-//                        checkIsRegisteredSocialLogin(kakaoUserEmail,token.toString())
                         val registerRequest = RegisterRequest(accessToken,kakaoUserEmail,kakaoUsername,signupType)
                         tryLogin(registerRequest)
 
@@ -146,8 +145,13 @@ class LoginActivity : AppCompatActivity() {
         Log.d("msg","user name: "+ googleUserName)
         Log.d("msg","user email: "+ googleUserEmail)
         Log.d("msg","token: "+ (token))
-        val registerRequest = RegisterRequest(token!!,googleUserEmail!!,googleUserName!!,signupType)
-        tryLogin(registerRequest)
+        if(token == null || googleUserEmail == null || googleUserName == null){
+            Toast.makeText(this@LoginActivity,"ERROR! Fields are null",Toast.LENGTH_SHORT).show()
+        }else {
+            val registerRequest =
+                RegisterRequest(token, googleUserEmail, googleUserName, signupType)
+            tryLogin(registerRequest)
+        }
         login_google.visibility = View.GONE
     } catch (e: ApiException) {
         Log.w("failed","signInResult:failed code="+e.statusCode)
@@ -172,7 +176,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun tryLogin(registerRequest:RegisterRequest){
-        saveUserToken("null",this@LoginActivity)
+        saveUserToken("",this@LoginActivity)
         (application as GlobalApplication).retrofitService.register(
             registerRequest
         ).enqueue(object : Callback<RegisterResponse> {
@@ -189,15 +193,18 @@ class LoginActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     Log.d("msg","successful!")
                     val responseFromServer = response.body()
-                    val token = responseFromServer!!.data!!
-                    Log.d("response token: ",token.toString())
-                    saveUserToken(token,this@LoginActivity)
-                    val intentToMain = Intent(this@LoginActivity,MainActivity::class.java)
-                    startActivity(intentToMain)
-                    finish()
+                    if(responseFromServer?.data == null){
+                        Toast.makeText(this@LoginActivity,"response from server is null",Toast.LENGTH_SHORT).show()
+                    } else {
+                        val token = responseFromServer.data
+                        Log.d("response token: ", token.toString())
+                        saveUserToken(token, this@LoginActivity)
+                        val intentToMain = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intentToMain)
+                        finish()
+                    }
                 }
                 else{
-                    Toast.makeText(this@LoginActivity,call.request().headers().toString(),Toast.LENGTH_SHORT).show()
                     Log.e("request header : ", call.request().headers().toString())
                     Log.e("request body : ", call.request().body().toString())
                     Log.d("response msg: ",response.message())

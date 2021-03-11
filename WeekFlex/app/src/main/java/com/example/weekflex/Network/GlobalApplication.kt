@@ -50,8 +50,11 @@ class GlobalApplication : Application(){
         val header = Interceptor{
             val original = it.request()
 
-            if(checkIsLogin()){
-                // 로그인 이미 되어있는 경우
+            if(checkIsLogin()==false){
+                // 로그인 되어있지 있는 경우
+                return@Interceptor it.proceed(original)
+            }else{
+                // 로그인이 되어 있는 경우
                 getUserToken()?.let{token ->
                     // getUserToken이 null이 아닌경우
                     val request = original.newBuilder()
@@ -59,10 +62,6 @@ class GlobalApplication : Application(){
                         .build()
                     it.proceed(request)
                 }
-
-            }else{
-                // 로그인이 우되어있지 않은 경우
-                it.proceed(original)
             }
 
         }
@@ -83,23 +82,23 @@ class GlobalApplication : Application(){
     // 로그인 했는지 안했는지 알아보는
     fun checkIsLogin():Boolean{
         val sharedPreference = getSharedPreferences("login_token",Context.MODE_PRIVATE)
-        val token = sharedPreference.getString("login_token","null")
+        val token = sharedPreference.getString("login_token","")
         Log.d("checkisLogin: ",token.toString())
-        if(token !="null"){
-            return true
+        if (token != null) {
+            return token.isNotBlank()
+        }else{
+            return false
         }
-        else return false
     }
 
     // nullable -- b/c 로그인 안된경우 그냥 null로 할 수 있도록
     fun getUserToken():String?{
         val sharedPreference = getSharedPreferences("login_token",Context.MODE_PRIVATE)
-        val token = sharedPreference.getString("login_token","null")
+        val token = sharedPreference.getString("login_token","")
         Log.d("getuserToken: ",token.toString())
-        if(token !="null"){
-            return null
-        }
-        else return token
+        return if(token!=""){
+            token
+        } else null
     }
 
 }

@@ -17,8 +17,7 @@
         <activity android:name=".Activity.CompleteMakeRoutineActivity"></activity>
         <activity android:name=".Activity.InsertRoutineNameActivity" />
         <activity android:name=".Activity.AddTodoActivity" ></activity>
-        <activity android:name=".Activity.AddRoutineActivity">
-        </activity>
+        <activity android:name=".Activity.AddRoutineActivity"/>
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

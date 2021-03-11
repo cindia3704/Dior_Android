@@ -131,7 +131,7 @@ class TodoMainFragment : Fragment(){
         Log.d("msg","todayDay: "+todayDay.toString())
         if(todayDay != 7){
             Log.d("msg","calday: "+calendar.get(Calendar.DAY_OF_WEEK).toString())
-            val differenceInDay = todayDay-8
+            val differenceInDay = -(todayDay-2)
             calendar.add(Calendar.DATE,differenceInDay)
         }
         for ( i in 0..6){
