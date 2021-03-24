@@ -1,7 +1,6 @@
 package com.example.weekflex.Fragment
 
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -11,16 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.Activity.routineList
 import com.example.weekflex.Adapter.TodoMainRoutineViewAdapter
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
+import com.example.weekflex.Data.Routine
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.todo_main_fragment.*
-import kotlinx.android.synthetic.main.todo_routine_home_view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,7 +73,11 @@ class TodoMainFragment : Fragment(){
         val display = (this.resources.displayMetrics.xdpi+(24*7))/6
         val deco = RecyclerDecoration(display.toInt())
         weekHeader_recylerview.addItemDecoration(deco)
-        body_todo_routineRecyclerView.adapter = TodoMainRoutineViewAdapter(inflater, routineList)
+        body_todo_routineRecyclerView.adapter = TodoMainRoutineViewAdapter(inflater, routineList, onClickDeleteButton = ::onClickDeleteRoutine)
+    }
+
+    fun onClickDeleteRoutine(routine: Routine) {
+        Log.d("onClickDeleteRoutine", "routine title : ${routine.routineTitle}")
     }
 
     fun setListener(){
