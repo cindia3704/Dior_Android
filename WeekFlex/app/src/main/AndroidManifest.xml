@@ -14,7 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.AddCategory"></activity>
-        <activity android:name=".Activity.CompleteMakeRoutineActivity"></activity>
+        <activity android:name=".Activity.CompleteMakeRoutineActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activity.InsertRoutineNameActivity" />
         <activity android:name=".Activity.AddTodoActivity" ></activity>
         <activity android:name=".Activity.AddRoutineActivity"/>
@@ -33,11 +39,11 @@
 
 
         <activity android:name=".Activity.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".Activity.SplashActivity">
         </activity>

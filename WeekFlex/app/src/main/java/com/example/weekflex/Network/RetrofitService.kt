@@ -7,7 +7,7 @@ import retrofit2.http.*
 
 interface RetrofitService {
 
-    @POST("api/v1/dummy")
+    @POST("api/v1/users/socialLogin")
         fun register(
        @Body registerRequest: RegisterRequest
     ) : Call<RegisterResponse>
