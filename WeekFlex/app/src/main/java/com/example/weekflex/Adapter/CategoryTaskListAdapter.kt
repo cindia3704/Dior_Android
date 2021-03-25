@@ -1,6 +1,5 @@
 package com.example.weekflex.Adapter
 
-import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,11 +13,15 @@ import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 
-class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,var categoryList:List<Category>,val newRoutineTaskList:ArrayList<RoutineItem>):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
+class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,var categoryList:List<Category>):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
 
     var user_id:Int?=null
-    var selectedCategory:Int=1
-    var taskList:List<RoutineItem> = getCategoryTaskList(categoryList)
+    var selectedCategoryId:Int=1
+    var selectedRoutineItemList : List<RoutineItem> = listOf()
+
+    // property 찾아보기
+    val taskList: List<RoutineItem> get() = getCategoryTaskList(categoryList, selectedCategoryId)
+
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val bookmark : ImageView = itemView.findViewById(R.id.taskList_bookmarkImg)
         val taskName: TextView = itemView.findViewById(R.id.taskList_taskName)
@@ -27,7 +30,6 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,var cat
         fun bind(position: Int){
 
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,16 +42,21 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,var cat
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if(taskList.get(position) in newRoutineTaskList){
+        if(taskList.get(position) in selectedRoutineItemList){
             holder.container.setBackgroundResource(R.color.task_gray)
         }else{
             holder.container.setBackgroundResource(R.color.white)
         }
 
         val item = taskList[position]
-        val adapter = this
-        if(taskList.get(position).bookMarked==true) holder.bookmark.setImageResource(R.drawable.bookmark_fill)
-        else holder.bookmark.setImageResource(R.drawable.bookmark_empty)
+
+        if(taskList.get(position).bookMarked==true) {
+            holder.bookmark.setImageResource(R.drawable.bookmark_fill)
+        }
+        else {
+            holder.bookmark.setImageResource(R.drawable.bookmark_empty)
+        }
+
         holder.taskName.setText(taskList.get(position).routineItemTitle)
         holder.taskTime.setText(getWeekDays(taskList.get(position).weekdaysScheduled)+taskList.get(position).startTime.toString()+"-"+taskList.get(position).endTime)
         holder.bind(position)
@@ -69,31 +76,34 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,var cat
 
         return weekdays
     }
-    fun getCategoryTaskList(list:List<Category>):List<RoutineItem>{
+
+    fun getCategoryTaskList(list:List<Category>, selectedCategoryId: Int):List<RoutineItem>{
         lateinit var category:Category
         for (i in list.indices)
-            if(list[i].categoryId==selectedCategory){
+            if(list[i].categoryId==selectedCategoryId){
                 category = list[i]
             }
         return category.routineItemList
     }
-    fun isIncluded(newRoutineTaskList:ArrayList<RoutineItem>, item:RoutineItem):Boolean{
-        return item in newRoutineTaskList
-    }
 
     fun updateBackgroundColor(holder:ViewHolder,item:RoutineItem){
-        if(isIncluded(newRoutineTaskList,item)){
+        if(item in selectedRoutineItemList){
             Log.d("msg","INCLUDED!!")
             holder.container.setBackgroundResource(R.color.white)
             activity.deleteAddedTask(item)
         }else{
             holder.container.setBackgroundResource(R.color.task_gray)
-            activity.addTaskToRoutin(item)
+            activity.addTaskToRoutine(item)
             Log.d("msg","NOT INCLUDED!!")
-
         }
     }
 
-
-
+    fun changeSelectedCategoryId(id : Int){
+        selectedCategoryId = id
+        notifyDataSetChanged()
+    }
+    fun changeSelectedRoutineItemList(list : List<RoutineItem>){
+        selectedRoutineItemList = list
+        notifyDataSetChanged()
+    }
 }

@@ -14,8 +14,9 @@ import com.example.weekflex.Activity.CompleteMakeRoutineActivity
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 
-class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity, val newRoutineTaskList:ArrayList<RoutineItem>): RecyclerView.Adapter<AddedRoutineTaskAdapter.ViewHolder>(){
+class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity): RecyclerView.Adapter<AddedRoutineTaskAdapter.ViewHolder>(){
     var user_id:Int?=null
+    var newRoutineTaskList:List<RoutineItem> = listOf()
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val deleteButton : ImageView = itemView.findViewById(R.id.addedTaskDeleteBtn)
@@ -37,5 +38,10 @@ class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity, val new
         holder.deleteButton.setOnClickListener {
             activity.deleteAddedTask(newRoutineTaskList.get(position))
         }
+    }
+
+    fun changeSelectedRoutineItemList(list : List<RoutineItem>){
+        newRoutineTaskList = list
+        notifyDataSetChanged()
     }
 }

@@ -45,7 +45,6 @@ class CategoryListAdapter(val context: Context): RecyclerView.Adapter<CategoryLi
             categoryName = itemView.findViewById(R.id.recycler_one_title)
             categoryColor = itemView.findViewById(R.id.recycler_one_color)
         }
-
     }
 
     fun refreshData(inputData : ArrayList<Category>){
