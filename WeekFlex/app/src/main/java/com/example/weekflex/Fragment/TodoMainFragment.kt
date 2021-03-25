@@ -18,11 +18,11 @@ import com.example.weekflex.Activity.routineList
 import com.example.weekflex.Adapter.TodoMainRoutineViewAdapter
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.Data.Routine
+import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.todo_main_fragment.*
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 class TodoMainFragment : Fragment(){
     private lateinit var inflater: LayoutInflater
@@ -74,7 +74,18 @@ class TodoMainFragment : Fragment(){
         val display = (this.resources.displayMetrics.xdpi+(24*7))/6
         val deco = RecyclerDecoration(display.toInt())
         weekHeader_recylerview.addItemDecoration(deco)
-        body_todo_routineRecyclerView.adapter = TodoMainRoutineViewAdapter(inflater, routineList, onClickDeleteButton = ::onClickDeleteRoutine)
+
+        body_todo_routineRecyclerView.adapter = TodoMainRoutineViewAdapter(
+                inflater,
+                routineList,
+                onClickDeleteButton = ::onClickDeleteRoutine,
+                onClickRoutineItemMenuButton = ::onClickRoutineItemMenuButton
+        )
+    }
+
+    fun onClickRoutineItemMenuButton(routine: Routine, routineItem: RoutineItem){
+        val bottomSheetDialog: RoutineModifyBottomDialogFragment = RoutineModifyBottomDialogFragment.instance
+        fragmentManager?.let { bottomSheetDialog.show(it, "bottomSheet") }
     }
 
     fun onClickDeleteRoutine(routine: Routine) {

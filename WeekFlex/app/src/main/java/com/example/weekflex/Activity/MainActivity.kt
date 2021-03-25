@@ -6,13 +6,12 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.example.weekflex.Adapter.NavigationTabAdapter
 import com.example.weekflex.R
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.navibation_bar.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         fragmentView.adapter=fragmentAdapter
         navigationBar.setupWithViewPager(fragmentView)
         fragmentView.currentItem=0
-
     }
 
     private fun makeNavigationBar(){

@@ -10,13 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.weekflex.Data.Routine
+import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 
 class TodoMainRoutineViewAdapter(
-    val inflater: LayoutInflater,
-    val routineList: List<Routine>,
-    val onClickDeleteButton: (Routine) -> Unit,
-    private val viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
+        val inflater: LayoutInflater,
+        val routineList: List<Routine>,
+        val onClickDeleteButton: (Routine) -> Unit,
+        val onClickRoutineItemMenuButton: (Routine, RoutineItem) -> Unit,
+        private val viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
 ):RecyclerView.Adapter<TodoMainRoutineViewAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val itemRecyclerView : RecyclerView
@@ -47,7 +49,7 @@ class TodoMainRoutineViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val routine = routineList[position]
         holder.title.text = routine.routineTitle
-        holder.itemRecyclerView.adapter = TodoMainRoutineViewItemAdapter(inflater, routine.routineItemList)
+        holder.itemRecyclerView.adapter = TodoMainRoutineViewItemAdapter(inflater, routine, onClickRoutineItemMenuButton)
 
         viewBinderHelper.bind(holder.swipeRevealLayout, routine.toString())
 
