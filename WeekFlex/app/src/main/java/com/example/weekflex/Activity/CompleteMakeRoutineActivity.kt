@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -19,7 +18,6 @@ import com.example.weekflex.Adapter.AddedRoutineTaskAdapter
 import com.example.weekflex.Adapter.CategoryTaskListAdapter
 import com.example.weekflex.Adapter.RoutineCategoryListAdapter
 import com.example.weekflex.Data.Category
-import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_complete_make_routine.*
@@ -51,13 +49,11 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     private lateinit var addTaskComment:TextView
     private lateinit var addedTaskView:RecyclerView
 
+    var selectedTaskListForNewRoutine  = listOf<RoutineItem>()
 
-    var newTaskListForRoutine  = arrayListOf<RoutineItem>()
-    private val addedTaskAdapter = AddedRoutineTaskAdapter(this@CompleteMakeRoutineActivity, newTaskListForRoutine)
-    private val categoryTaskAdapter = CategoryTaskListAdapter(this@CompleteMakeRoutineActivity,
-        categoryList,newTaskListForRoutine
-    )
-    private val categoryAdapter = RoutineCategoryListAdapter(this@CompleteMakeRoutineActivity, categoryList)
+    private val routineCategoryListAdapter = RoutineCategoryListAdapter(this@CompleteMakeRoutineActivity, categoryList)
+    private val categoryTaskListAdapter = CategoryTaskListAdapter(this@CompleteMakeRoutineActivity, categoryList)
+    private val addedRoutineTaskAdapter = AddedRoutineTaskAdapter(this@CompleteMakeRoutineActivity)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +62,8 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         layoutInit()
 
         setListener()
+
+        routineCategoryListAdapter.lambdaList = listOf( {x -> categoryTaskListAdapter.changeSelectedCategoryId(x)} )
     }
 
     override fun onResume() {
@@ -89,11 +87,11 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         }
         //현재 루틴에 추가된 태스크 없을때 안내 메세지. 아니면 태스크 리스트
         hideKeyboard()
-        setheaderView()
+        setHeaderView()
     }
 
-    fun setheaderView(){
-        if(newTaskListForRoutine.size!=0){
+    fun setHeaderView(){
+        if(selectedTaskListForNewRoutine.size!=0){
             addTaskComment.visibility=View.INVISIBLE
             addedTaskView.visibility=View.VISIBLE
         }else{
@@ -117,7 +115,6 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             val intent = Intent(this@CompleteMakeRoutineActivity,AddTodoActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     fun hideKeyboard() {
@@ -137,40 +134,44 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     private fun layoutInit(){
         //TODO: 서버랑 연결해서 루틴 리스트 받아오기
 //     val categoryAdapter = RoutineCategoryListAdapter(LayoutInflater.from(this@CompleteMakeRoutineActivity), categoryList)
-        completeRoutine_categoryList.adapter = categoryAdapter
+        completeRoutine_categoryList.adapter = routineCategoryListAdapter
         completeRoutine_categoryList.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.HORIZONTAL,false)
 
-        taskList_recyclerview.adapter = categoryTaskAdapter
+        taskList_recyclerview.adapter = categoryTaskListAdapter
         taskList_recyclerview.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.VERTICAL,false)
 
-        addedTasksList.adapter = addedTaskAdapter
+        addedTasksList.adapter = addedRoutineTaskAdapter
         addedTasksList.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.HORIZONTAL,false)
 
-        addedTaskAdapter.notifyDataSetChanged()
-        categoryTaskAdapter.notifyDataSetChanged()
-        categoryAdapter.notifyDataSetChanged()
+        addedRoutineTaskAdapter.notifyDataSetChanged()
+        categoryTaskListAdapter.notifyDataSetChanged()
+        routineCategoryListAdapter.notifyDataSetChanged()
     }
 
     fun deleteAddedTask(item: RoutineItem){
-        newTaskListForRoutine.remove(item)
-        setheaderView()
+        selectedTaskListForNewRoutine = selectedTaskListForNewRoutine.minus(item)
         Log.d("msg","removed!!!!")
-        addedTaskAdapter.notifyDataSetChanged()
-        categoryTaskAdapter.notifyDataSetChanged()
+
+        refreshAddedRoutineItem()
     }
 
-    fun addTaskToRoutin(item:RoutineItem){
-        newTaskListForRoutine.add(item)
+    fun refreshAddedRoutineItem(){
+        addedRoutineTaskAdapter.changeSelectedRoutineItemList(selectedTaskListForNewRoutine)
+        categoryTaskListAdapter.changeSelectedRoutineItemList(selectedTaskListForNewRoutine)
+
+        setHeaderView()
+    }
+
+    fun addTaskToRoutine(item:RoutineItem){
+        selectedTaskListForNewRoutine = selectedTaskListForNewRoutine.plus(item)
+
         Log.d("msg","added!!!!")
-        Log.d("msg","count: "+newTaskListForRoutine.size)
-        Log.d("msg","!!!!: "+newTaskListForRoutine[newTaskListForRoutine.size-1].routineItemTitle)
-        addedTaskAdapter.notifyDataSetChanged()
-        categoryTaskAdapter.notifyDataSetChanged()
-        setheaderView()
+        Log.d("msg","count: "+selectedTaskListForNewRoutine.size)
+        Log.d("msg","!!!!: "+selectedTaskListForNewRoutine[selectedTaskListForNewRoutine.size-1].routineItemTitle)
+
+        refreshAddedRoutineItem()
     }
-
-
 }
