@@ -55,7 +55,7 @@ class AddTodoActivity : AppCompatActivity() {
         setListener()
         OnClickTime()
 
-        category = Category("",0)
+        category = Category(0,"",0)
         todo = Todo("","", ArrayList(),"","")
     }
 

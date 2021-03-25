@@ -33,7 +33,7 @@ class AddCategory : AppCompatActivity(){
         setContentView(R.layout.activity_add_category)
         initView()
         setListener()
-        category = Category("",0)
+        category = Category(0,"",0)
 
     }
 
