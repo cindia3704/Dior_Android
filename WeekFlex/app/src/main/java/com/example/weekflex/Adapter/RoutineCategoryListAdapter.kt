@@ -15,23 +15,30 @@ import com.example.weekflex.Data.Category
 import com.example.weekflex.R
 
 // CompleteMakeRoutineActivity의 카테고리 리스트 어댑터
-class RoutineCategoryListAdapter (val inflater: LayoutInflater, var routineCategoryList: List<Category>,val selectedId:Int)
+class RoutineCategoryListAdapter (val activity: CompleteMakeRoutineActivity, var routineCategoryList: List<Category>)
     :RecyclerView.Adapter<RoutineCategoryListAdapter.ViewHolder>(){
 
     var user_id:Int?=null
+    var selectedId = 0
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         //category_list_item_view의 카테고리 이름
         val categoryTitle : TextView = itemView.findViewById(R.id.category_name_categoryList)
         val content: ConstraintLayout = itemView.findViewById(R.id.categoryList_itemView)
         val underline:View = itemView.findViewById(R.id.category_underline_categoryList)
+        val container:ConstraintLayout=itemView.findViewById(R.id.categoryList_itemView)
+
+        fun bind(position: Int){
+
+        }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): RoutineCategoryListAdapter.ViewHolder {
-        val view = inflater.inflate(R.layout.category_list_item_view,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.category_list_item_view,parent,false)
         return ViewHolder(view)
+
     }
 
     override fun getItemCount(): Int {
@@ -49,6 +56,12 @@ class RoutineCategoryListAdapter (val inflater: LayoutInflater, var routineCateg
             Log.d("msg","invisible")
             holder.underline.visibility = View.INVISIBLE
             holder.categoryTitle.setTypeface(null, Typeface.NORMAL);
+        }
+        holder.bind(position)
+
+        holder.container.setOnClickListener {
+            selectedId=routineCategoryList.get(position).categoryId
+            notifyDataSetChanged()
         }
     }
 

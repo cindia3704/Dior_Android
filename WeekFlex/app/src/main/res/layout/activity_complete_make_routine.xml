@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CompleteMakeRoutineActivity">
+    android:onClick="hideKeyboard"
+    android:background="@color/white"
+    tools:context=".Activity.CompleteMakeRoutineActivity"
+    tools:ignore="OnClick">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/makeRoutine_topheader"
         android:layout_width="match_parent"
@@ -53,9 +56,21 @@
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="@id/routineName_completeRoutine"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="40dp"/>
+            android:layout_marginBottom="40dp"
+            android:visibility="invisible"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:elevation="10dp"
+            android:id="@+id/addedTasksList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/routineName_completeRoutine"
+            app:layout_constraintLeft_toLeftOf="@id/routineName_completeRoutine"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="40dp"
+            android:visibility="visible"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@color/white"
         android:id="@+id/completeRoutine_categoryheader"
         android:layout_width="match_parent"
         android:layout_height="102dp"
@@ -98,6 +113,7 @@
             android:layout_marginRight="2dp"
             android:visibility="invisible"/>
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/white"
             android:id="@+id/categoryList_completeRoutine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

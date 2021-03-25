@@ -17,17 +17,17 @@ import kotlinx.android.synthetic.main.activity_add_routine.*
 
 val routineList = listOf(
         Routine("English Master :-)", listOf(
-            RoutineItem("스피킹", 3, "10:00AM", "1:00PM",true, listOf("월","화")),
-            RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, listOf("수")),
-            RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, listOf("금","일"))
+            RoutineItem("스피킹", 3, "10:00AM", "1:00PM",true, arrayListOf("월","화")),
+            RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, arrayListOf("수")),
+            RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, arrayListOf("금","일"))
         )),
         Routine("빡세게 면접 준비", listOf(
-            RoutineItem("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
-            RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
+            RoutineItem("CS", 3, "10:00AM", "1:00PM",false, arrayListOf("수")),
+            RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, arrayListOf("월","화"))
         )),
         Routine("운동 뿌셔", listOf(
-            RoutineItem("코어", 1, "10:00AM", "1:00PM",false, listOf("일")),
-            RoutineItem("하체", 2, "1:00PM", "1:30PM",false, listOf("토"))
+            RoutineItem("코어", 1, "10:00AM", "1:00PM",false, arrayListOf("일")),
+            RoutineItem("하체", 2, "1:00PM", "1:30PM",false, arrayListOf("토"))
         ))
 )
 
