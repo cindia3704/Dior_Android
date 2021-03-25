@@ -1,12 +1,15 @@
 package com.example.weekflex.Fragment
 
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
@@ -75,7 +78,27 @@ class TodoMainFragment : Fragment(){
     }
 
     fun onClickDeleteRoutine(routine: Routine) {
-        Log.d("onClickDeleteRoutine", "routine title : ${routine.routineTitle}")
+//        Toast.makeText(context,"하이!! ",Toast.LENGTH_SHORT).show()
+        val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+        builder.setMessage("이번주의 해당 루틴 전체가 삭제됩니다.\n이대로 삭제를 진행할까요?")
+
+        builder.setPositiveButton("그만두기") { dialog, which ->
+            Toast.makeText(context,"굿 하이!! ",Toast.LENGTH_SHORT).show()
+        }
+
+        builder.setNegativeButton("삭제하기") { dialog, which ->
+            Toast.makeText(context,"아니  하이!! ",Toast.LENGTH_SHORT).show()
+        }
+
+        val dialog: AlertDialog = builder.create()
+
+        dialog.show()
+
+        this.context?.let {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(it, R.color.gray_4))
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(it, R.color.color6))
+        }
     }
 
     fun setListener(){
@@ -96,9 +119,6 @@ class TodoMainFragment : Fragment(){
                 addRoutineView_todo.visibility=View.VISIBLE
                 addRoutineView_todo.translationY=-264F
                 addRoutineView_todo.animate().alpha(1f).translationYBy(-264F).setDuration(200)
-
-
-
             }
             else{
                 (activity as MainActivity?)?.undoDarkTabView()
