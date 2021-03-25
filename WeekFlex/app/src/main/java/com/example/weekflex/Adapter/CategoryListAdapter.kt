@@ -35,16 +35,17 @@ class CategoryListAdapter(val context: Context): RecyclerView.Adapter<CategoryLi
             GlobalApplication.selectCategory.add(selectedCategory)
             Toast.makeText(context,"${selectedCategory.categoryName}",Toast.LENGTH_LONG).show()
         }
+
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val categoryName: TextView
         val categoryColor: ImageView
-
         init {
             categoryName = itemView.findViewById(R.id.recycler_one_title)
             categoryColor = itemView.findViewById(R.id.recycler_one_color)
         }
+
     }
 
     fun refreshData(inputData : ArrayList<Category>){

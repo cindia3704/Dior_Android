@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -13,29 +14,29 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.weekflex.Adapter.AddedRoutineTaskAdapter
 import com.example.weekflex.Adapter.CategoryTaskListAdapter
 import com.example.weekflex.Adapter.RoutineCategoryListAdapter
-import com.example.weekflex.Adapter.RoutineListAdapter
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
-import kotlinx.android.synthetic.main.activity_add_routine.*
 import kotlinx.android.synthetic.main.activity_complete_make_routine.*
 
 val categoryList = listOf(
     Category(1,"언어",0,listOf(
-        RoutineItem("스피킹", 3, "10:00AM", "1:00PM",true, listOf("월","화")),
-        RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, listOf("수")),
-        RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, listOf("금","일"))
+        RoutineItem("스피킹", 3, "10:00AM", "1:00PM",true, arrayListOf("월","화")),
+        RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, arrayListOf("수")),
+        RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, arrayListOf("금","일"))
     )),
     Category(2,"코딩",0,listOf(
-        RoutineItem("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
-        RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
+        RoutineItem("CS", 3, "10:00AM", "1:00PM",false, arrayListOf("수")),
+        RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, arrayListOf("월","화"))
     )),
     Category(3,"운동",0,listOf(
-        RoutineItem("코어", 1, "10:00AM", "1:00PM",false, listOf("일")),
-        RoutineItem("하체", 2, "1:00PM", "1:30PM",false, listOf("토"))
+        RoutineItem("코어", 1, "10:00AM", "1:00PM",false, arrayListOf("일")),
+        RoutineItem("하체", 2, "1:00PM", "1:30PM",false, arrayListOf("토"))
     ))
 )
 
@@ -47,12 +48,30 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     private lateinit var searchIconImg : ImageView
     private lateinit var deleteSearchBtn: ImageView
     private lateinit var addTodoBtn: Button
+    private lateinit var addTaskComment:TextView
+    private lateinit var addedTaskView:RecyclerView
+
+
+    var newTaskListForRoutine  = arrayListOf<RoutineItem>()
+    private val addedTaskAdapter = AddedRoutineTaskAdapter(this@CompleteMakeRoutineActivity, newTaskListForRoutine)
+    private val categoryTaskAdapter = CategoryTaskListAdapter(this@CompleteMakeRoutineActivity,
+        categoryList,newTaskListForRoutine
+    )
+    private val categoryAdapter = RoutineCategoryListAdapter(this@CompleteMakeRoutineActivity, categoryList)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_complete_make_routine)
         initView()
         layoutInit()
+
         setListener()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initView()
+
     }
 
     private fun initView(){
@@ -63,10 +82,24 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         searchIconImg = findViewById(R.id.search_img_completeRoutine)
         deleteSearchBtn = findViewById(R.id.deleteBtn_searchRoutine)
         addTodoBtn = findViewById(R.id.addBtn_work_completeRoutine)
+        addTaskComment=findViewById(R.id.addRoutineMent_completeRoutine)
+        addedTaskView = findViewById(R.id.addedTasksList)
         if (intent.hasExtra("name")) {
             nameOfRoutine.text = intent.getStringExtra("name")
         }
+        //현재 루틴에 추가된 태스크 없을때 안내 메세지. 아니면 태스크 리스트
         hideKeyboard()
+        setheaderView()
+    }
+
+    fun setheaderView(){
+        if(newTaskListForRoutine.size!=0){
+            addTaskComment.visibility=View.INVISIBLE
+            addedTaskView.visibility=View.VISIBLE
+        }else{
+            addTaskComment.visibility=View.VISIBLE
+            addedTaskView.visibility=View.INVISIBLE
+        }
     }
 
     private fun setListener(){
@@ -84,6 +117,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             val intent = Intent(this@CompleteMakeRoutineActivity,AddTodoActivity::class.java)
             startActivity(intent)
         }
+
     }
 
     fun hideKeyboard() {
@@ -102,14 +136,41 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     }
     private fun layoutInit(){
         //TODO: 서버랑 연결해서 루틴 리스트 받아오기
-        val adapter = RoutineCategoryListAdapter(LayoutInflater.from(this@CompleteMakeRoutineActivity), categoryList,1)
-        completeRoutine_categoryList.adapter = adapter
+//     val categoryAdapter = RoutineCategoryListAdapter(LayoutInflater.from(this@CompleteMakeRoutineActivity), categoryList)
+        completeRoutine_categoryList.adapter = categoryAdapter
         completeRoutine_categoryList.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.HORIZONTAL,false)
 
-        val categoryTaskAdapter = CategoryTaskListAdapter(LayoutInflater.from(this@CompleteMakeRoutineActivity), categoryList)
         taskList_recyclerview.adapter = categoryTaskAdapter
         taskList_recyclerview.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.VERTICAL,false)
+
+        addedTasksList.adapter = addedTaskAdapter
+        addedTasksList.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
+            GridLayoutManager.HORIZONTAL,false)
+
+        addedTaskAdapter.notifyDataSetChanged()
+        categoryTaskAdapter.notifyDataSetChanged()
+        categoryAdapter.notifyDataSetChanged()
     }
+
+    fun deleteAddedTask(item: RoutineItem){
+        newTaskListForRoutine.remove(item)
+        setheaderView()
+        Log.d("msg","removed!!!!")
+        addedTaskAdapter.notifyDataSetChanged()
+        categoryTaskAdapter.notifyDataSetChanged()
+    }
+
+    fun addTaskToRoutin(item:RoutineItem){
+        newTaskListForRoutine.add(item)
+        Log.d("msg","added!!!!")
+        Log.d("msg","count: "+newTaskListForRoutine.size)
+        Log.d("msg","!!!!: "+newTaskListForRoutine[newTaskListForRoutine.size-1].routineItemTitle)
+        addedTaskAdapter.notifyDataSetChanged()
+        categoryTaskAdapter.notifyDataSetChanged()
+        setheaderView()
+    }
+
+
 }

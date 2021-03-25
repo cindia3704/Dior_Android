@@ -1,5 +1,6 @@
 package com.example.weekflex.Adapter
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,11 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weekflex.Activity.CompleteMakeRoutineActivity
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 
-class CategoryTaskListAdapter (val inflater: LayoutInflater,var categoryList:List<Category>):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
+class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,var categoryList:List<Category>,val newRoutineTaskList:ArrayList<RoutineItem>):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
 
     var user_id:Int?=null
     var selectedCategory:Int=1
@@ -22,11 +24,14 @@ class CategoryTaskListAdapter (val inflater: LayoutInflater,var categoryList:Lis
         val taskName: TextView = itemView.findViewById(R.id.taskList_taskName)
         val taskTime: TextView = itemView.findViewById(R.id.taskList_time)
         val container: ConstraintLayout=itemView.findViewById(R.id.taskList_wholeLayout)
+        fun bind(position: Int){
+
+        }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = inflater.inflate(R.layout.task_list_item_view,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_list_item_view,parent,false)
         return ViewHolder(view)
     }
 
@@ -35,15 +40,28 @@ class CategoryTaskListAdapter (val inflater: LayoutInflater,var categoryList:Lis
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        if(taskList.get(position) in newRoutineTaskList){
+            holder.container.setBackgroundResource(R.color.task_gray)
+        }else{
+            holder.container.setBackgroundResource(R.color.white)
+        }
+
+        val item = taskList[position]
+        val adapter = this
         if(taskList.get(position).bookMarked==true) holder.bookmark.setImageResource(R.drawable.bookmark_fill)
         else holder.bookmark.setImageResource(R.drawable.bookmark_empty)
         holder.taskName.setText(taskList.get(position).routineItemTitle)
-        holder.taskTime.setText(taskList.get(position).startTime.toString()+"-"+taskList.get(position).endTime)
+        holder.taskTime.setText(getWeekDays(taskList.get(position).weekdaysScheduled)+taskList.get(position).startTime.toString()+"-"+taskList.get(position).endTime)
+        holder.bind(position)
+
         holder.container.setOnClickListener {
-            Log.d("msg","clicked!!!")
+            updateBackgroundColor(holder,item)
+            notifyDataSetChanged()
         }
 
+
     }
+
     fun getWeekDays(days:List<String>):String{
         var weekdays  = ""
         for (day in days)
@@ -59,4 +77,23 @@ class CategoryTaskListAdapter (val inflater: LayoutInflater,var categoryList:Lis
             }
         return category.routineItemList
     }
+    fun isIncluded(newRoutineTaskList:ArrayList<RoutineItem>, item:RoutineItem):Boolean{
+        return item in newRoutineTaskList
+    }
+
+    fun updateBackgroundColor(holder:ViewHolder,item:RoutineItem){
+        if(isIncluded(newRoutineTaskList,item)){
+            Log.d("msg","INCLUDED!!")
+            holder.container.setBackgroundResource(R.color.white)
+            activity.deleteAddedTask(item)
+        }else{
+            holder.container.setBackgroundResource(R.color.task_gray)
+            activity.addTaskToRoutin(item)
+            Log.d("msg","NOT INCLUDED!!")
+
+        }
+    }
+
+
+
 }
