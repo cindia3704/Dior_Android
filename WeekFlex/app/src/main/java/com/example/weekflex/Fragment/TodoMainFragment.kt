@@ -2,13 +2,11 @@ package com.example.weekflex.Fragment
 
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
@@ -139,12 +137,11 @@ class TodoMainFragment : Fragment(){
         return todayDate
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     private fun getThisWeek(): Array<Any> {
         var thisWeek = ArrayList<String>(7)
         var todayDay = calendar.get(Calendar.DAY_OF_WEEK)
         Log.d("msg","todayDay: "+todayDay.toString())
-        val differenceInDay = Math.floorMod(todayDay-Calendar.MONDAY,7)
+        val differenceInDay = floorMod(todayDay-Calendar.MONDAY,7)
         Log.d("diff: ",differenceInDay.toString())
         calendar.add(Calendar.DATE,-differenceInDay)
 
@@ -154,5 +151,14 @@ class TodoMainFragment : Fragment(){
             calendar.add(Calendar.DATE,1)
         }
         return thisWeek.toArray()
+    }
+
+    private fun floorMod(number: Int, mod: Int) : Int {
+        val result = number % mod
+        if(result < 0){
+            return result + mod
+        } else {
+            return result
+        }
     }
 }
