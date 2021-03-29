@@ -181,6 +181,9 @@ class LoginActivity : AppCompatActivity() {
         ).enqueue(object : Callback<RegisterResponse> {
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
                 Log.d("msg","failed!")
+                Log.d("msg","!!"+registerRequest.accessToken)
+                Log.d("msg","!!"+registerRequest.email)
+
                 Toast.makeText(this@LoginActivity,"회원가입 실패",Toast.LENGTH_SHORT).show()
             }
 
@@ -191,6 +194,8 @@ class LoginActivity : AppCompatActivity() {
 
                 if(response.isSuccessful){
                     Log.d("msg","successful!")
+                    Log.d("msg","!!"+registerRequest.accessToken)
+                    Log.d("msg","!!"+registerRequest.email)
                     val responseFromServer = response.body()
                     if(responseFromServer?.data == null){
                         Toast.makeText(this@LoginActivity,"response from server is null",Toast.LENGTH_SHORT).show()
