@@ -89,6 +89,8 @@
             android:hint="원하는 할 일을 찾을 수 있어요"
             android:textSize="14sp"
             android:paddingLeft="32dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:paddingBottom="15dp"
             />
         <ImageView

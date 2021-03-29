@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
@@ -24,17 +25,17 @@ import kotlinx.android.synthetic.main.activity_complete_make_routine.*
 
 val categoryList = listOf(
     Category(1,"언어",0,listOf(
-        RoutineItem("스피킹", 3, "10:00AM", "1:00PM",true, arrayListOf("월","화")),
-        RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, arrayListOf("수")),
-        RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, arrayListOf("금","일"))
+        RoutineItem("Speaking", 3, "10:00AM", "1:00PM",true, listOf("월","화")),
+        RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, listOf("수")),
+        RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, listOf("금","일"))
     )),
-    Category(2,"코딩",0,listOf(
-        RoutineItem("CS", 3, "10:00AM", "1:00PM",false, arrayListOf("수")),
-        RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, arrayListOf("월","화"))
+    Category(2,"Coding",0,listOf(
+        RoutineItem("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
+        RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
     )),
     Category(3,"운동",0,listOf(
-        RoutineItem("코어", 1, "10:00AM", "1:00PM",false, arrayListOf("일")),
-        RoutineItem("하체", 2, "1:00PM", "1:30PM",false, arrayListOf("토"))
+        RoutineItem("코어", 1, "10:00AM", "1:00PM",false, listOf("일")),
+        RoutineItem("하체", 2, "1:00PM", "1:30PM",false, listOf("토"))
     ))
 )
 
@@ -50,13 +51,16 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     private lateinit var addedTaskView:RecyclerView
 
     var selectedTaskListForNewRoutine  = listOf<RoutineItem>()
+    var allCategoryList:List<Category> = emptyList()
+    var searchedRoutineName:String = ""
 
-    private val routineCategoryListAdapter = RoutineCategoryListAdapter(this@CompleteMakeRoutineActivity, categoryList)
-    private val categoryTaskListAdapter = CategoryTaskListAdapter(this@CompleteMakeRoutineActivity, categoryList)
-    private val addedRoutineTaskAdapter = AddedRoutineTaskAdapter(this@CompleteMakeRoutineActivity)
+    private lateinit var routineCategoryListAdapter :RoutineCategoryListAdapter
+    private lateinit var categoryTaskListAdapter :CategoryTaskListAdapter
+    private lateinit var addedRoutineTaskAdapter :AddedRoutineTaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        addAllCategoryTask(categoryList)
         setContentView(R.layout.activity_complete_make_routine)
         initView()
         layoutInit()
@@ -64,6 +68,8 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         setListener()
 
         routineCategoryListAdapter.lambdaList = listOf( {x -> categoryTaskListAdapter.changeSelectedCategoryId(x)} )
+
+
     }
 
     override fun onResume() {
@@ -85,7 +91,9 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         if (intent.hasExtra("name")) {
             nameOfRoutine.text = intent.getStringExtra("name")
         }
-        //현재 루틴에 추가된 태스크 없을때 안내 메세지. 아니면 태스크 리스트
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
+
         hideKeyboard()
         setHeaderView()
     }
@@ -110,11 +118,32 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         }
         deleteSearchBtn.setOnClickListener {
             searchCategoryView.setText("")
+            searchedRoutineName=""
+
+            categoryTaskListAdapter.changeSearchedRoutine(searchedRoutineName)
+            routineCategoryListAdapter.changeSearchedRoutine(searchedRoutineName)
         }
         addTodoBtn.setOnClickListener {
             val intent = Intent(this@CompleteMakeRoutineActivity,AddTodoActivity::class.java)
             startActivity(intent)
         }
+
+//      키보드 enter --> 완료로 바꾸고 검색 진행
+        searchCategoryView.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    searchedRoutineName = searchCategoryView.text.toString()
+                    categoryTaskListAdapter.changeSearchedRoutine(searchedRoutineName)
+                    routineCategoryListAdapter.changeSearchedRoutine(searchedRoutineName)
+
+                    Log.d("msg","Search start!! "+searchedRoutineName)
+                    hideKeyboard()
+                }
+                else -> {
+                }
+            }
+            true
+        })
     }
 
     fun hideKeyboard() {
@@ -133,15 +162,17 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     }
     private fun layoutInit(){
         //TODO: 서버랑 연결해서 루틴 리스트 받아오기
-//     val categoryAdapter = RoutineCategoryListAdapter(LayoutInflater.from(this@CompleteMakeRoutineActivity), categoryList)
+        routineCategoryListAdapter = RoutineCategoryListAdapter(this@CompleteMakeRoutineActivity, allCategoryList,searchedRoutineName)
         completeRoutine_categoryList.adapter = routineCategoryListAdapter
         completeRoutine_categoryList.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.HORIZONTAL,false)
 
+        categoryTaskListAdapter = CategoryTaskListAdapter(this@CompleteMakeRoutineActivity, allCategoryList,searchedRoutineName)
         taskList_recyclerview.adapter = categoryTaskListAdapter
         taskList_recyclerview.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.VERTICAL,false)
 
+        addedRoutineTaskAdapter = AddedRoutineTaskAdapter(this@CompleteMakeRoutineActivity)
         addedTasksList.adapter = addedRoutineTaskAdapter
         addedTasksList.layoutManager= GridLayoutManager(this@CompleteMakeRoutineActivity,1,
             GridLayoutManager.HORIZONTAL,false)
@@ -173,5 +204,25 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         Log.d("msg","!!!!: "+selectedTaskListForNewRoutine[selectedTaskListForNewRoutine.size-1].routineItemTitle)
 
         refreshAddedRoutineItem()
+    }
+
+    fun addAllCategoryTask(categoryList:List<Category>){
+        var allRoutineItem:List<RoutineItem> = emptyList()
+
+        for ( i in 0..categoryList.size-1){
+            var routineForCategory : List<RoutineItem> =categoryList[i].routineItemList
+            for(j in 0..routineForCategory.size-1){
+                allRoutineItem=allRoutineItem.plus(routineForCategory[j])
+            }
+        }
+        // 어댑터에 보내기 전 가장 앞 element = 전체로 만듬
+        val allCategory = Category(0,"전체",0,allRoutineItem)
+        allCategoryList=allCategoryList.plus(allCategory)
+
+        for (i in 0..categoryList.size-1){
+            allCategoryList=allCategoryList.plus(categoryList[i])
+        }
+        Log.d("msg","!!!!!!! ALL CATEGORY LIST SIZE : "+allCategoryList.size)
+
     }
 }
