@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.weekflex">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -16,11 +17,6 @@
         <activity android:name=".Activity.AddCategory"></activity>
         <activity android:name=".Activity.CompleteMakeRoutineActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity android:name=".Activity.InsertRoutineNameActivity">
             <intent-filter>
@@ -29,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.InsertRoutineNameActivity" />
         <activity android:name=".Activity.AddTodoActivity" ></activity>
         <activity android:name=".Activity.AddRoutineActivity"/>
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
@@ -47,11 +42,6 @@
 
 
         <activity android:name=".Activity.LoginActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
         <activity android:name=".Activity.SplashActivity">
         </activity>
