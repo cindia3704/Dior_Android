@@ -10,6 +10,7 @@
     <color name="gray_3">#a4a4a9</color>
     <color name="gray_4">#666666</color>
     <color name="black">#000000</color>
+    <color name="semiBlack">#181818</color> <!-- 임의로 만든거. zeplin에는 black이 181818 이고 000000은 이름 없이 사용중  -->
     <color name="task_gray">#f5f5f5</color>
     <color name="white">#ffffff</color>
     <color name="yellowBorder">#f9eb88</color>
