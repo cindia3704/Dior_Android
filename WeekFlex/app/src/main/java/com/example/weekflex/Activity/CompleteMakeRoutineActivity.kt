@@ -19,6 +19,7 @@ import com.example.weekflex.Adapter.AddedRoutineTaskAdapter
 import com.example.weekflex.Adapter.CategoryTaskListAdapter
 import com.example.weekflex.Adapter.RoutineCategoryListAdapter
 import com.example.weekflex.Data.Category
+import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_complete_make_routine.*
@@ -114,6 +115,12 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             finish()
         }
         nextBtn.setOnClickListener{
+            if(selectedTaskListForNewRoutine.size>0){
+                val intent = Intent(this@CompleteMakeRoutineActivity,RoutineFinalCheckActivity::class.java)
+                val newRoutine : Routine = Routine(nameOfRoutine.text.toString(),selectedTaskListForNewRoutine)
+                intent.putExtra("routine",newRoutine)
+                startActivity(intent)
+            }
 
         }
         deleteSearchBtn.setOnClickListener {

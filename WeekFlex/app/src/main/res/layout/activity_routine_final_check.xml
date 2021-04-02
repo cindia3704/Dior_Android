@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.RoutineFinalCheckActivity">
+
+    <ImageView
+        android:id="@+id/back_routineFinalCheck"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/goback"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="56dp"
+        android:layout_marginLeft="25dp"/>
+    <TextView
+        android:id="@+id/routineName_routineFinalCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Routine Name"
+        android:textColor="@color/colorAccent"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/back_routineFinalCheck"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="23dp"
+        android:layout_marginTop="48dp"/>
+    <TextView
+        android:id="@+id/routineMent_routineFinalCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/routineName_routineFinalCheck"
+        app:layout_constraintLeft_toLeftOf="@id/routineName_routineFinalCheck"
+        android:layout_marginTop="18dp"
+        android:text="짜잔! 마지막으로 루틴을 확인해 주세요:)"
+        android:textColor="@color/gray_4"
+        android:textStyle="normal"
+        android:textSize="16dp"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/taskList_routineFinalCheck"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/routineMent_routineFinalCheck"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomBtns_routineFinalCheck"
+        android:layout_marginTop="81dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        app:layout_constraintVertical_bias="0"
+        />
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/bottomBtns_routineFinalCheck"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    android:orientation="horizontal">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/addTask_routineFinalCheck"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        app:layout_constraintRight_toLeftOf="@id/saveRoutine_routineFinalCheck"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/gray_1">
+        <ImageView
+            android:id="@+id/addImg_routineFinalCheck"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/blackplusbtn"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="46dp"
+            android:layout_marginRight="118dp"/>
+        <TextView
+            android:id="@+id/addRoutineText_routineFinalCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/addImg_routineFinalCheck"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="47dp"
+            android:layout_marginLeft="8dp"
+            android:textSize="16dp"
+            android:text="할 일 추가"
+            android:textColor="@color/colorAccent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/saveRoutine_routineFinalCheck"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        app:layout_constraintLeft_toRightOf="@id/addTask_routineFinalCheck"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorAccent">
+        <TextView
+            android:id="@+id/saveText_routineFinalCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="저장하기"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
