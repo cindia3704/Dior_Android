@@ -84,8 +84,7 @@ class TodoMainFragment : Fragment(){
     }
 
     fun onClickRoutineItemMenuButton(routine: Routine, routineItem: RoutineItem){
-        val bottomSheetDialog: RoutineModifyBottomDialogFragment = RoutineModifyBottomDialogFragment.instance
-        fragmentManager?.let { bottomSheetDialog.show(it, "bottomSheet") }
+        fragmentManager?.let { RoutineModifyBottomDialogFragment.showTask(it, routineItem) }
     }
 
     fun onClickDeleteRoutine(routine: Routine) {
