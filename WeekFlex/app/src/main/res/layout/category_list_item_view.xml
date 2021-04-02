@@ -33,7 +33,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:id="@+id/category_underline_categoryList"
-        android:layout_width="50dp"
+        android:layout_width="0dp"
         android:layout_height="3dp"
         android:background="@color/colorAccent"
         app:layout_constraintTop_toBottomOf="@id/categoryList_itemView"
