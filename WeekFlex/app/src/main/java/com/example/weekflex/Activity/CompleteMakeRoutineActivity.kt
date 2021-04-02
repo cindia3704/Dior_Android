@@ -2,8 +2,10 @@ package com.example.weekflex.Activity
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -12,6 +14,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
@@ -24,6 +27,7 @@ import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_complete_make_routine.*
+
 
 val categoryList = listOf(
     Category(1,"언어",0,listOf(
@@ -72,8 +76,6 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         setListener()
 
         routineCategoryListAdapter.lambdaList = listOf( {x -> categoryTaskListAdapter.changeSelectedCategoryId(x)} )
-
-
     }
 
     override fun onResume() {
@@ -146,8 +148,28 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             else searchIconImg.setImageResource(R.drawable.serach_gray)
         }
 
+        searchCategoryView.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+                val str = if(s.isNotBlank()) s.toString() else ""
+                Log.d("TextChange", "asxdfsdf$str")
+                categoryTaskListAdapter.changeSearchedRoutine(str)
+                routineCategoryListAdapter.changeSearchedRoutine(str)
+            }
+
+        })
+
 //      키보드 enter --> 완료로 바꾸고 검색 진행
-        searchCategoryView.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+        searchCategoryView.setOnEditorActionListener { v, actionId, event ->
 //            searchIconImg.setImageResource(R.drawable.search_black)
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
@@ -164,8 +186,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
                 }
             }
             true
-        })
-
+        }
     }
 
     fun hideKeyboard() {
