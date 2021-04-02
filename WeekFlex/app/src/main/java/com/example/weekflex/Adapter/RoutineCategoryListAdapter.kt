@@ -1,7 +1,5 @@
 package com.example.weekflex.Adapter
 
-import android.annotation.SuppressLint
-import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
@@ -13,10 +11,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.CompleteMakeRoutineActivity
-import com.example.weekflex.Activity.categoryList
 import com.example.weekflex.Data.Category
-import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
+import com.example.weekflex.Data.categoryToStarImage
 
 // CompleteMakeRoutineActivity의 카테고리 리스트 어댑터
 class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
@@ -37,8 +34,30 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
         val underline: View = itemView.findViewById(R.id.category_underline_categoryList)
         val container: ConstraintLayout = itemView.findViewById(R.id.categoryList_itemView)
 
-        fun bind(position: Int) {
+        var category: Category? = null
+        var selected: Boolean = false
 
+        fun bind(c: Category, s: Boolean) {
+            category = c
+            selected = s
+
+            render()
+        }
+
+        fun render(){
+            fun setCategoryTitle(selected: Boolean){
+                categoryTitle.text = category?.categoryName ?: "ERROR"
+
+                val typeFace = if (selected) Typeface.BOLD else Typeface.NORMAL
+                val textColor = Color.parseColor(if (selected) "#181818" else "#666666")
+
+                categoryTitle.setTypeface( null, typeFace)
+                categoryTitle.setTextColor(textColor)
+            }
+
+            underline.visibility = if (selected) View.VISIBLE else View.INVISIBLE
+
+            setCategoryTitle(selected)
         }
     }
 
@@ -46,6 +65,18 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
         val view = LayoutInflater.from(parent.context).inflate(R.layout.category_list_item_view, parent, false)
 
         return ViewHolder(view)
+            .also {
+                val viewHolderLambda = {
+                    selectedId = it.category?.categoryId ?: 0
+                    for (lambda in lambdaList) {
+                        lambda.invoke(selectedId)
+                    }
+
+                    notifyDataSetChanged()
+                }
+
+                it.container.setOnClickListener {viewHolderLambda.invoke() }
+            }
     }
 
     override fun getItemCount(): Int {
@@ -53,53 +84,26 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(position)
-        var category = routineCategoryList.get(position)
-        var selected = category.categoryId == selectedId
-        if(!searchedRoutine.isNullOrBlank()){
-            category = routineCategoryList[0]
-            selectedId=0
-            selected = category.categoryId == selectedId
+        val isSearching = !searchedRoutine.isNullOrBlank()
 
-            Log.d(
-                "msg",
-                "current : ${category.categoryId} selected : $selectedId visible : $selected"
-            )
+        val category = routineCategoryList.get(position)
+        val usedSelectedId = if(isSearching) 0 else selectedId
+        val selected = category.categoryId == usedSelectedId
 
-            if(selected){
-                holder.categoryTitle.setTextColor(Color.parseColor("#181818") )
-            }else{
-                holder.categoryTitle.setTextColor(Color.parseColor("#666666"))
-            }
-        }else {
+        holder.bind(category, selected)
 
+        // 모든 별이 검어지는데 이게 맞나?
+        if(isSearching){
             holder.categoryColor.setImageResource(R.drawable.graystar)
-            holder.underline.visibility = if (selected) View.VISIBLE else View.INVISIBLE
-            holder.categoryTitle.setText(category.categoryName)
-            holder.categoryTitle.setTypeface(
-                null,
-                if (selected) Typeface.BOLD else Typeface.NORMAL
-            )
-            if(selected){
-                 holder.categoryTitle.setTextColor(Color.parseColor("#181818") )
-            }else{
-                holder.categoryTitle.setTextColor(Color.parseColor("#666666"))
-            }
+        }else{
+            val drawableStar = categoryToStarImage[category.categoryId]?:R.drawable.graystar
 
-            Log.d(
-                "msg",
-                "current : ${category.categoryId} selected : $selectedId visible : $selected"
-            )
-
-            holder.container.setOnClickListener {
-                selectedId = category.categoryId
-                notifyDataSetChanged()
-                for (lambda in lambdaList) {
-                    lambda.invoke(selectedId)
-                }
-            }
+            holder.categoryColor.setImageResource(drawableStar)
         }
+
+        Log.d( "msg", "current : ${category.categoryId} selected : $selectedId visible : $selected" )
     }
+
 
     fun changeSearchedRoutine(item : String){
         searchedRoutine=item
