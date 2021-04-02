@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.weekflex.Adapter.RoutineListAdapter
@@ -35,6 +37,7 @@ class AddRoutineActivity : AppCompatActivity() {
     private lateinit var backBtn:Button
     private lateinit var introMentView:TextView
     private lateinit var makeRoutineBtn: Button
+    private lateinit var adapter : RoutineListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_routine)
@@ -66,8 +69,31 @@ class AddRoutineActivity : AppCompatActivity() {
     private fun layoutInit(){
         //TODO: 서버랑 연결해서 루틴 리스트 받아오기
 
-        val adapter = RoutineListAdapter(LayoutInflater.from(this@AddRoutineActivity), routineList)
+        adapter = RoutineListAdapter(this@AddRoutineActivity, routineList)
         recyclerview_addRoutine.adapter = adapter
         recyclerview_addRoutine.layoutManager= GridLayoutManager(this@AddRoutineActivity,1,GridLayoutManager.VERTICAL,false)
+    }
+
+    fun deleteRoutine(item: Routine){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@AddRoutineActivity)
+        builder.setMessage("이번주의 해당 루틴 전체가 삭제됩니다.\n이대로 삭제를 진행할까요?")
+
+        builder.setPositiveButton("삭제하기") { dialog, which ->
+            routineList=routineList.minus(item)
+            adapter.changeRoutine(routineList)
+        }
+
+        builder.setNegativeButton("그만두기") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+
+        dialog.show()
+
+        this?.let {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(it, R.color.gray_4))
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(it, R.color.color6))
+        }
     }
 }
