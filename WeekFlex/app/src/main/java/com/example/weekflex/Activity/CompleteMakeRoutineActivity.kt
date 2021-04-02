@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,8 @@ val categoryList = listOf(
 )
 
 class CompleteMakeRoutineActivity : AppCompatActivity() {
+    private lateinit var makeRoutineTopheader : ConstraintLayout
+
     private lateinit var gobackBtn:ImageView
     private lateinit var nextBtn:TextView
     private lateinit var nameOfRoutine:TextView
@@ -80,6 +83,9 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     }
 
     private fun initView(){
+        makeRoutineTopheader = findViewById(R.id.makeRoutine_topheader)
+        makeRoutineTopheader.setOnClickListener { hideKeyboard()}
+
         gobackBtn = findViewById(R.id.back_completeRoutine)
         nextBtn=findViewById(R.id.next_completeRoutine)
         nameOfRoutine=findViewById(R.id.routineName_completeRoutine)
