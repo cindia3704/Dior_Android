@@ -19,9 +19,9 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
                                var searchedRoutine:String
                                 ):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
     var user_id:Int?=null
-    var selectedCategoryId:Int=1
+    var selectedCategoryId:Int=0
     var selectedRoutineItemList : List<RoutineItem> = listOf()
-
+    var searchDoesNotExist : Boolean = false
     // property 찾아보기
     val taskList: List<RoutineItem> get() = getCategoryTaskList(categoryList, selectedCategoryId)
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
@@ -41,36 +41,54 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
 
     override fun getItemCount(): Int {
         if(!searchedRoutine.isNullOrBlank()){
-            return 1
+            if(searchDoesNotExist ==true) return 0 else return 1
         }else {
             return taskList.size
         }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("msg","search!!: "+searchedRoutine)
+        holder.bind(position)
+        // 뷰 초기 세팅
+        if (taskList.get(position) in selectedRoutineItemList) {
+            holder.container.setBackgroundResource(R.color.task_gray)
+        } else {
+            holder.container.setBackgroundResource(R.color.white)
+        }
+        if (taskList.get(position).bookMarked == true) {
+            holder.bookmark.setImageResource(R.drawable.bookmark_fill)
+        } else {
+            holder.bookmark.setImageResource(R.drawable.bookmark_empty)
+        }
 
         if(!searchedRoutine.isNullOrBlank()){
+            selectedCategoryId=0
+            Log.d(",sg","searching,,,")
             val item:RoutineItem = showSearchedRoutineItem(searchedRoutine)
-
-            holder.taskName.setText(item.routineItemTitle)
-            holder.taskTime.setText(getWeekDays(item.weekdaysScheduled)+item.startTime.toString()+"-"+item.endTime)
-        }else {
-
-            if (taskList.get(position) in selectedRoutineItemList) {
+            if (item in selectedRoutineItemList) {
                 holder.container.setBackgroundResource(R.color.task_gray)
             } else {
                 holder.container.setBackgroundResource(R.color.white)
             }
 
-            val item = taskList[position]
-
-            if (taskList.get(position).bookMarked == true) {
-                holder.bookmark.setImageResource(R.drawable.bookmark_fill)
-            } else {
-                holder.bookmark.setImageResource(R.drawable.bookmark_empty)
+            if(item.routineItemTitle!="null") {
+                holder.taskName.setText(item.routineItemTitle)
+                holder.taskTime.setText(getWeekDays(item.weekdaysScheduled) + item.startTime.toString() + "-" + item.endTime)
+                holder.container.setOnClickListener {
+                    updateBackgroundColor(holder, item)
+                    notifyDataSetChanged()
+                }
+                holder.bookmark.setOnClickListener {
+                    Log.d("msg", "clicked!!!")
+                    updateBookmark(item)
+                }
             }
-
+        }else {
+            val item = taskList[position]
+            holder.bookmark.setOnClickListener {
+                Log.d("msg","clicked!!!")
+                updateBookmark(item)
+            }
             holder.taskName.setText(taskList.get(position).routineItemTitle)
             holder.taskTime.setText(
                 getWeekDays(taskList.get(position).weekdaysScheduled) + taskList.get(
@@ -83,6 +101,7 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
                 notifyDataSetChanged()
             }
         }
+
 
     }
 
@@ -115,6 +134,16 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         }
     }
 
+    fun updateBookmark(item:RoutineItem){
+        for ( i in taskList){
+            if(i.equals(item)){
+                i.bookMarked = !i.bookMarked
+                Log.d("msg","bookmarked: "+i.bookMarked)
+            }
+        }
+        notifyDataSetChanged()
+    }
+
     fun changeSelectedCategoryId(id : Int){
         selectedCategoryId = id
         notifyDataSetChanged()
@@ -133,6 +162,7 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         }
 
         if(routineItem==null){
+            searchDoesNotExist = true
             return RoutineItem("null",0,"0","0",false, emptyList())
         }else{
             return routineItem

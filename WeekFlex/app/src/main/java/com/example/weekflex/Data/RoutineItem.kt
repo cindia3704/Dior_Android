@@ -6,6 +6,6 @@ data class RoutineItem(
     val category : Int,
     val startTime : String,
     val endTime : String,
-    val bookMarked:Boolean,
+    var bookMarked:Boolean,
     val weekdaysScheduled:List<String>
 )

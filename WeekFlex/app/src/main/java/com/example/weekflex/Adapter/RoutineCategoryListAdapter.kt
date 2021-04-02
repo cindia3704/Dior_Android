@@ -1,5 +1,8 @@
 package com.example.weekflex.Adapter
 
+import android.annotation.SuppressLint
+import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
@@ -50,11 +53,25 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val category = routineCategoryList.get(position)
+        holder.bind(position)
+        var category = routineCategoryList.get(position)
+        var selected = category.categoryId == selectedId
         if(!searchedRoutine.isNullOrBlank()){
-            selectedId = 0
+            category = routineCategoryList[0]
+            selectedId=0
+            selected = category.categoryId == selectedId
+
+            Log.d(
+                "msg",
+                "current : ${category.categoryId} selected : $selectedId visible : $selected"
+            )
+
+            if(selected){
+                holder.categoryTitle.setTextColor(Color.parseColor("#181818") )
+            }else{
+                holder.categoryTitle.setTextColor(Color.parseColor("#666666"))
+            }
         }else {
-            val selected = category.categoryId == selectedId
 
             holder.categoryColor.setImageResource(R.drawable.graystar)
             holder.underline.visibility = if (selected) View.VISIBLE else View.INVISIBLE
@@ -62,14 +79,17 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
             holder.categoryTitle.setTypeface(
                 null,
                 if (selected) Typeface.BOLD else Typeface.NORMAL
-            );
+            )
+            if(selected){
+                 holder.categoryTitle.setTextColor(Color.parseColor("#181818") )
+            }else{
+                holder.categoryTitle.setTextColor(Color.parseColor("#666666"))
+            }
 
             Log.d(
                 "msg",
                 "current : ${category.categoryId} selected : $selectedId visible : $selected"
             )
-
-            holder.bind(position)
 
             holder.container.setOnClickListener {
                 selectedId = category.categoryId
