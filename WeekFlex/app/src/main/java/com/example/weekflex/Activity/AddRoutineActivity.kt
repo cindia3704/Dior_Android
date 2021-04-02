@@ -35,7 +35,6 @@ class AddRoutineActivity : AppCompatActivity() {
     private lateinit var backBtn:Button
     private lateinit var introMentView:TextView
     private lateinit var makeRoutineBtn: Button
-    private lateinit var newRoutine:Routine
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_routine)
@@ -48,8 +47,8 @@ class AddRoutineActivity : AppCompatActivity() {
         backBtn= findViewById(R.id.back_addRoutine)
         introMentView = findViewById(R.id.ment_addRoutine)
         makeRoutineBtn = findViewById(R.id.makeRoutine_addRoutine)
-        if((intent.getSerializableExtra("newRoutine") as Routine)!=null){
-            newRoutine = intent.getSerializableExtra("newRoutine") as Routine
+        if(intent.hasExtra("newRoutine")){
+            val newRoutine = intent.getSerializableExtra("newRoutine") as Routine
             routineList = routineList.plus(newRoutine)
         }
     }

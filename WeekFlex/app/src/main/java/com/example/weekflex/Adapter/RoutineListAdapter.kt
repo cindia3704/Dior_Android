@@ -14,12 +14,12 @@ class RoutineListAdapter (
     val inflater: LayoutInflater,
     val routineList: List<Routine>
 ):RecyclerView.Adapter<RoutineListAdapter.ViewHolder>(){
-//    val routineList: ArrayList<Routine> = ArrayList()
-
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val routineTitle: TextView
+        val taskCount: TextView
         init {
             routineTitle = itemView.findViewById(R.id.routineList_item_addRoutine)
+            taskCount = itemView.findViewById(R.id.routineList_item_numTodo)
         }
     }
 
@@ -34,5 +34,6 @@ class RoutineListAdapter (
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.routineTitle.setText(routineList.get(position).routineTitle)
+        holder.taskCount.setText(routineList.get(position).routineItemList.size.toString()+"개의 할 일")
     }
 }

@@ -42,7 +42,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskList_routineFinalCheck"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/routineMent_routineFinalCheck"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -51,6 +51,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintVertical_bias="0"
+        android:scrollbars="vertical"
         />
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/bottomBtns_routineFinalCheck"
