@@ -2,12 +2,13 @@ package com.example.weekflex.Data
 
 import com.example.weekflex.Activity.routineList
 import com.example.weekflex.R
+import java.io.Serializable
 import java.util.*
 
 data class Routine (
     val routineTitle: String,
-    val routineItemList:List<RoutineItem> = emptyList()
-)
+    var routineItemList:List<RoutineItem> = emptyList()
+):Serializable
 
 val categoryToStarImage = mapOf<Int, Int>(
         0 to R.drawable.graystar,

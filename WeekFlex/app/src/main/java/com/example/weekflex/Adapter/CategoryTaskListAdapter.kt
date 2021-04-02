@@ -91,7 +91,7 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
             }
             holder.taskName.setText(taskList.get(position).routineItemTitle)
             holder.taskTime.setText(
-                getWeekDays(taskList.get(position).weekdaysScheduled) + taskList.get(
+                getWeekDays(taskList.get(position).weekdaysScheduled) +" "+ taskList.get(
                     position
                 ).startTime.toString() + "-" + taskList.get(position).endTime
             )
@@ -107,10 +107,12 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
 
     fun getWeekDays(days:List<String>):String{
         var weekdays  = ""
-        for (day in days)
-            weekdays+day
-
-        return weekdays
+        for (day in days) {
+            Log.d("msg", "day: $day")
+            weekdays = "$weekdays$day, "
+        }
+        Log.d("msg","weekday!!! $weekdays")
+        return weekdays.subSequence(0,weekdays.length-2).toString()
     }
 
     fun getCategoryTaskList(list:List<Category>, selectedCategoryId: Int):List<RoutineItem>{
