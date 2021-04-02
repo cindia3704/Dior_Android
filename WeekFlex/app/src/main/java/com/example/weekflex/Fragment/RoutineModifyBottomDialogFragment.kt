@@ -1,6 +1,7 @@
 package com.example.weekflex.Fragment
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,8 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,7 +23,9 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
     private lateinit var dialogView: View
     private lateinit var taskNameTextView: TextView
     private lateinit var taskModifyTextView: TextView
+    private lateinit var taskModifyImageView: ImageView
     private lateinit var taskDeleteTextView: TextView
+    private lateinit var taskDeleteImageView: ImageView
     private lateinit var cancelImageView: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,13 +33,25 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
         dialogView = view
 
         taskNameTextView = dialogView.findViewById(R.id.task_name_textView)
+        taskNameTextView.text = routineItem.routineItemTitle
 
+        val onModify = { Toast.makeText(context, "ModifyMessage", Toast.LENGTH_SHORT).show() }
         taskModifyTextView = dialogView.findViewById(R.id.task_modify_textview)
+        taskModifyTextView.setOnClickListener {onModify.invoke()}
+        taskModifyImageView = dialogView.findViewById(R.id.task_modify_Imageview)
+        taskModifyImageView.setOnClickListener {onModify.invoke()}
+
+        val onDelete = { Toast.makeText(context, "DeleteMessage", Toast.LENGTH_SHORT).show() }
+
         taskDeleteTextView = dialogView.findViewById(R.id.task_delete_textview)
-        taskDeleteTextView.setOnClickListener {
-            Toast.makeText(context, "Message", Toast.LENGTH_SHORT).show()
-        }
+        taskDeleteTextView.setOnClickListener {onDelete.invoke()}
+        taskDeleteImageView = dialogView.findViewById(R.id.task_delete_textview)
+        taskDeleteImageView.setOnClickListener {onDelete.invoke()}
+
         cancelImageView = dialogView.findViewById(R.id.task_modify_dialog_close_imageView)
+        with(cancelImageView){ setOnClickListener{
+            dialog?.also { getBottomSheetDialog(it).state = BottomSheetBehavior.STATE_HIDDEN }
+        }}
 
         return view
     }
@@ -51,27 +68,38 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
     companion object {
         val instance: RoutineModifyBottomDialogFragment
             get() = RoutineModifyBottomDialogFragment()
+        val TAG = "bottomSheet"
+
+        lateinit var routineItem: RoutineItem
+
+        fun showTask(frangmentManager : FragmentManager, passedRoutineItem : RoutineItem){
+            routineItem = passedRoutineItem
+            instance.show(frangmentManager, TAG)
+        }
     }
 
-    override fun onActivityCreated(arg0: Bundle?) {
-        super.onActivityCreated(arg0)
+    override fun onActivityCreated(arg0: Bundle?) { super.onActivityCreated(arg0)
         dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
-//        dialog?.window?.attributes?.windowAnimations = R.style.DialogAnimation
+    }
+
+    fun getBottomSheetDialog(dialog: DialogInterface) : BottomSheetBehavior<FrameLayout>{
+        val d = dialog as BottomSheetDialog
+
+        val bottomSheet =
+                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
+
+        return BottomSheetBehavior.from(bottomSheet!!)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
 
-//        dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
-
         dialog.setOnShowListener { dialog ->
-            val d = dialog as BottomSheetDialog
-            val bottomSheet =
-                d.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-            Log.d("하이","좀 자자")
-            BottomSheetBehavior.from<FrameLayout?>(bottomSheet!!).peekHeight = 0
-            BottomSheetBehavior.from<FrameLayout?>(bottomSheet!!).state = BottomSheetBehavior.STATE_COLLAPSED
-            BottomSheetBehavior.from<FrameLayout?>(bottomSheet!!).state = BottomSheetBehavior.STATE_EXPANDED
+            getBottomSheetDialog(dialog).also {
+                it.peekHeight = 0
+                it.state = BottomSheetBehavior.STATE_COLLAPSED
+                it.state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
 
         // Do something with your dialog like setContentView() or whatever

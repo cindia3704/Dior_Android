@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/icon_32_cancle_black" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/task_modify_Imageview"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
@@ -56,7 +56,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/task_delete_imageView"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginStart="24dp"
