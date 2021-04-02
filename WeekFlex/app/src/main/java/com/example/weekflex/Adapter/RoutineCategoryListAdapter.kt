@@ -92,14 +92,8 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
 
         holder.bind(category, selected)
 
-        // 모든 별이 검어지는데 이게 맞나?
-        if(isSearching){
-            holder.categoryColor.setImageResource(R.drawable.graystar)
-        }else{
-            val drawableStar = categoryToStarImage[category.categoryId]?:R.drawable.graystar
-
-            holder.categoryColor.setImageResource(drawableStar)
-        }
+        val drawableStar = categoryToStarImage[category.categoryId]?:R.drawable.graystar
+        holder.categoryColor.setImageResource(drawableStar)
 
         Log.d( "msg", "current : ${category.categoryId} selected : $selectedId visible : $selected" )
     }
