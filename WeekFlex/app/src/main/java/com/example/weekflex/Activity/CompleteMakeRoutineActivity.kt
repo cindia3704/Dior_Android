@@ -94,7 +94,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-        hideKeyboard()
+//        hideKeyboard()
         setHeaderView()
     }
 
@@ -119,7 +119,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         deleteSearchBtn.setOnClickListener {
             searchCategoryView.setText("")
             searchedRoutineName=""
-
+            searchCategoryView.clearFocus()
             categoryTaskListAdapter.changeSearchedRoutine(searchedRoutineName)
             routineCategoryListAdapter.changeSearchedRoutine(searchedRoutineName)
         }
@@ -128,13 +128,21 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        searchCategoryView.setOnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) searchIconImg.setImageResource(R.drawable.search_black)
+            else searchIconImg.setImageResource(R.drawable.serach_gray)
+        }
+
 //      키보드 enter --> 완료로 바꾸고 검색 진행
         searchCategoryView.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+//            searchIconImg.setImageResource(R.drawable.search_black)
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     searchedRoutineName = searchCategoryView.text.toString()
                     categoryTaskListAdapter.changeSearchedRoutine(searchedRoutineName)
                     routineCategoryListAdapter.changeSearchedRoutine(searchedRoutineName)
+
+//                    searchIconImg.setImageResource(R.drawable.serach_gray)
 
                     Log.d("msg","Search start!! "+searchedRoutineName)
                     hideKeyboard()
@@ -144,6 +152,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             }
             true
         })
+
     }
 
     fun hideKeyboard() {
@@ -185,7 +194,6 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     fun deleteAddedTask(item: RoutineItem){
         selectedTaskListForNewRoutine = selectedTaskListForNewRoutine.minus(item)
         Log.d("msg","removed!!!!")
-
         refreshAddedRoutineItem()
     }
 

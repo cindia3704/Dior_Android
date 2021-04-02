@@ -14,7 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.AddCategory"></activity>
-        <activity android:name=".Activity.CompleteMakeRoutineActivity">
+        <activity android:name=".Activity.CompleteMakeRoutineActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".Activity.InsertRoutineNameActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

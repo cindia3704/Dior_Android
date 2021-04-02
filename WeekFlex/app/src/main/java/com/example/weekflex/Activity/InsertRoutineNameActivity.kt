@@ -3,6 +3,7 @@ package com.example.weekflex.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -12,6 +13,7 @@ import android.widget.TextView
 import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import com.example.weekflex.R
 
 
@@ -62,7 +64,8 @@ class InsertRoutineNameActivity : AppCompatActivity() {
             if (s.isNullOrEmpty() || s.length <2) {
                checkImg.setImageResource(R.drawable.uncheck)
                 routineNameCommentView.setText("루틴 이름을 입력해주세요")
-            } else {
+            }
+            else {
                 checkImg.setImageResource(R.drawable.check)
                 routineNameCommentView.setText("멋진 이름이에요! *-*")
             }

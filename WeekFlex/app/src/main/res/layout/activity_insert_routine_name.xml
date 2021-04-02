@@ -64,6 +64,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:imeOptions="actionDone"
+        android:maxLength="22"
         android:inputType="text">
         <requestFocus/>
     </EditText>

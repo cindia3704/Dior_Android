@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginRight="24dp"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categoryList_itemView"
@@ -32,12 +33,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     <View
         android:id="@+id/category_underline_categoryList"
-        android:layout_width="0dp"
+        android:layout_width="50dp"
         android:layout_height="3dp"
         android:background="@color/colorAccent"
         app:layout_constraintTop_toBottomOf="@id/categoryList_itemView"
         android:layout_marginTop="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:visibility="invisible"/>
+        app:layout_constraintLeft_toLeftOf="@id/categoryList_itemView"
+        app:layout_constraintRight_toRightOf="@id/categoryList_itemView"
+        android:visibility="visible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
