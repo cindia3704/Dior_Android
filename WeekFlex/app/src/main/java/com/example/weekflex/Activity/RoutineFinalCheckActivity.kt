@@ -54,10 +54,13 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
         }
         saveRoutineBtn.setOnClickListener {
             val savedRoutine:Routine = taskListAdapter.getSavedRoutine()
-            val intentToSaveRoutine = Intent(this@RoutineFinalCheckActivity,AddRoutineActivity::class.java)
-            intentToSaveRoutine.putExtra("newRoutine",savedRoutine)
-            startActivity(intentToSaveRoutine)
-            finish()
+            if(savedRoutine.routineItemList.isNotEmpty()) {
+                val intentToSaveRoutine =
+                    Intent(this@RoutineFinalCheckActivity, AddRoutineActivity::class.java)
+                intentToSaveRoutine.putExtra("newRoutine", savedRoutine)
+                startActivity(intentToSaveRoutine)
+                finish()
+            }
         }
     }
 
