@@ -72,9 +72,9 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
 
         lateinit var routineItem: RoutineItem
 
-        fun showTask(frangmentManager : FragmentManager, passedRoutineItem : RoutineItem){
+        fun showTask(fragmentManager : FragmentManager, passedRoutineItem : RoutineItem){
             routineItem = passedRoutineItem
-            instance.show(frangmentManager, TAG)
+            instance.show(fragmentManager, TAG)
         }
     }
 
