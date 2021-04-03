@@ -35,7 +35,7 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
         taskNameTextView = dialogView.findViewById(R.id.task_name_textView)
         taskNameTextView.text = task.routineItemTitle
 
-        val onModify = { fragmentManager?.let { showTask(it, task) } }
+        val onModify = { fragmentManager?.let { TaskModifyBottomFragment.showTask(it, task) } }
         taskModifyTextView = dialogView.findViewById(R.id.task_modify_textview)
         taskModifyTextView.setOnClickListener {onModify.invoke()}
         taskModifyImageView = dialogView.findViewById(R.id.task_modify_Imageview)
@@ -79,7 +79,12 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
     }
 
     override fun onActivityCreated(arg0: Bundle?) { super.onActivityCreated(arg0)
-        dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
+        if(dialog?.window != null){
+            dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
+        }
+        else{
+            Log.e("에러!!!!!!!!", "애니메이션 섲렁!!!!!!!!!!!")
+        }
     }
 
     fun getBottomSheetDialog(dialog: DialogInterface) : BottomSheetBehavior<FrameLayout>{
@@ -101,6 +106,8 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
                 it.state = BottomSheetBehavior.STATE_EXPANDED
             }
         }
+
+        dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
 
         // Do something with your dialog like setContentView() or whatever
         Log.d("Dismiss", dialog.dismissWithAnimation.toString())
