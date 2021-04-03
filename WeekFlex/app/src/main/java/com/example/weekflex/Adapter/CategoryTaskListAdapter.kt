@@ -10,7 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.CompleteMakeRoutineActivity
 import com.example.weekflex.Data.Category
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
 class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
@@ -18,10 +18,10 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
                                var searchedTaskString:String
                                 ):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
     private var selectedCategoryId:Int=0
-    var selectedRoutineItemList : List<RoutineItem> = listOf()
+    var selectedTaskList : List<Task> = listOf()
     // property 찾아보기
-    val taskList: List<RoutineItem> get() = getCategoryTaskList(categoryList, selectedCategoryId)
-    val searchedTaskList: List<RoutineItem> get() = taskList.filter { t -> t.routineItemTitle.contains(searchedTaskString) }.toList()
+    val taskList: List<Task> get() = getCategoryTaskList(categoryList, selectedCategoryId)
+    val searchedTaskList: List<Task> get() = taskList.filter { t -> t.routineItemTitle.contains(searchedTaskString) }.toList()
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val bookmark : ImageView = itemView.findViewById(R.id.taskList_bookmarkImg)
@@ -43,7 +43,7 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         // 뷰 초기 세팅
         val task = searchedTaskList[position]
 
-        var isSelectedTask = task in selectedRoutineItemList
+        var isSelectedTask = task in selectedTaskList
         holder.container.setBackgroundResource(if(isSelectedTask) R.color.task_gray else R.color.white)
 
         var isBookMarked = task.bookMarked
@@ -72,17 +72,17 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         return weekdays.subSequence(0,weekdays.length-2).toString()
     }
 
-    fun getCategoryTaskList(list:List<Category>, selectedCategoryId: Int):List<RoutineItem>{
-        var routineItemList :List<RoutineItem> = emptyList()
+    fun getCategoryTaskList(list:List<Category>, selectedCategoryId: Int):List<Task>{
+        var taskList :List<Task> = emptyList()
         for (i in list.indices)
             if(list[i].categoryId==selectedCategoryId){
-                routineItemList = list[i].routineItemList
+                taskList = list[i].taskList
             }
-        return routineItemList
+        return taskList
     }
 
-    fun updateBackgroundColor(holder:ViewHolder,item:RoutineItem){
-        if(item in selectedRoutineItemList){
+    fun updateBackgroundColor(holder:ViewHolder,item:Task){
+        if(item in selectedTaskList){
             Log.d("msg","INCLUDED!!")
         }else{
             holder.container.setBackgroundResource(R.color.task_gray)
@@ -91,7 +91,7 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         }
     }
 
-    fun updateBookmark(item:RoutineItem){
+    fun updateBookmark(item:Task){
         for ( i in taskList){
             if(i.equals(item)){
                 i.bookMarked = !i.bookMarked
@@ -105,8 +105,8 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         selectedCategoryId = id
         notifyDataSetChanged()
     }
-    fun changeSelectedRoutineItemList(list : List<RoutineItem>){
-        selectedRoutineItemList = list
+    fun changeSelectedRoutineItemList(list : List<Task>){
+        selectedTaskList = list
         notifyDataSetChanged()
     }
 

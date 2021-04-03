@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
@@ -24,24 +23,24 @@ import com.example.weekflex.Adapter.CategoryTaskListAdapter
 import com.example.weekflex.Adapter.RoutineCategoryListAdapter
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Routine
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_complete_make_routine.*
 
 
 val categoryList = listOf(
     Category(1,"언어",0,listOf(
-        RoutineItem("Speaking", 3, "10:00AM", "1:00PM",true, listOf("월","화")),
-        RoutineItem("전화영어", 2, "1:00PM", "1:30PM",false, listOf("수")),
-        RoutineItem("스피킹", 1, "5:00PM", "6:00PM",true, listOf("금","일"))
+        Task("Speaking", 3, "10:00AM", "1:00PM",true, listOf("월","화")),
+        Task("전화영어", 2, "1:00PM", "1:30PM",false, listOf("수")),
+        Task("스피킹", 1, "5:00PM", "6:00PM",true, listOf("금","일"))
     )),
     Category(2,"Coding",0,listOf(
-        RoutineItem("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
-        RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
+        Task("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
+        Task("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
     )),
     Category(3,"운동",0,listOf(
-        RoutineItem("코어", 1, "10:00AM", "1:00PM",false, listOf("일")),
-        RoutineItem("하체", 2, "1:00PM", "1:30PM",false, listOf("토"))
+        Task("코어", 1, "10:00AM", "1:00PM",false, listOf("일")),
+        Task("하체", 2, "1:00PM", "1:30PM",false, listOf("토"))
     ))
 )
 
@@ -58,7 +57,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     private lateinit var addTaskComment:TextView
     private lateinit var addedTaskView:RecyclerView
 
-    var selectedTaskListForNewRoutine  = listOf<RoutineItem>()
+    var selectedTaskListForNewRoutine  = listOf<Task>()
     var allCategoryList:List<Category> = emptyList()
     var searchedRoutineName:String = ""
 
@@ -229,7 +228,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         routineCategoryListAdapter.notifyDataSetChanged()
     }
 
-    fun deleteAddedTask(item: RoutineItem){
+    fun deleteAddedTask(item: Task){
         selectedTaskListForNewRoutine = selectedTaskListForNewRoutine.minus(item)
         Log.d("msg","removed!!!!")
         refreshAddedRoutineItem()
@@ -242,7 +241,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         setHeaderView()
     }
 
-    fun addTaskToRoutine(item:RoutineItem){
+    fun addTaskToRoutine(item:Task){
         selectedTaskListForNewRoutine = selectedTaskListForNewRoutine.plus(item)
 
         Log.d("msg","added!!!!")
@@ -253,16 +252,16 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     }
 
     fun addAllCategoryTask(categoryList:List<Category>){
-        var allRoutineItem:List<RoutineItem> = emptyList()
+        var allTask:List<Task> = emptyList()
 
         for ( i in 0..categoryList.size-1){
-            var routineForCategory : List<RoutineItem> =categoryList[i].routineItemList
+            var routineForCategory : List<Task> =categoryList[i].taskList
             for(j in 0..routineForCategory.size-1){
-                allRoutineItem=allRoutineItem.plus(routineForCategory[j])
+                allTask=allTask.plus(routineForCategory[j])
             }
         }
         // 어댑터에 보내기 전 가장 앞 element = 전체로 만듬
-        val allCategory = Category(0,"전체",0,allRoutineItem)
+        val allCategory = Category(0,"전체",0,allTask)
         allCategoryList=allCategoryList.plus(allCategory)
 
         for (i in 0..categoryList.size-1){

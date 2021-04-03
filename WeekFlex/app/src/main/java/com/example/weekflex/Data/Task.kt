@@ -3,7 +3,7 @@ package com.example.weekflex.Data
 import java.io.Serializable
 
 // TODO 용어 맞춰야함
-data class RoutineItem(
+data class Task(
     val routineItemTitle : String,
     val category : Int,
     val startTime : String,

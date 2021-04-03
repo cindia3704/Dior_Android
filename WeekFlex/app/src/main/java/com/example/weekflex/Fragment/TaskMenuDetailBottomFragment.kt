@@ -12,7 +12,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,9 +33,9 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
         dialogView = view
 
         taskNameTextView = dialogView.findViewById(R.id.task_name_textView)
-        taskNameTextView.text = routineItem.routineItemTitle
+        taskNameTextView.text = task.routineItemTitle
 
-        val onModify = { fragmentManager?.let { showTask(it, routineItem) } }
+        val onModify = { fragmentManager?.let { showTask(it, task) } }
         taskModifyTextView = dialogView.findViewById(R.id.task_modify_textview)
         taskModifyTextView.setOnClickListener {onModify.invoke()}
         taskModifyImageView = dialogView.findViewById(R.id.task_modify_Imageview)
@@ -70,10 +70,10 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
             get() = TaskMenuDetailBottomFragment()
         val TAG = "bottomSheet"
 
-        lateinit var routineItem: RoutineItem
+        lateinit var task: Task
 
-        fun showTask(fragmentManager : FragmentManager, passedRoutineItem : RoutineItem){
-            routineItem = passedRoutineItem
+        fun showTask(fragmentManager : FragmentManager, passedTask : Task){
+            task = passedTask
             instance.show(fragmentManager, TAG)
         }
     }

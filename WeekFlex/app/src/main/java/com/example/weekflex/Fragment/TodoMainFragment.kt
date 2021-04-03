@@ -18,7 +18,7 @@ import com.example.weekflex.Activity.routineList
 import com.example.weekflex.Adapter.TodoMainRoutineViewAdapter
 import com.example.weekflex.Adapter.TodoWeekDateAdapter
 import com.example.weekflex.Data.Routine
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.todo_main_fragment.*
 import java.text.SimpleDateFormat
@@ -83,8 +83,8 @@ class TodoMainFragment : Fragment(){
         )
     }
 
-    fun onClickRoutineItemMenuButton(routine: Routine, routineItem: RoutineItem){
-        fragmentManager?.let { TaskMenuDetailBottomFragment.showTask(it, routineItem) }
+    fun onClickRoutineItemMenuButton(routine: Routine, task: Task){
+        fragmentManager?.let { TaskMenuDetailBottomFragment.showTask(it, task) }
     }
 
     fun onClickDeleteRoutine(routine: Routine) {

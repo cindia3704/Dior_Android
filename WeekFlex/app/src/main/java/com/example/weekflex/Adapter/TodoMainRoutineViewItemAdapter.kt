@@ -8,14 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Data.Routine
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.Data.categoryToStarImage
 import com.example.weekflex.R
 
 class TodoMainRoutineViewItemAdapter (
         val inflater: LayoutInflater,
         val routine: Routine,
-        val onClickRoutineItemMenuButton: (Routine, RoutineItem) -> Unit
+        val onClickRoutineItemMenuButton: (Routine, Task) -> Unit
 ):RecyclerView.Adapter<TodoMainRoutineViewItemAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val routineItemTitle : TextView
@@ -39,12 +39,12 @@ class TodoMainRoutineViewItemAdapter (
     }
 
     override fun getItemCount(): Int {
-        return routine.routineItemList.size
+        return routine.taskList.size
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val routineItem = routine.routineItemList[position]
+        val routineItem = routine.taskList[position]
 
         holder.routineItemTitle.text = routineItem.routineItemTitle
         holder.routineItemTime.text = "${routineItem.startTime}~${routineItem.endTime}"
