@@ -162,6 +162,10 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
             ) {
                 val str = if(s.isNotBlank()) s.toString() else ""
                 Log.d("TextChange", "asxdfsdf$str")
+                searchedRoutineName = searchCategoryView.text.toString()
+                if(str.isNotEmpty()) {
+                    routineCategoryListAdapter.setMySelectedId(0)
+                }
                 categoryTaskListAdapter.changeSearchedRoutine(str)
                 routineCategoryListAdapter.changeSearchedRoutine(str)
             }

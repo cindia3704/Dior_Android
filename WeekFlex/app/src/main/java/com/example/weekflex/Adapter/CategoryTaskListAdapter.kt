@@ -10,28 +10,24 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.CompleteMakeRoutineActivity
 import com.example.weekflex.Data.Category
-import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.RoutineItem
 import com.example.weekflex.R
 
 class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
                                var categoryList:List<Category>,
-                               var searchedRoutine:String
+                               var searchedTaskString:String
                                 ):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
-    var user_id:Int?=null
-    var selectedCategoryId:Int=0
+    private var selectedCategoryId:Int=0
     var selectedRoutineItemList : List<RoutineItem> = listOf()
-    var searchDoesNotExist : Boolean = false
     // property 찾아보기
     val taskList: List<RoutineItem> get() = getCategoryTaskList(categoryList, selectedCategoryId)
+    val searchedTaskList: List<RoutineItem> get() = taskList.filter { t -> t.routineItemTitle.contains(searchedTaskString) }.toList()
+
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val bookmark : ImageView = itemView.findViewById(R.id.taskList_bookmarkImg)
         val taskName: TextView = itemView.findViewById(R.id.taskList_taskName)
         val taskTime: TextView = itemView.findViewById(R.id.taskList_time)
         val container: ConstraintLayout=itemView.findViewById(R.id.taskList_wholeLayout)
-        fun bind(position: Int){
-
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,69 +35,30 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        if(!searchedRoutine.isNullOrBlank()){
-            if(searchDoesNotExist ==true) return 0 else return 1
-        }else {
-            return taskList.size
-        }
-    }
+    // property getter setter 줄일때 이렇게 씀
+    override fun getItemCount() = searchedTaskList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(position)
+        // selectedCategoryId=0
         // 뷰 초기 세팅
-        if (taskList.get(position) in selectedRoutineItemList) {
-            holder.container.setBackgroundResource(R.color.task_gray)
-        } else {
-            holder.container.setBackgroundResource(R.color.white)
-        }
-        if (taskList.get(position).bookMarked == true) {
-            holder.bookmark.setImageResource(R.drawable.bookmark_fill)
-        } else {
-            holder.bookmark.setImageResource(R.drawable.bookmark_empty)
-        }
+        val task = searchedTaskList[position]
 
-        if(!searchedRoutine.isNullOrBlank()){
-            selectedCategoryId=0
-            Log.d(",sg","searching,,,")
-            val item:RoutineItem = showSearchedRoutineItem(searchedRoutine)
-            if (item in selectedRoutineItemList) {
-                holder.container.setBackgroundResource(R.color.task_gray)
-            } else {
-                holder.container.setBackgroundResource(R.color.white)
-            }
+        var isSelectedTask = task in selectedRoutineItemList
+        holder.container.setBackgroundResource(if(isSelectedTask) R.color.task_gray else R.color.white)
 
-            if(item.routineItemTitle!="null") {
-                holder.taskName.setText(item.routineItemTitle)
-                holder.taskTime.setText(getWeekDays(item.weekdaysScheduled) + item.startTime.toString() + "-" + item.endTime)
-                holder.container.setOnClickListener {
-                    updateBackgroundColor(holder, item)
-                    notifyDataSetChanged()
-                }
-                holder.bookmark.setOnClickListener {
-                    Log.d("msg", "clicked!!!")
-                    updateBookmark(item)
-                }
-            }
-        }else {
-            val item = taskList[position]
-            holder.bookmark.setOnClickListener {
-                Log.d("msg","clicked!!!")
-                updateBookmark(item)
-            }
-            holder.taskName.setText(taskList.get(position).routineItemTitle)
-            holder.taskTime.setText(
-                getWeekDays(taskList.get(position).weekdaysScheduled) +" "+ taskList.get(
-                    position
-                ).startTime.toString() + "-" + taskList.get(position).endTime
-            )
-            holder.bind(position)
-            holder.container.setOnClickListener {
-                updateBackgroundColor(holder, item)
-                notifyDataSetChanged()
-            }
+        var isBookMarked = task.bookMarked
+        holder.bookmark.setImageResource(if(isBookMarked) R.drawable.bookmark_fill else R.drawable.bookmark_empty)
+
+        holder.taskTime.setText("${getWeekDays(task.weekdaysScheduled)}${task.startTime}-${task.endTime}")
+        holder.taskName.setText(task.routineItemTitle)
+        holder.container.setOnClickListener {
+            updateBackgroundColor(holder, task)
+            notifyDataSetChanged()
         }
-
+        holder.bookmark.setOnClickListener {
+            Log.d("msg","clicked!!!")
+            updateBookmark(task)
+        }
 
     }
 
@@ -123,8 +80,6 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
             }
         return routineItemList
     }
-
-
 
     fun updateBackgroundColor(holder:ViewHolder,item:RoutineItem){
         if(item in selectedRoutineItemList){
@@ -154,24 +109,16 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         selectedRoutineItemList = list
         notifyDataSetChanged()
     }
-    fun showSearchedRoutineItem(searchedRoutine:String): RoutineItem {
-        val routineListFromAllCategory:List<RoutineItem> = categoryList[0].routineItemList
-        var routineItem:RoutineItem? = null
-        for(i in 0..routineListFromAllCategory.size-1){
-            if(routineListFromAllCategory[i].routineItemTitle.equals(searchedRoutine)){
-                routineItem = routineListFromAllCategory[i]
-            }
-        }
 
-        if(routineItem==null){
-            searchDoesNotExist = true
-            return RoutineItem("null",0,"0","0",false, emptyList())
-        }else{
-            return routineItem
-        }
-    }
+    // 요 기능을 나눌겁니다.
+    // RoutineItem(of 전체 카테고리)를 대상으로 가져오기. 전체가 아닐때는 정상적으로 가져와야된다.
+    // 전체도, 카테고리 중 하나니까, 그냥 선택 카테고리를 검색이면 전체로 바꾸면 됨.
+    // (검색중인지 여부도 검사 안함. 전제조건 검사 X -> filterd~에서 보면, contain으로 한다. contain("")는 무조건 true라서)
+    // 검색해서 맞는거 가져오기 ->filtered~~
+    // 검색결과가 있으면 searchDoesNotExist = true로 바꾸기 (false로 바꾸지 않음.)
+
     fun changeSearchedRoutine(item : String){
-        searchedRoutine=item
+        searchedTaskString=item
         notifyDataSetChanged()
     }
 }
