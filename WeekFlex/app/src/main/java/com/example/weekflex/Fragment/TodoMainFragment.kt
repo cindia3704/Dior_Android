@@ -84,7 +84,7 @@ class TodoMainFragment : Fragment(){
     }
 
     fun onClickRoutineItemMenuButton(routine: Routine, routineItem: RoutineItem){
-        fragmentManager?.let { RoutineModifyBottomDialogFragment.showTask(it, routineItem) }
+        fragmentManager?.let { TaskMenuDetailBottomFragment.showTask(it, routineItem) }
     }
 
     fun onClickDeleteRoutine(routine: Routine) {

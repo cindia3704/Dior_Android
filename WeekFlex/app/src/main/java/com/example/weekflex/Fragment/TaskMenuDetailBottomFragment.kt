@@ -19,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
-class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnClickListener {
+class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var dialogView: View
     private lateinit var taskNameTextView: TextView
     private lateinit var taskModifyTextView: TextView
@@ -29,13 +29,13 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
     private lateinit var cancelImageView: ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.routine_modify_bottom_dialog_layout, container, false)
+        val view = inflater.inflate(R.layout.task_menu_detail_bottom_fragment, container, false)
         dialogView = view
 
         taskNameTextView = dialogView.findViewById(R.id.task_name_textView)
         taskNameTextView.text = routineItem.routineItemTitle
 
-        val onModify = { Toast.makeText(context, "ModifyMessage", Toast.LENGTH_SHORT).show() }
+        val onModify = { fragmentManager?.let { showTask(it, routineItem) } }
         taskModifyTextView = dialogView.findViewById(R.id.task_modify_textview)
         taskModifyTextView.setOnClickListener {onModify.invoke()}
         taskModifyImageView = dialogView.findViewById(R.id.task_modify_Imageview)
@@ -45,7 +45,7 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
 
         taskDeleteTextView = dialogView.findViewById(R.id.task_delete_textview)
         taskDeleteTextView.setOnClickListener {onDelete.invoke()}
-        taskDeleteImageView = dialogView.findViewById(R.id.task_delete_textview)
+        taskDeleteImageView = dialogView.findViewById(R.id.task_delete_imageView)
         taskDeleteImageView.setOnClickListener {onDelete.invoke()}
 
         cancelImageView = dialogView.findViewById(R.id.task_modify_dialog_close_imageView)
@@ -66,8 +66,8 @@ class RoutineModifyBottomDialogFragment : BottomSheetDialogFragment(), View.OnCl
     }
 
     companion object {
-        val instance: RoutineModifyBottomDialogFragment
-            get() = RoutineModifyBottomDialogFragment()
+        val instance: TaskMenuDetailBottomFragment
+            get() = TaskMenuDetailBottomFragment()
         val TAG = "bottomSheet"
 
         lateinit var routineItem: RoutineItem
