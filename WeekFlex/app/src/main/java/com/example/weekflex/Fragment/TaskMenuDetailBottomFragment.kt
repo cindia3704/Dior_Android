@@ -79,12 +79,7 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
     }
 
     override fun onActivityCreated(arg0: Bundle?) { super.onActivityCreated(arg0)
-        if(dialog?.window != null){
-            dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
-        }
-        else{
-            Log.e("에러!!!!!!!!", "애니메이션 섲렁!!!!!!!!!!!")
-        }
+        dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
     }
 
     fun getBottomSheetDialog(dialog: DialogInterface) : BottomSheetBehavior<FrameLayout>{
