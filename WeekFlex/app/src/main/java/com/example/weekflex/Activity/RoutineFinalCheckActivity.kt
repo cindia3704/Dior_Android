@@ -3,6 +3,9 @@ package com.example.weekflex.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,13 +21,15 @@ import kotlinx.android.synthetic.main.activity_routine_final_check.*
 //))
 
 class RoutineFinalCheckActivity : AppCompatActivity() {
-    private lateinit var routineNameView: TextView
+    private lateinit var routineNameView: EditText
     private lateinit var routineMentView: TextView
     private lateinit var addTaskBtn: ConstraintLayout
     private lateinit var saveRoutineBtn:ConstraintLayout
     private lateinit var goBackBtn:ImageView
     private lateinit var taskListAdapter : RoutineTaskListAdapter
     private lateinit var routineSelected:Routine
+    private lateinit var pageTitle:TextView
+    private  var isFinalCheck : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,28 +44,54 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
         routineMentView = findViewById(R.id.routineMent_routineFinalCheck)
         addTaskBtn = findViewById(R.id.addTask_routineFinalCheck)
         saveRoutineBtn = findViewById(R.id.saveRoutine_routineFinalCheck)
+        pageTitle = findViewById(R.id.title_editRoutine)
         goBackBtn = findViewById(R.id.back_routineFinalCheck)
         routineSelected = intent.getSerializableExtra("routine") as Routine
-        routineNameView.text = routineSelected.routineTitle
+        routineNameView.setText(routineSelected.routineTitle)
+
+        // 최종점검 & 수정 디자인 반영 위해
+        isFinalCheck = intent.hasExtra("final")
+        if(isFinalCheck) pageTitle.visibility = View.INVISIBLE else pageTitle.visibility =View.VISIBLE
+        if(isFinalCheck) routineMentView.visibility = View.VISIBLE else routineMentView.visibility =View.GONE
     }
     private fun setListener(){
         goBackBtn.setOnClickListener {
-            finish()
+            if(isFinalCheck){
+                backToCompleteMakeRoutineActivity()
+            }
+            else{
+                val intentToAddRoutineAcitivity = Intent(this@RoutineFinalCheckActivity,AddRoutineActivity::class.java)
+                startActivity(intentToAddRoutineAcitivity)
+                finish()
+            }
         }
         addTaskBtn.setOnClickListener {
-
+            // 수정하기에서 왔을때 --> "modify"  , 새로운 루틴 만들다가 최종 점검에서 왔을때 --> "final check"
+            backToCompleteMakeRoutineActivity()
         }
         saveRoutineBtn.setOnClickListener {
             val savedRoutine:Routine = taskListAdapter.getSavedRoutine()
             if(savedRoutine.taskList.isNotEmpty()) {
+                val noteToNextActivity= if(isFinalCheck) "newRoutine" else "originalRoutine"
                 val intentToSaveRoutine =
                     Intent(this@RoutineFinalCheckActivity, AddRoutineActivity::class.java)
-                intentToSaveRoutine.putExtra("newRoutine", savedRoutine)
+                intentToSaveRoutine.putExtra(noteToNextActivity, savedRoutine)
                 startActivity(intentToSaveRoutine)
                 finish()
             }
         }
     }
+
+    private fun backToCompleteMakeRoutineActivity(){
+        val noteToNextActivity= if(isFinalCheck) "final check" else "modify"
+        val intentToAddTask =
+            Intent(this@RoutineFinalCheckActivity, CompleteMakeRoutineActivity::class.java)
+        intentToAddTask.putExtra("routine",routineSelected)
+        intentToAddTask.putExtra(noteToNextActivity, routineSelected)
+        startActivity(intentToAddTask)
+        finish()
+    }
+
 
     private fun layoutInit(){
         taskListAdapter =RoutineTaskListAdapter(this@RoutineFinalCheckActivity,routineSelected)

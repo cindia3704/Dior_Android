@@ -47,10 +47,13 @@ class AddRoutineActivity : AppCompatActivity() {
         backBtn= findViewById(R.id.back_addRoutine)
         introMentView = findViewById(R.id.ment_addRoutine)
         makeRoutineBtn = findViewById(R.id.makeRoutine_addRoutine)
+
+        // 새로 추가된 루틴인지 아니면, 수정된 루틴인지 구분 그냥 안하고, 서버에서 GET 요청으로 받는거로!
         if(intent.hasExtra("newRoutine")){
             val newRoutine = intent.getSerializableExtra("newRoutine") as Routine
             routineList = routineList.plus(newRoutine)
         }
+
     }
     private fun setListener(){
         backBtn.setOnClickListener {
@@ -92,5 +95,12 @@ class AddRoutineActivity : AppCompatActivity() {
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(it, R.color.gray_4))
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(it, R.color.color6))
         }
+    }
+
+    fun modifyRoutine(item: Routine){
+        val intent = Intent(this@AddRoutineActivity, RoutineFinalCheckActivity::class.java)
+        intent.putExtra("routine",item)
+        intent.putExtra("modify","")
+        startActivity(intent)
     }
 }

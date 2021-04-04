@@ -1,5 +1,6 @@
 package com.example.weekflex.Activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -45,8 +46,9 @@ val categoryList = listOf(
 )
 
 class CompleteMakeRoutineActivity : AppCompatActivity() {
-    private lateinit var makeRoutineTopheader : ConstraintLayout
+    private var isNewRoutine = true
 
+    private lateinit var makeRoutineTopheader : ConstraintLayout
     private lateinit var gobackBtn:ImageView
     private lateinit var nextBtn:TextView
     private lateinit var nameOfRoutine:TextView
@@ -69,8 +71,8 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         addAllCategoryTask(categoryList)
         setContentView(R.layout.activity_complete_make_routine)
-        initView()
         layoutInit()
+        initView()
 
         setListener()
 
@@ -99,6 +101,18 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         if (intent.hasExtra("name")) {
             nameOfRoutine.text = intent.getStringExtra("name")
         }
+        // 최종 점검 / 수정할때 데이터 받기
+        if(intent.hasExtra("routine")){
+            val recievedRoutine = intent.getSerializableExtra("routine") as Routine
+            nameOfRoutine.text = recievedRoutine.routineTitle
+            selectedTaskListForNewRoutine = recievedRoutine.taskList.map { task -> task }
+            refreshAddedRoutineItem()
+        }
+
+        // 현재 상태가 수정중인건지 아니면 최종 점검인지 확인하기 위해
+        isNewRoutine = !intent.hasExtra("modify")
+
+
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
@@ -118,10 +132,14 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         }
         nextBtn.setOnClickListener{
             if(selectedTaskListForNewRoutine.size>0){
+                Log.d("msg","is New Routine?? $isNewRoutine")
+                val noteToIntent:String = if(isNewRoutine) "final" else "modify"
                 val intent = Intent(this@CompleteMakeRoutineActivity,RoutineFinalCheckActivity::class.java)
                 val newRoutine : Routine = Routine(nameOfRoutine.text.toString(),selectedTaskListForNewRoutine)
                 intent.putExtra("routine",newRoutine)
+                intent.putExtra(noteToIntent,"")
                 startActivity(intent)
+                finish()
             }
 
         }

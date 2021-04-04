@@ -17,6 +17,17 @@
         android:layout_marginTop="56dp"
         android:layout_marginLeft="25dp"/>
     <TextView
+        android:id="@+id/title_editRoutine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="루틴 수정하기"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintTop_toTopOf="@id/back_routineFinalCheck"
+        app:layout_constraintBottom_toBottomOf="@id/back_routineFinalCheck"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <EditText
         android:id="@+id/routineName_routineFinalCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,11 +45,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/routineName_routineFinalCheck"
         app:layout_constraintLeft_toLeftOf="@id/routineName_routineFinalCheck"
+        app:layout_constraintBottom_toTopOf="@id/taskList_routineFinalCheck"
+        android:layout_marginBottom="17dp"
         android:layout_marginTop="18dp"
         android:text="짜잔! 마지막으로 루틴을 확인해 주세요:)"
         android:textColor="@color/gray_4"
         android:textStyle="normal"
-        android:textSize="16dp"/>
+        android:textSize="16dp"
+        android:visibility="visible"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/taskList_routineFinalCheck"
         android:layout_width="0dp"
@@ -47,7 +61,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomBtns_routineFinalCheck"
-        android:layout_marginTop="81dp"
+        android:layout_marginTop="64dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layout_constraintVertical_bias="0"
