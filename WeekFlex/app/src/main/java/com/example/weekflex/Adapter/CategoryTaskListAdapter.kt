@@ -49,7 +49,7 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         var isBookMarked = task.bookMarked
         holder.bookmark.setImageResource(if(isBookMarked) R.drawable.bookmark_fill else R.drawable.bookmark_empty)
 
-        holder.taskTime.setText("${getWeekDays(task.weekdaysScheduled)}${task.startTime}-${task.endTime}")
+        holder.taskTime.setText("${getWeekDays(task.weekdaysScheduled)} ${task.startTime}-${task.endTime}")
         holder.taskName.setText(task.routineItemTitle)
         holder.container.setOnClickListener {
             updateBackgroundColor(holder, task)
@@ -63,21 +63,15 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
     }
 
     fun getWeekDays(days:List<String>):String{
-        var weekdays  = ""
-        for (day in days) {
-            Log.d("msg", "day: $day")
-            weekdays = "$weekdays$day, "
-        }
+        val weekdays  = days.joinToString(", ")
         Log.d("msg","weekday!!! $weekdays")
-        return weekdays.subSequence(0,weekdays.length-2).toString()
+
+        return weekdays
     }
 
     fun getCategoryTaskList(list:List<Category>, selectedCategoryId: Int):List<Task>{
-        var taskList :List<Task> = emptyList()
-        for (i in list.indices)
-            if(list[i].categoryId==selectedCategoryId){
-                taskList = list[i].taskList
-            }
+        var taskList :List<Task> = list.find { category ->category.categoryId==selectedCategoryId }?.taskList ?: emptyList()
+
         return taskList
     }
 
@@ -92,11 +86,9 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
     }
 
     fun updateBookmark(item:Task){
-        for ( i in taskList){
-            if(i.equals(item)){
-                i.bookMarked = !i.bookMarked
-                Log.d("msg","bookmarked: "+i.bookMarked)
-            }
+        taskList.find { i -> i.equals(item) }?.apply {
+            bookMarked = !bookMarked
+            Log.d("msg", "bookmarked: $bookMarked")
         }
         notifyDataSetChanged()
     }
