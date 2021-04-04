@@ -102,18 +102,13 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-//        hideKeyboard()
         setHeaderView()
     }
 
     fun setHeaderView(){
-        if(selectedTaskListForNewRoutine.size!=0){
-            addTaskComment.visibility=View.INVISIBLE
-            addedTaskView.visibility=View.VISIBLE
-        }else{
-            addTaskComment.visibility=View.VISIBLE
-            addedTaskView.visibility=View.INVISIBLE
-        }
+        val noSelectedRoutine = selectedTaskListForNewRoutine.size!=0
+        addTaskComment.visibility=if(noSelectedRoutine) View.INVISIBLE else View.VISIBLE
+        addedTaskView.visibility=if(!noSelectedRoutine) View.INVISIBLE else View.VISIBLE
     }
 
     private fun setListener(){
@@ -252,21 +247,13 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     }
 
     fun addAllCategoryTask(categoryList:List<Category>){
-        var allTask:List<Task> = emptyList()
 
-        for ( i in 0..categoryList.size-1){
-            var routineForCategory : List<Task> =categoryList[i].taskList
-            for(j in 0..routineForCategory.size-1){
-                allTask=allTask.plus(routineForCategory[j])
-            }
-        }
+        var allRoutineItem:List<Task> = categoryList.flatMap { category -> category.taskList }
+
         // 어댑터에 보내기 전 가장 앞 element = 전체로 만듬
-        val allCategory = Category(0,"전체",0,allTask)
-        allCategoryList=allCategoryList.plus(allCategory)
+        val allCategory = Category(0,"전체",0,allRoutineItem)
+        allCategoryList=allCategoryList.plus(allCategory) + categoryList
 
-        for (i in 0..categoryList.size-1){
-            allCategoryList=allCategoryList.plus(categoryList[i])
-        }
         Log.d("msg","!!!!!!! ALL CATEGORY LIST SIZE : "+allCategoryList.size)
 
     }

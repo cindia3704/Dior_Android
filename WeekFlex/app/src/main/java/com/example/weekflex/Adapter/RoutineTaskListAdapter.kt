@@ -16,7 +16,7 @@ class RoutineTaskListAdapter (val activity: RoutineFinalCheckActivity,
                                var routine: Routine
 ): RecyclerView.Adapter<RoutineTaskListAdapter.ViewHolder>(){
     var user_id:Int?=null
-    var taskList:List<Task> = getTaskLists()
+    var taskList:List<Task> = routine.taskList
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val taskName: TextView = itemView.findViewById(R.id.taskName_finalCheckItem)
@@ -62,15 +62,6 @@ class RoutineTaskListAdapter (val activity: RoutineFinalCheckActivity,
         }
         Log.d("msg","weekday!!! $weekdays")
         return weekdays.subSequence(0,weekdays.length-2).toString()
-    }
-
-    fun getTaskLists():List<Task>{
-        var taskList:List<Task> = emptyList()
-        for(task in routine.taskList){
-            taskList = taskList.plus(task)
-            Log.d("msg","size of taskList: "+taskList.size)
-        }
-        return taskList
     }
 
     fun changeTaskItemList(list : List<Task>){
