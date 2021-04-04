@@ -53,12 +53,11 @@
             android:id="@+id/relative_addroutine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             >
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_addRoutine"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:orientation="vertical"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:nestedScrollingEnabled="false"
@@ -68,6 +67,8 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
             <Button
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:id="@+id/makeRoutine_addRoutine"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
@@ -75,7 +76,7 @@
                 android:textSize="20sp"
                 android:textAllCaps="false"
                 android:textStyle="bold"
-                android:background="@drawable/routine_list_rectangle"
+                android:background="@drawable/black_border_add_routine_btn_background"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_below="@+id/recyclerview_addRoutine"

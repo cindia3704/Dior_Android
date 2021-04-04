@@ -41,9 +41,7 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
         saveRoutineBtn = findViewById(R.id.saveRoutine_routineFinalCheck)
         goBackBtn = findViewById(R.id.back_routineFinalCheck)
         routineSelected = intent.getSerializableExtra("routine") as Routine
-        if (routineSelected!=null) {
-            routineNameView.text = routineSelected.routineTitle
-        }
+        routineNameView.text = routineSelected.routineTitle
     }
     private fun setListener(){
         goBackBtn.setOnClickListener {
