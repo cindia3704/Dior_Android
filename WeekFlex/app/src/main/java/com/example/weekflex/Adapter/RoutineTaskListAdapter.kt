@@ -69,9 +69,5 @@ class RoutineTaskListAdapter (val activity: RoutineFinalCheckActivity,
         notifyDataSetChanged()
     }
 
-    fun getSavedRoutine():Routine{
-        val newRoutine: Routine=Routine(routine.routineTitle,taskList)
-        return newRoutine
-    }
 
 }
