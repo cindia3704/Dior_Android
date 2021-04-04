@@ -6,20 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weekflex.Activity.CompleteMakeRoutineActivity
 import com.example.weekflex.Activity.RoutineFinalCheckActivity
-import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Routine
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
 class RoutineTaskListAdapter (val activity: RoutineFinalCheckActivity,
                                var routine: Routine
 ): RecyclerView.Adapter<RoutineTaskListAdapter.ViewHolder>(){
     var user_id:Int?=null
-    var taskList:List<RoutineItem> = getTaskLists()
+    var taskList:List<Task> = getTaskLists()
 
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val taskName: TextView = itemView.findViewById(R.id.taskName_finalCheckItem)
@@ -67,16 +64,16 @@ class RoutineTaskListAdapter (val activity: RoutineFinalCheckActivity,
         return weekdays.subSequence(0,weekdays.length-2).toString()
     }
 
-    fun getTaskLists():List<RoutineItem>{
-        var taskList:List<RoutineItem> = emptyList()
-        for(task in routine.routineItemList){
+    fun getTaskLists():List<Task>{
+        var taskList:List<Task> = emptyList()
+        for(task in routine.taskList){
             taskList = taskList.plus(task)
             Log.d("msg","size of taskList: "+taskList.size)
         }
         return taskList
     }
 
-    fun changeTaskItemList(list : List<RoutineItem>){
+    fun changeTaskItemList(list : List<Task>){
         taskList = list
         notifyDataSetChanged()
     }

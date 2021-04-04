@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chauthai.swipereveallayout.SwipeRevealLayout
 import com.chauthai.swipereveallayout.ViewBinderHelper
 import com.example.weekflex.Data.Routine
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
 class TodoMainRoutineViewAdapter(
         val inflater: LayoutInflater,
         val routineList: List<Routine>,
         val onClickDeleteButton: (Routine) -> Unit,
-        val onClickRoutineItemMenuButton: (Routine, RoutineItem) -> Unit,
+        val onClickRoutineItemMenuButton: (Routine, Task) -> Unit,
         private val viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
 ):RecyclerView.Adapter<TodoMainRoutineViewAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weekflex.Adapter.RoutineTaskListAdapter
 import com.example.weekflex.Data.Routine
-import com.example.weekflex.Data.RoutineItem
+import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_routine_final_check.*
 
@@ -52,7 +52,7 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
         }
         saveRoutineBtn.setOnClickListener {
             val savedRoutine:Routine = taskListAdapter.getSavedRoutine()
-            if(savedRoutine.routineItemList.isNotEmpty()) {
+            if(savedRoutine.taskList.isNotEmpty()) {
                 val intentToSaveRoutine =
                     Intent(this@RoutineFinalCheckActivity, AddRoutineActivity::class.java)
                 intentToSaveRoutine.putExtra("newRoutine", savedRoutine)
@@ -69,14 +69,14 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
             GridLayoutManager.VERTICAL,false)
     }
 
-    fun addTaskForRoutine(item:RoutineItem){
-        routineSelected.routineItemList = routineSelected.routineItemList.plus(item)
-        taskListAdapter.changeTaskItemList(routineSelected.routineItemList)
+    fun addTaskForRoutine(item:Task){
+        routineSelected.taskList = routineSelected.taskList.plus(item)
+        taskListAdapter.changeTaskItemList(routineSelected.taskList)
     }
 
-    fun deleteTaskForRoutine(item: RoutineItem){
-        routineSelected.routineItemList=routineSelected.routineItemList.minus(item)
-        taskListAdapter.changeTaskItemList(routineSelected.routineItemList)
+    fun deleteTaskForRoutine(item: Task){
+        routineSelected.taskList=routineSelected.taskList.minus(item)
+        taskListAdapter.changeTaskItemList(routineSelected.taskList)
 
     }
 }

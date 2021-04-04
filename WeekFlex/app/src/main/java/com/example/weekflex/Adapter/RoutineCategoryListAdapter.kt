@@ -24,7 +24,19 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
     var lambdaList : List<((Int) -> Unit)> = listOf()
     var user_id: Int? = null
     // null propagation 널 전파
-    var selectedId : Int = routineCategoryList.getOrNull(0)?.categoryId ?: 0
+    private var selectedId : Int = routineCategoryList.getOrNull(0)?.categoryId ?: 0
+    // 검색중이면 0으로 바꿔주고 유지한다.
+    val isSearching : Boolean get() = searchedRoutine.isNullOrBlank() == false
+
+    fun setMySelectedId(categoryId : Int) {
+        selectedId = if(isSearching) 0 else categoryId
+        for (lambda in lambdaList) {
+            lambda.invoke(getMySelectedId())
+        }
+    }
+    fun getMySelectedId() : Int {
+        return if(isSearching) 0 else selectedId
+    }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //category_list_item_view의 카테고리 이름
@@ -67,15 +79,14 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
         return ViewHolder(view)
             .also {
                 val viewHolderLambda = {
-                    selectedId = it.category?.categoryId ?: 0
-                    for (lambda in lambdaList) {
-                        lambda.invoke(selectedId)
-                    }
+                    Log.d("test", "$isSearching $searchedRoutine")
+                    val clickedId = it.category?.categoryId ?: 0
+                    setMySelectedId(clickedId)
 
                     notifyDataSetChanged()
                 }
 
-                it.container.setOnClickListener {viewHolderLambda.invoke() }
+                it.container.setOnClickListener { viewHolderLambda.invoke() }
             }
     }
 
@@ -84,18 +95,15 @@ class RoutineCategoryListAdapter(val activity: CompleteMakeRoutineActivity,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val isSearching = !searchedRoutine.isNullOrBlank()
-
         val category = routineCategoryList.get(position)
-        val usedSelectedId = if(isSearching) 0 else selectedId
-        val selected = category.categoryId == usedSelectedId
+        val selected = category.categoryId == getMySelectedId()
 
         holder.bind(category, selected)
 
         val drawableStar = categoryToStarImage[category.categoryId]?:R.drawable.graystar
         holder.categoryColor.setImageResource(drawableStar)
 
-        Log.d( "msg", "current : ${category.categoryId} selected : $selectedId visible : $selected" )
+        Log.d( "msg", "current : ${category.categoryId} selected : ${getMySelectedId()} visible : $selected" )
     }
 
 
