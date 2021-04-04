@@ -128,7 +128,15 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
     private fun setListener(){
         showDeleteButton(searchCategoryView,deleteSearchBtn)
         gobackBtn.setOnClickListener {
-            finish()
+            if(isNewRoutine){
+                Log.d("THIS IS NEW!!! , ","   Routinename: "+nameOfRoutine.text)
+                val intentToInsertRoutineName = Intent(this@CompleteMakeRoutineActivity,InsertRoutineNameActivity::class.java)
+                intent.putExtra("name",nameOfRoutine.text.toString())
+                startActivity(intentToInsertRoutineName)
+                finish()
+            }else {
+                finish()
+            }
         }
         nextBtn.setOnClickListener{
             if(selectedTaskListForNewRoutine.size>0){

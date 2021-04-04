@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
@@ -35,6 +36,9 @@ class InsertRoutineNameActivity : AppCompatActivity() {
         routineNameView.imeOptions = EditorInfo.IME_ACTION_DONE
         checkImg = findViewById(R.id.checkImg_insertRoutineName)
         routineNameCommentView = findViewById(R.id.addRoutineName_ment)
+        if(intent.hasExtra("name")){
+            routineNameView.setText(intent.getStringExtra("name"))
+        }
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
     }
@@ -76,6 +80,7 @@ class InsertRoutineNameActivity : AppCompatActivity() {
                     val intent = Intent(this@InsertRoutineNameActivity,CompleteMakeRoutineActivity::class.java)
                     intent.putExtra("name",""+routineNameView.text.toString())
                     startActivity(intent)
+                    finish()
         }
     }
 

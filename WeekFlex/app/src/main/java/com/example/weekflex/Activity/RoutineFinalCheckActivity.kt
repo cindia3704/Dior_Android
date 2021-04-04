@@ -3,12 +3,14 @@ package com.example.weekflex.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weekflex.Adapter.RoutineTaskListAdapter
 import com.example.weekflex.Data.Routine
@@ -70,7 +72,8 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
             backToCompleteMakeRoutineActivity()
         }
         saveRoutineBtn.setOnClickListener {
-            val savedRoutine:Routine = taskListAdapter.getSavedRoutine()
+//            val savedRoutine:Routine = taskListAdapter.getSavedRoutine()
+            val savedRoutine:Routine = routineSelected
             if(savedRoutine.taskList.isNotEmpty()) {
                 val noteToNextActivity= if(isFinalCheck) "newRoutine" else "originalRoutine"
                 val intentToSaveRoutine =
@@ -79,6 +82,9 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
                 startActivity(intentToSaveRoutine)
                 finish()
             }
+        }
+        routineNameView.doOnTextChanged { text, start, before, count ->
+            routineSelected.routineTitle = text.toString()
         }
     }
 
