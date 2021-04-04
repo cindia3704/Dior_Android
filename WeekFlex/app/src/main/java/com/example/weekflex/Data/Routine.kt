@@ -4,7 +4,7 @@ import com.example.weekflex.R
 import java.io.Serializable
 
 data class Routine (
-    val routineTitle: String,
+    var routineTitle: String,
     var taskList:List<Task> = emptyList()
 ):Serializable
 
