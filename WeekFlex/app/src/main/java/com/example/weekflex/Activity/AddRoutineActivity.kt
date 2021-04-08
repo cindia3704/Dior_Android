@@ -30,7 +30,7 @@ var routineList = listOf(
         ))
 )
 
-class AddRoutineActivity : AppCompatActivity() {
+class AddRoutineActivity : BaseActivity() {
     private lateinit var backBtn:Button
     private lateinit var introMentView:TextView
     private lateinit var makeRoutineBtn: Button
@@ -62,7 +62,7 @@ class AddRoutineActivity : AppCompatActivity() {
 
         makeRoutineBtn.setOnClickListener {
             val intent = Intent(this@AddRoutineActivity,InsertRoutineNameActivity::class.java)
-            startActivity(intent)
+            navigateWithoutFinish(intent)
         }
     }
 
@@ -101,6 +101,7 @@ class AddRoutineActivity : AppCompatActivity() {
         val intent = Intent(this@AddRoutineActivity, RoutineFinalCheckActivity::class.java)
         intent.putExtra("routine",item)
         intent.putExtra("modify","")
-        startActivity(intent)
+
+        navigateWithFinish(intent)
     }
 }

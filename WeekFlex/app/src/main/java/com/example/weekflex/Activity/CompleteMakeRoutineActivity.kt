@@ -45,7 +45,7 @@ val categoryList = listOf(
     ))
 )
 
-class CompleteMakeRoutineActivity : AppCompatActivity() {
+class CompleteMakeRoutineActivity : BaseActivity() {
     private var isNewRoutine = true
 
     private lateinit var makeRoutineTopheader : ConstraintLayout
@@ -132,22 +132,22 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
                 Log.d("THIS IS NEW!!! , ","   Routinename: "+nameOfRoutine.text)
                 val intentToInsertRoutineName = Intent(this@CompleteMakeRoutineActivity,InsertRoutineNameActivity::class.java)
                 intent.putExtra("name",nameOfRoutine.text.toString())
-                startActivity(intentToInsertRoutineName)
-                finish()
-            }else {
-                finish()
+                navigateWithoutFinish(intentToInsertRoutineName)
             }
+            finish()
+
         }
         nextBtn.setOnClickListener{
             if(selectedTaskListForNewRoutine.size>0){
                 Log.d("msg","is New Routine?? $isNewRoutine")
-                val noteToIntent:String = if(isNewRoutine) "final" else "modify"
-                val intent = Intent(this@CompleteMakeRoutineActivity,RoutineFinalCheckActivity::class.java)
                 val newRoutine : Routine = Routine(nameOfRoutine.text.toString(),selectedTaskListForNewRoutine)
+                val noteToIntent:String = if(isNewRoutine) "final" else "modify"
+
+                val intent = Intent(this@CompleteMakeRoutineActivity,RoutineFinalCheckActivity::class.java)
                 intent.putExtra("routine",newRoutine)
                 intent.putExtra(noteToIntent,"")
-                startActivity(intent)
-                finish()
+
+                navigateWithFinish(intent)
             }
 
         }
@@ -160,7 +160,7 @@ class CompleteMakeRoutineActivity : AppCompatActivity() {
         }
         addTodoBtn.setOnClickListener {
             val intent = Intent(this@CompleteMakeRoutineActivity,AddTodoActivity::class.java)
-            startActivity(intent)
+            navigateWithoutFinish(intent)
         }
 
         searchCategoryView.setOnFocusChangeListener { view, hasFocus ->
