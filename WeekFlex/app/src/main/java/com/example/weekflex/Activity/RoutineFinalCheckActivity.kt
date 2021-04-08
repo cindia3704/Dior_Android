@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_routine_final_check.*
 //    RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
 //))
 
-class RoutineFinalCheckActivity : AppCompatActivity() {
+class RoutineFinalCheckActivity : BaseActivity() {
     private lateinit var routineNameView: EditText
     private lateinit var routineMentView: TextView
     private lateinit var addTaskBtn: ConstraintLayout
@@ -53,8 +53,8 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
 
         // 최종점검 & 수정 디자인 반영 위해
         isFinalCheck = intent.hasExtra("final")
-        if(isFinalCheck) pageTitle.visibility = View.INVISIBLE else pageTitle.visibility =View.VISIBLE
-        if(isFinalCheck) routineMentView.visibility = View.VISIBLE else routineMentView.visibility =View.GONE
+        pageTitle.visibility = if(isFinalCheck) View.INVISIBLE else View.VISIBLE
+        routineMentView.visibility = if(isFinalCheck) View.VISIBLE else View.GONE
     }
     private fun setListener(){
         goBackBtn.setOnClickListener {
@@ -63,8 +63,7 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
             }
             else{
                 val intentToAddRoutineAcitivity = Intent(this@RoutineFinalCheckActivity,AddRoutineActivity::class.java)
-                startActivity(intentToAddRoutineAcitivity)
-                finish()
+                navigateWithFinish(intentToAddRoutineAcitivity)
             }
         }
         addTaskBtn.setOnClickListener {
@@ -79,8 +78,8 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
                 val intentToSaveRoutine =
                     Intent(this@RoutineFinalCheckActivity, AddRoutineActivity::class.java)
                 intentToSaveRoutine.putExtra(noteToNextActivity, savedRoutine)
-                startActivity(intentToSaveRoutine)
-                finish()
+
+                navigateWithFinish(intentToSaveRoutine)
             }
         }
         routineNameView.doOnTextChanged { text, start, before, count ->
@@ -94,8 +93,8 @@ class RoutineFinalCheckActivity : AppCompatActivity() {
             Intent(this@RoutineFinalCheckActivity, CompleteMakeRoutineActivity::class.java)
         intentToAddTask.putExtra("routine",routineSelected)
         intentToAddTask.putExtra(noteToNextActivity, routineSelected)
-        startActivity(intentToAddTask)
-        finish()
+
+        navigateWithFinish(intentToAddTask)
     }
 
 

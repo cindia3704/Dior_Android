@@ -18,7 +18,7 @@ import androidx.core.widget.doOnTextChanged
 import com.example.weekflex.R
 
 
-class InsertRoutineNameActivity : AppCompatActivity() {
+class InsertRoutineNameActivity : BaseActivity() {
     private lateinit var backBtn : Button
     private lateinit var routineNameView: EditText
     private lateinit var checkImg : ImageView
@@ -48,20 +48,6 @@ class InsertRoutineNameActivity : AppCompatActivity() {
             hideKeyboard()
             finish()
         }
-        // 키보드 enter --> 완료로 바꾸고 다음 액티비티로 보내기
-//        routineNameView.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
-//            when (actionId) {
-//                EditorInfo.IME_ACTION_DONE -> {
-//                    hideKeyboard()
-//                    val intent = Intent(this@InsertRoutineNameActivity,CompleteMakeRoutineActivity::class.java)
-//                    startActivity(intent)
-//                    finish()
-//                }
-//                else -> {
-//                }
-//            }
-//            true
-//        })
 
         //루틴 이름 입력시 코멘트 바꾸기 & 상단 체크 표시 바꾸기
         routineNameView.doAfterTextChanged { s ->
@@ -79,8 +65,7 @@ class InsertRoutineNameActivity : AppCompatActivity() {
             hideKeyboard()
                     val intent = Intent(this@InsertRoutineNameActivity,CompleteMakeRoutineActivity::class.java)
                     intent.putExtra("name",""+routineNameView.text.toString())
-                    startActivity(intent)
-                    finish()
+                    navigateWithFinish(intent)
         }
     }
 
