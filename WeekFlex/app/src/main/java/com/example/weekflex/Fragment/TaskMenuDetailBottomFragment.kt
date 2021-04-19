@@ -12,11 +12,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.setFragmentResultListener
 import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlin.math.log
 
 
 class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickListener {
@@ -75,8 +77,17 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
         fun showTask(fragmentManager : FragmentManager, passedTask : Task){
             task = passedTask
             instance.show(fragmentManager, TAG)
+
+            instance.setFragmentResultListener(requestKey(task)) { requestKey, bundle ->
+                val result = bundle.getString(bundleKey(task))
+                Log.e("와라", "$result")
+            }
         }
+
+        fun requestKey(task : Task) = "${task.routineItemTitle}"
+        fun bundleKey(task : Task)= "${task.routineItemTitle}${task.category}"
     }
+
 
     override fun onActivityCreated(arg0: Bundle?) { super.onActivityCreated(arg0)
         dialog?.window?.setWindowAnimations(R.style.DialogAnimation)

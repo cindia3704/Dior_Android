@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import com.example.weekflex.Activity.AddRoutineActivity
 import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Activity.MainActivity
@@ -84,7 +86,14 @@ class TodoMainFragment : Fragment(){
     }
 
     fun onClickRoutineItemMenuButton(routine: Routine, task: Task){
-        fragmentManager?.let { TaskMenuDetailBottomFragment.showTask(it, task) }
+        parentFragmentManager?.let {
+            val result = "result"
+            setFragmentResult(TaskMenuDetailBottomFragment.requestKey(task), bundleOf(TaskMenuDetailBottomFragment.bundleKey(task) to result))
+            TaskMenuDetailBottomFragment.showTask(it, task)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.task_menu_detail_bottom_fragment, TaskMenuDetailBottomFragment.instance)
+                .commit()
+        }
     }
 
     fun onClickDeleteRoutine(routine: Routine) {
