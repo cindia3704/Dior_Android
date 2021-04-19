@@ -30,14 +30,14 @@ class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity) : Recyc
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("newRoutineTaskList", newRoutineTaskList.get(position).routineItemTitle)
-        holder.taskName.setText(newRoutineTaskList.get(position).routineItemTitle)
+        Log.d("newRoutineTaskList", newRoutineTaskList.get(position).taskTitle)
+        holder.taskName.setText(newRoutineTaskList.get(position).taskTitle)
         holder.deleteButton.setOnClickListener {
             activity.deleteAddedTask(newRoutineTaskList.get(position))
         }
     }
 
-    fun changeSelectedRoutineItemList(list: List<Task>) {
+    fun changeSelectedTaskList(list: List<Task>) {
         newRoutineTaskList = list
         notifyDataSetChanged()
     }

@@ -4,7 +4,7 @@ import java.io.Serializable
 
 // TODO 용어 맞춰야함
 data class Task(
-    val routineItemTitle: String,
+    val taskTitle: String,
     val category: Int,
     val startTime: String,
     val endTime: String,

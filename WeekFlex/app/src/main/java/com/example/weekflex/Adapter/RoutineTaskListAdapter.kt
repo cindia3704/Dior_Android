@@ -44,9 +44,9 @@ class RoutineTaskListAdapter(
         if (position == taskList.size - 1) {
             holder.divisionLine.visibility = View.INVISIBLE
         }
-        Log.d("msg", "item: " + item.routineItemTitle)
+        Log.d("msg", "item: " + item.taskTitle)
         holder.taskColor.setImageResource(R.drawable.yellowstar)
-        holder.taskName.setText(item.routineItemTitle)
+        holder.taskName.setText(item.taskTitle)
         holder.taskDateAndTime.setText(getWeekDays(item.weekdaysScheduled) + " " + item.startTime + "-" + item.endTime)
         holder.bind(position)
         holder.taskDeleteBtn.setOnClickListener {

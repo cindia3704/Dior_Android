@@ -26,12 +26,12 @@ class RoutineListAdapter(
             taskCount = itemView.findViewById(R.id.routineList_item_numTodo)
             modifyRoutineButton = itemView.findViewById(R.id.modifyRoutine_routineList)
             deleteRoutineButtone = itemView.findViewById(R.id.deleteRoutine_routineList)
-            swipeContainer = itemView.findViewById(R.id.routine_item_view_layout)
+            swipeContainer = itemView.findViewById(R.id.task_view_layout)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.routine_item_content, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.`task_content.xml`, parent, false)
         return ViewHolder(view)
     }
 

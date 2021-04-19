@@ -15,18 +15,18 @@ import com.example.weekflex.R
 class TodoMainRoutineViewItemAdapter(
     val inflater: LayoutInflater,
     val routine: Routine,
-    val onClickRoutineItemMenuButton: (Routine, Task) -> Unit
+    val onClickTaskMenuButton: (Routine, Task) -> Unit
 ) : RecyclerView.Adapter<TodoMainRoutineViewItemAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val routineItemTitle: TextView
+        val taskTitle: TextView
         val categoryStarImageView: ImageView
-        val routineItemTime: TextView
+        val taskTime: TextView
         val menuButton: ImageView
 
         init {
-            routineItemTitle = itemView.findViewById(R.id.todo_routine_home_view_item_routineNameTextView)
+            taskTitle = itemView.findViewById(R.id.todo_routine_home_view_item_routineNameTextView)
             categoryStarImageView = itemView.findViewById(R.id.todo_routine_home_view_item_starImageView)
-            routineItemTime = itemView.findViewById(R.id.todo_routine_home_view_item_routineTimeTextView)
+            taskTime = itemView.findViewById(R.id.todo_routine_home_view_item_routineTimeTextView)
             menuButton = itemView.findViewById(R.id.todo_routine_home_view_item_Menu)
         }
     }
@@ -44,16 +44,16 @@ class TodoMainRoutineViewItemAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val routineItem = routine.taskList[position]
+        val task = routine.taskList[position]
 
-        holder.routineItemTitle.text = routineItem.routineItemTitle
-        holder.routineItemTime.text = "${routineItem.startTime}~${routineItem.endTime}"
+        holder.taskTitle.text = task.taskTitle
+        holder.taskTime.text = "${task.startTime}~${task.endTime}"
 
-        val drawableStar = categoryToStarImage[routineItem.category] ?: R.drawable.graystar
+        val drawableStar = categoryToStarImage[task.category] ?: R.drawable.graystar
         holder.categoryStarImageView.setImageResource(drawableStar)
 
         holder.menuButton.setOnClickListener { view ->
-            onClickRoutineItemMenuButton.invoke(routine, routineItem)
+            onClickTaskMenuButton.invoke(routine, task)
         }
     }
 }

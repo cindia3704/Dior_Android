@@ -17,7 +17,7 @@ class TodoMainRoutineViewAdapter(
     val inflater: LayoutInflater,
     val routineList: List<Routine>,
     val onClickDeleteButton: (Routine) -> Unit,
-    val onClickRoutineItemMenuButton: (Routine, Task) -> Unit,
+    val onClickTaskMenuButton: (Routine, Task) -> Unit,
     private val viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
 ) : RecyclerView.Adapter<TodoMainRoutineViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -49,7 +49,7 @@ class TodoMainRoutineViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val routine = routineList[position]
         holder.title.text = routine.routineTitle
-        holder.itemRecyclerView.adapter = TodoMainRoutineViewItemAdapter(inflater, routine, onClickRoutineItemMenuButton)
+        holder.itemRecyclerView.adapter = TodoMainRoutineViewItemAdapter(inflater, routine, onClickTaskMenuButton)
 
         viewBinderHelper.bind(holder.swipeRevealLayout, routine.toString())
 

@@ -33,7 +33,7 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
         dialogView = view
 
         taskNameTextView = dialogView.findViewById(R.id.task_name_textView)
-        taskNameTextView.text = task.routineItemTitle
+        taskNameTextView.text = task.taskTitle
 
         val onModify = { fragmentManager?.let { TaskModifyBottomFragment.showTask(it, task) } }
         taskModifyTextView = dialogView.findViewById(R.id.task_modify_textview)
@@ -82,8 +82,8 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
             }
         }
 
-        fun requestKey(task: Task) = "${task.routineItemTitle}"
-        fun bundleKey(task: Task) = "${task.routineItemTitle}${task.category}"
+        fun requestKey(task: Task) = "${task.taskTitle}"
+        fun bundleKey(task: Task) = "${task.taskTitle}${task.category}"
     }
 
     override fun onActivityCreated(arg0: Bundle?) { super.onActivityCreated(arg0)

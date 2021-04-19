@@ -1,6 +1,5 @@
 package com.example.weekflex.Activity
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -103,7 +102,7 @@ class CompleteMakeRoutineActivity : BaseActivity() {
             val recievedRoutine = intent.getSerializableExtra("routine") as Routine
             nameOfRoutine.text = recievedRoutine.routineTitle
             selectedTaskListForNewRoutine = recievedRoutine.taskList.map { task -> task }
-            refreshAddedRoutineItem()
+            refreshAddedTask()
         }
 
         // 현재 상태가 수정중인건지 아니면 최종 점검인지 확인하기 위해
@@ -249,12 +248,12 @@ class CompleteMakeRoutineActivity : BaseActivity() {
     fun deleteAddedTask(item: Task) {
         selectedTaskListForNewRoutine = selectedTaskListForNewRoutine.minus(item)
         Log.d("msg", "removed!!!!")
-        refreshAddedRoutineItem()
+        refreshAddedTask()
     }
 
-    fun refreshAddedRoutineItem() {
-        addedRoutineTaskAdapter.changeSelectedRoutineItemList(selectedTaskListForNewRoutine)
-        categoryTaskListAdapter.changeSelectedRoutineItemList(selectedTaskListForNewRoutine)
+    fun refreshAddedTask() {
+        addedRoutineTaskAdapter.changeSelectedTaskList(selectedTaskListForNewRoutine)
+        categoryTaskListAdapter.changeSelectedTaskList(selectedTaskListForNewRoutine)
 
         setHeaderView()
     }
@@ -264,17 +263,17 @@ class CompleteMakeRoutineActivity : BaseActivity() {
 
         Log.d("msg", "added!!!!")
         Log.d("msg", "count: " + selectedTaskListForNewRoutine.size)
-        Log.d("msg", "!!!!: " + selectedTaskListForNewRoutine[selectedTaskListForNewRoutine.size - 1].routineItemTitle)
+        Log.d("msg", "!!!!: " + selectedTaskListForNewRoutine[selectedTaskListForNewRoutine.size - 1].taskTitle)
 
-        refreshAddedRoutineItem()
+        refreshAddedTask()
     }
 
     fun addAllCategoryTask(categoryList: List<Category>) {
 
-        var allRoutineItem: List<Task> = categoryList.flatMap { category -> category.taskList }
+        var allTaskList: List<Task> = categoryList.flatMap { category -> category.taskList }
 
         // 어댑터에 보내기 전 가장 앞 element = 전체로 만듬
-        val allCategory = Category(0, "전체", 0, allRoutineItem)
+        val allCategory = Category(0, "전체", 0, allTaskList)
         allCategoryList = allCategoryList.plus(allCategory) + categoryList
 
         Log.d("msg", "!!!!!!! ALL CATEGORY LIST SIZE : " + allCategoryList.size)

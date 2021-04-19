@@ -91,11 +91,11 @@ class TodoMainFragment : Fragment() {
                 inflater,
                 routineList,
                 onClickDeleteButton = ::onClickDeleteRoutine,
-                onClickRoutineItemMenuButton = ::onClickRoutineItemMenuButton
+                onClickTaskMenuButton = ::onClickTaskMenuButton
         )
     }
 
-    fun onClickRoutineItemMenuButton(routine: Routine, task: Task) {
+    fun onClickTaskMenuButton(routine: Routine, task: Task) {
         parentFragmentManager?.let {
             val result = "result"
             setFragmentResult(TaskMenuDetailBottomFragment.requestKey(task), bundleOf(TaskMenuDetailBottomFragment.bundleKey(task) to result))

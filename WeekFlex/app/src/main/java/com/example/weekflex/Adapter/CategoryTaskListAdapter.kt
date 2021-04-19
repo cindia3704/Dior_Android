@@ -22,7 +22,7 @@ class CategoryTaskListAdapter(
     var selectedTaskList: List<Task> = listOf()
     // property 찾아보기
     val taskList: List<Task> get() = getCategoryTaskList(categoryList, selectedCategoryId)
-    val searchedTaskList: List<Task> get() = taskList.filter { t -> t.routineItemTitle.contains(searchedTaskString) }.toList()
+    val searchedTaskList: List<Task> get() = taskList.filter { t -> t.taskTitle.contains(searchedTaskString) }.toList()
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val bookmark: ImageView = itemView.findViewById(R.id.taskList_bookmarkImg)
@@ -51,7 +51,7 @@ class CategoryTaskListAdapter(
         holder.bookmark.setImageResource(if (isBookMarked) R.drawable.bookmark_fill else R.drawable.bookmark_empty)
 
         holder.taskTime.setText("${getWeekDays(task.weekdaysScheduled)} ${task.startTime}-${task.endTime}")
-        holder.taskName.setText(task.routineItemTitle)
+        holder.taskName.setText(task.taskTitle)
         holder.container.setOnClickListener {
             updateBackgroundColor(holder, task)
             notifyDataSetChanged()
@@ -97,17 +97,10 @@ class CategoryTaskListAdapter(
         selectedCategoryId = id
         notifyDataSetChanged()
     }
-    fun changeSelectedRoutineItemList(list: List<Task>) {
+    fun changeSelectedTaskList(list: List<Task>) {
         selectedTaskList = list
         notifyDataSetChanged()
     }
-
-    // 요 기능을 나눌겁니다.
-    // RoutineItem(of 전체 카테고리)를 대상으로 가져오기. 전체가 아닐때는 정상적으로 가져와야된다.
-    // 전체도, 카테고리 중 하나니까, 그냥 선택 카테고리를 검색이면 전체로 바꾸면 됨.
-    // (검색중인지 여부도 검사 안함. 전제조건 검사 X -> filterd~에서 보면, contain으로 한다. contain("")는 무조건 true라서)
-    // 검색해서 맞는거 가져오기 ->filtered~~
-    // 검색결과가 있으면 searchDoesNotExist = true로 바꾸기 (false로 바꾸지 않음.)
 
     fun changeSearchedRoutine(item: String) {
         searchedTaskString = item

@@ -15,10 +15,6 @@ import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 import kotlinx.android.synthetic.main.activity_routine_final_check.*
 
-// val routineSelected: Routine = Routine("Coding",listOf( RoutineItem("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
-//    RoutineItem("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
-// ))
-
 class RoutineFinalCheckActivity : BaseActivity() {
     private lateinit var routineNameView: EditText
     private lateinit var routineMentView: TextView

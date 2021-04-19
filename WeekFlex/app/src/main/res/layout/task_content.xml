@@ -2,7 +2,7 @@
 <com.chauthai.swipereveallayout.SwipeRevealLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/routine_item_view_layout"
+    android:id="@+id/task_view_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
@@ -40,7 +40,7 @@
                 android:id="@+id/deleteRoutine_routineList"
                 android:layout_width="84dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/pink_routineitem_corner_background"
+                android:background="@drawable/pink_task_corner_background"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/modifyRoutine_routineList"
                 android:adjustViewBounds="true"
@@ -67,7 +67,7 @@
     android:layout_height="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/black_routineitem_corner_background">
+    android:background="@drawable/black_task_corner_background">
     <ImageView
         android:id="@+id/routinelist_item_routineImg"
         android:layout_width="24dp"

@@ -81,7 +81,7 @@ class TaskModifyBottomFragment : BottomSheetDialogFragment(), View.OnClickListen
         val view = inflater.inflate(R.layout.task_modify_bottom_fragment, container, false)
 
         taskName = view.findViewById(R.id.task_name_textView)
-        taskName.text = task.routineItemTitle
+        taskName.text = task.taskTitle
         categoryView = CategoryView(
                 view.findViewById(R.id.task_category_star_imageView),
                 view.findViewById(R.id.task_category_name_textView),
