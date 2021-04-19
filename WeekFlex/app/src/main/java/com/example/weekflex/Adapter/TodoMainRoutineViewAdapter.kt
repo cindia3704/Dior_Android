@@ -14,17 +14,17 @@ import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
 class TodoMainRoutineViewAdapter(
-        val inflater: LayoutInflater,
-        val routineList: List<Routine>,
-        val onClickDeleteButton: (Routine) -> Unit,
-        val onClickRoutineItemMenuButton: (Routine, Task) -> Unit,
-        private val viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
-):RecyclerView.Adapter<TodoMainRoutineViewAdapter.ViewHolder>(){
+    val inflater: LayoutInflater,
+    val routineList: List<Routine>,
+    val onClickDeleteButton: (Routine) -> Unit,
+    val onClickRoutineItemMenuButton: (Routine, Task) -> Unit,
+    private val viewBinderHelper: ViewBinderHelper = ViewBinderHelper()
+) : RecyclerView.Adapter<TodoMainRoutineViewAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val itemRecyclerView : RecyclerView
-        val title : TextView
-        val swipeRevealLayout : SwipeRevealLayout
-        val routineDeleteButton : ImageButton
+        val itemRecyclerView: RecyclerView
+        val title: TextView
+        val swipeRevealLayout: SwipeRevealLayout
+        val routineDeleteButton: ImageButton
         init {
             Log.d("msg", itemView.resources.getResourceName(itemView.getId()))
             itemRecyclerView = itemView.findViewById(R.id.todo_routine_home_view_itemRecyclerView)
@@ -37,7 +37,7 @@ class TodoMainRoutineViewAdapter(
     // 생성될 때 해주는거
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layout = R.layout.todo_routine_home_view
-        val view = inflater.inflate(layout,parent,false)
+        val view = inflater.inflate(layout, parent, false)
 
         return ViewHolder(view)
     }

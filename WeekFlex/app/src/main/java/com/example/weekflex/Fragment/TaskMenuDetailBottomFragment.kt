@@ -18,8 +18,6 @@ import com.example.weekflex.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlin.math.log
-
 
 class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickListener {
     private lateinit var dialogView: View
@@ -39,21 +37,21 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
 
         val onModify = { fragmentManager?.let { TaskModifyBottomFragment.showTask(it, task) } }
         taskModifyTextView = dialogView.findViewById(R.id.task_modify_textview)
-        taskModifyTextView.setOnClickListener {onModify.invoke()}
+        taskModifyTextView.setOnClickListener { onModify.invoke() }
         taskModifyImageView = dialogView.findViewById(R.id.task_modify_Imageview)
-        taskModifyImageView.setOnClickListener {onModify.invoke()}
+        taskModifyImageView.setOnClickListener { onModify.invoke() }
 
         val onDelete = { Toast.makeText(context, "DeleteMessage", Toast.LENGTH_SHORT).show() }
 
         taskDeleteTextView = dialogView.findViewById(R.id.task_delete_textview)
-        taskDeleteTextView.setOnClickListener {onDelete.invoke()}
+        taskDeleteTextView.setOnClickListener { onDelete.invoke() }
         taskDeleteImageView = dialogView.findViewById(R.id.task_delete_imageView)
-        taskDeleteImageView.setOnClickListener {onDelete.invoke()}
+        taskDeleteImageView.setOnClickListener { onDelete.invoke() }
 
         cancelImageView = dialogView.findViewById(R.id.task_modify_dialog_close_imageView)
-        with(cancelImageView){ setOnClickListener{
+        with(cancelImageView) { setOnClickListener {
             dialog?.also { getBottomSheetDialog(it).state = BottomSheetBehavior.STATE_HIDDEN }
-        }}
+        } }
 
         return view
     }
@@ -74,7 +72,7 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
 
         lateinit var task: Task
 
-        fun showTask(fragmentManager : FragmentManager, passedTask : Task){
+        fun showTask(fragmentManager: FragmentManager, passedTask: Task) {
             task = passedTask
             instance.show(fragmentManager, TAG)
 
@@ -84,16 +82,15 @@ class TaskMenuDetailBottomFragment : BottomSheetDialogFragment(), View.OnClickLi
             }
         }
 
-        fun requestKey(task : Task) = "${task.routineItemTitle}"
-        fun bundleKey(task : Task)= "${task.routineItemTitle}${task.category}"
+        fun requestKey(task: Task) = "${task.routineItemTitle}"
+        fun bundleKey(task: Task) = "${task.routineItemTitle}${task.category}"
     }
-
 
     override fun onActivityCreated(arg0: Bundle?) { super.onActivityCreated(arg0)
         dialog?.window?.setWindowAnimations(R.style.DialogAnimation)
     }
 
-    fun getBottomSheetDialog(dialog: DialogInterface) : BottomSheetBehavior<FrameLayout>{
+    fun getBottomSheetDialog(dialog: DialogInterface): BottomSheetBehavior<FrameLayout> {
         val d = dialog as BottomSheetDialog
 
         val bottomSheet =

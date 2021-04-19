@@ -29,11 +29,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 const val RC_SIGN_IN = 123
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var kakaoLogin : ImageView
+    lateinit var kakaoLogin: ImageView
     lateinit var googleLogin: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,20 +44,20 @@ class LoginActivity : AppCompatActivity() {
         Log.d("Hash", keyHash)
     }
 
-    fun initView(){
+    fun initView() {
         kakaoLogin = findViewById(R.id.login_kakao)
         googleLogin = findViewById(R.id.login_google)
     }
 
-    fun setupListener(){
-        kakaoLogin.setOnClickListener{
+    fun setupListener() {
+        kakaoLogin.setOnClickListener {
             kakaoLogin()
         }
         googleLogin.setOnClickListener {
             googleLogin()
         }
     }
-    private fun kakaoLogin(){
+    private fun kakaoLogin() {
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -90,34 +89,32 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-            else if (token != null) {
+            } else if (token != null) {
                 Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 UserApiClient.instance.me { user, error ->
                     if (user != null) {
-                        val kakaoUserEmail = user.kakaoAccount?.email?: "null"
-                        val kakaoUsername = user.kakaoAccount?.profile?.nickname?:"null"
+                        val kakaoUserEmail = user.kakaoAccount?.email ?: "null"
+                        val kakaoUsername = user.kakaoAccount?.profile?.nickname ?: "null"
                         val signupType = "KAKAO"
                         val accessToken = token.accessToken
-                        Log.d("msg","useremail: "+ kakaoUserEmail)
-                        Log.d("msg","user name: "+ kakaoUsername)
-                        Log.d("msg","token: "+ (token).accessToken)
-                        val registerRequest = RegisterRequest(accessToken,kakaoUserEmail,kakaoUsername,signupType)
+                        Log.d("msg", "useremail: " + kakaoUserEmail)
+                        Log.d("msg", "user name: " + kakaoUsername)
+                        Log.d("msg", "token: " + (token).accessToken)
+                        val registerRequest = RegisterRequest(accessToken, kakaoUserEmail, kakaoUsername, signupType)
                         tryLogin(registerRequest)
-
                     }
                 }
             }
         }
 
-        if(LoginClient.instance.isKakaoTalkLoginAvailable(this)){
+        if (LoginClient.instance.isKakaoTalkLoginAvailable(this)) {
             LoginClient.instance.loginWithKakaoTalk(this, callback = callback)
-        }else{
+        } else {
             LoginClient.instance.loginWithKakaoAccount(this, callback = callback)
         }
     }
 
-    private fun googleLogin(){
+    private fun googleLogin() {
 
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -125,14 +122,13 @@ class LoginActivity : AppCompatActivity() {
                 .requestEmail()
                 .build()
 
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
 
         login_google.visibility = View.VISIBLE
         login_google.setSize(SignInButton.SIZE_ICON_ONLY)
 
         val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
         startActivityForResult(signInIntent, RC_SIGN_IN)
-
     }
 
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) = try {
@@ -141,50 +137,50 @@ class LoginActivity : AppCompatActivity() {
         val googleUserEmail = account?.getEmail()
         val token = account?.getIdToken()
         val signupType = "GOOGLE"
-        Log.d("msg","user name: "+ googleUserName)
-        Log.d("msg","user email: "+ googleUserEmail)
-        Log.d("msg","token: "+ (token))
-        if(token == null || googleUserEmail == null || googleUserName == null){
-            Toast.makeText(this@LoginActivity,"ERROR! Fields are null",Toast.LENGTH_SHORT).show()
-        }else {
+        Log.d("msg", "user name: " + googleUserName)
+        Log.d("msg", "user email: " + googleUserEmail)
+        Log.d("msg", "token: " + (token))
+        if (token == null || googleUserEmail == null || googleUserName == null) {
+            Toast.makeText(this@LoginActivity, "ERROR! Fields are null", Toast.LENGTH_SHORT).show()
+        } else {
             val registerRequest =
                 RegisterRequest(token, googleUserEmail, googleUserName, signupType)
             tryLogin(registerRequest)
         }
         login_google.visibility = View.GONE
     } catch (e: ApiException) {
-        Log.w("failed","signInResult:failed code="+e.statusCode)
+        Log.w("failed", "signInResult:failed code=" + e.statusCode)
         login_google.visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            handleSignInResult(task);
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
         }
     }
 
     // sharedPreference에 토큰 저장하는 함수
-    fun saveUserToken(token: String?, activity: Activity){
+    fun saveUserToken(token: String?, activity: Activity) {
         val sp = activity.getSharedPreferences("login_token", Context.MODE_PRIVATE)
         val editor = sp.edit()
-        editor.putString("login_token",token)
+        editor.putString("login_token", token)
         editor.commit()
     }
 
-    fun tryLogin(registerRequest:RegisterRequest){
-        saveUserToken(null,this@LoginActivity)
+    fun tryLogin(registerRequest: RegisterRequest) {
+        saveUserToken(null, this@LoginActivity)
         (application as GlobalApplication).retrofitService.register(
             registerRequest
         ).enqueue(object : Callback<RegisterResponse> {
             override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Log.d("msg","failed!")
-                Log.d("msg","!!"+registerRequest.accessToken)
-                Log.d("msg","!!"+registerRequest.email)
+                Log.d("msg", "failed!")
+                Log.d("msg", "!!" + registerRequest.accessToken)
+                Log.d("msg", "!!" + registerRequest.email)
 
-                Toast.makeText(this@LoginActivity,"회원가입 실패",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "회원가입 실패", Toast.LENGTH_SHORT).show()
             }
 
             override fun onResponse(
@@ -192,13 +188,13 @@ class LoginActivity : AppCompatActivity() {
                 response: Response<RegisterResponse>
             ) {
 
-                if(response.isSuccessful){
-                    Log.d("msg","successful!")
-                    Log.d("msg","!!"+registerRequest.accessToken)
-                    Log.d("msg","!!"+registerRequest.email)
+                if (response.isSuccessful) {
+                    Log.d("msg", "successful!")
+                    Log.d("msg", "!!" + registerRequest.accessToken)
+                    Log.d("msg", "!!" + registerRequest.email)
                     val responseFromServer = response.body()
-                    if(responseFromServer?.data == null){
-                        Toast.makeText(this@LoginActivity,"response from server is null",Toast.LENGTH_SHORT).show()
+                    if (responseFromServer?.data == null) {
+                        Toast.makeText(this@LoginActivity, "response from server is null", Toast.LENGTH_SHORT).show()
                     } else {
                         val token = responseFromServer.data
                         Log.d("response token: ", token.toString())
@@ -207,17 +203,15 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intentToMain)
                         finish()
                     }
-                }
-                else{
+                } else {
                     Log.e("request header : ", call.request().headers().toString())
                     Log.e("request body : ", call.request().body().toString())
-                    Log.d("response msg: ",response.message())
+                    Log.d("response msg: ", response.message())
                     Log.d("response err body: ", response.errorBody().toString())
                     Log.d("response code: ", response.code().toString())
-                    Toast.makeText(this@LoginActivity,"아이디와 비밀번호를 다시 확인해주세요",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "아이디와 비밀번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show()
                 }
             }
         })
     }
-
 }

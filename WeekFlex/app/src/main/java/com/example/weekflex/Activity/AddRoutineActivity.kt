@@ -1,7 +1,6 @@
 package com.example.weekflex.Activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -16,25 +15,25 @@ import kotlinx.android.synthetic.main.activity_add_routine.*
 
 var routineList = listOf(
         Routine("English Master :-)", listOf(
-            Task("스피킹", 3, "10:00AM", "1:00PM",true, listOf("월","화")),
-            Task("전화영어", 2, "1:00PM", "1:30PM",false, listOf("수")),
-            Task("스피킹", 1, "5:00PM", "6:00PM",true, listOf("금","일"))
+            Task("스피킹", 3, "10:00AM", "1:00PM", true, listOf("월", "화")),
+            Task("전화영어", 2, "1:00PM", "1:30PM", false, listOf("수")),
+            Task("스피킹", 1, "5:00PM", "6:00PM", true, listOf("금", "일"))
         )),
         Routine("빡세게 면접 준비", listOf(
-            Task("CS", 3, "10:00AM", "1:00PM",false, listOf("수")),
-            Task("알고리즘", 2, "1:00PM", "1:30PM",true, listOf("월","화"))
+            Task("CS", 3, "10:00AM", "1:00PM", false, listOf("수")),
+            Task("알고리즘", 2, "1:00PM", "1:30PM", true, listOf("월", "화"))
         )),
         Routine("운동 뿌셔", listOf(
-            Task("코어", 1, "10:00AM", "1:00PM",false, listOf("일")),
-            Task("하체", 2, "1:00PM", "1:30PM",false, listOf("토"))
+            Task("코어", 1, "10:00AM", "1:00PM", false, listOf("일")),
+            Task("하체", 2, "1:00PM", "1:30PM", false, listOf("토"))
         ))
 )
 
 class AddRoutineActivity : BaseActivity() {
-    private lateinit var backBtn:Button
-    private lateinit var introMentView:TextView
+    private lateinit var backBtn: Button
+    private lateinit var introMentView: TextView
     private lateinit var makeRoutineBtn: Button
-    private lateinit var adapter : RoutineListAdapter
+    private lateinit var adapter: RoutineListAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_routine)
@@ -43,43 +42,42 @@ class AddRoutineActivity : BaseActivity() {
         layoutInit()
     }
 
-    private fun initView(){
-        backBtn= findViewById(R.id.back_addRoutine)
+    private fun initView() {
+        backBtn = findViewById(R.id.back_addRoutine)
         introMentView = findViewById(R.id.ment_addRoutine)
         makeRoutineBtn = findViewById(R.id.makeRoutine_addRoutine)
 
         // 새로 추가된 루틴인지 아니면, 수정된 루틴인지 구분 그냥 안하고, 서버에서 GET 요청으로 받는거로!
-        if(intent.hasExtra("newRoutine")){
+        if (intent.hasExtra("newRoutine")) {
             val newRoutine = intent.getSerializableExtra("newRoutine") as Routine
             routineList = routineList.plus(newRoutine)
         }
-
     }
-    private fun setListener(){
+    private fun setListener() {
         backBtn.setOnClickListener {
             finish()
         }
 
         makeRoutineBtn.setOnClickListener {
-            val intent = Intent(this@AddRoutineActivity,InsertRoutineNameActivity::class.java)
+            val intent = Intent(this@AddRoutineActivity, InsertRoutineNameActivity::class.java)
             navigateWithoutFinish(intent)
         }
     }
 
-    private fun layoutInit(){
-        //TODO: 서버랑 연결해서 루틴 리스트 받아오기
+    private fun layoutInit() {
+        // TODO: 서버랑 연결해서 루틴 리스트 받아오기
 
         adapter = RoutineListAdapter(this@AddRoutineActivity, routineList)
         recyclerview_addRoutine.adapter = adapter
-        recyclerview_addRoutine.layoutManager= GridLayoutManager(this@AddRoutineActivity,1,GridLayoutManager.VERTICAL,false)
+        recyclerview_addRoutine.layoutManager = GridLayoutManager(this@AddRoutineActivity, 1, GridLayoutManager.VERTICAL, false)
     }
 
-    fun deleteRoutine(item: Routine){
+    fun deleteRoutine(item: Routine) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this@AddRoutineActivity)
         builder.setMessage("이번주의 해당 루틴 전체가 삭제됩니다.\n이대로 삭제를 진행할까요?")
 
         builder.setPositiveButton("삭제하기") { dialog, which ->
-            routineList=routineList.minus(item)
+            routineList = routineList.minus(item)
             adapter.changeRoutine(routineList)
         }
 
@@ -97,10 +95,10 @@ class AddRoutineActivity : BaseActivity() {
         }
     }
 
-    fun modifyRoutine(item: Routine){
+    fun modifyRoutine(item: Routine) {
         val intent = Intent(this@AddRoutineActivity, RoutineFinalCheckActivity::class.java)
-        intent.putExtra("routine",item)
-        intent.putExtra("modify","")
+        intent.putExtra("routine", item)
+        intent.putExtra("modify", "")
 
         navigateWithFinish(intent)
     }

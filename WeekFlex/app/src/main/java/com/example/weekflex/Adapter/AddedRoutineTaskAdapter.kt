@@ -11,17 +11,17 @@ import com.example.weekflex.Activity.CompleteMakeRoutineActivity
 import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
-class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity): RecyclerView.Adapter<AddedRoutineTaskAdapter.ViewHolder>(){
-    var user_id:Int?=null
-    var newRoutineTaskList:List<Task> = listOf()
+class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity) : RecyclerView.Adapter<AddedRoutineTaskAdapter.ViewHolder>() {
+    var user_id: Int? = null
+    var newRoutineTaskList: List<Task> = listOf()
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        val deleteButton : ImageView = itemView.findViewById(R.id.addedTaskDeleteBtn)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val deleteButton: ImageView = itemView.findViewById(R.id.addedTaskDeleteBtn)
         val taskName: TextView = itemView.findViewById(R.id.addedTaskName)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view =LayoutInflater.from(parent.context).inflate(R.layout.added_task_item_view,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.added_task_item_view, parent, false)
         return ViewHolder(view)
     }
 
@@ -30,14 +30,14 @@ class AddedRoutineTaskAdapter(val activity: CompleteMakeRoutineActivity): Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.d("newRoutineTaskList",newRoutineTaskList.get(position).routineItemTitle)
+        Log.d("newRoutineTaskList", newRoutineTaskList.get(position).routineItemTitle)
         holder.taskName.setText(newRoutineTaskList.get(position).routineItemTitle)
         holder.deleteButton.setOnClickListener {
             activity.deleteAddedTask(newRoutineTaskList.get(position))
         }
     }
 
-    fun changeSelectedRoutineItemList(list : List<Task>){
+    fun changeSelectedRoutineItemList(list: List<Task>) {
         newRoutineTaskList = list
         notifyDataSetChanged()
     }

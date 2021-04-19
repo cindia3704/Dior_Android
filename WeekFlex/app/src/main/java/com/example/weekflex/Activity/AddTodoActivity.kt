@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.weekflex.Adapter.CategoryListAdapter
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Todo
 import com.example.weekflex.Fragment.BottomSheetFragment
@@ -15,38 +17,36 @@ import com.example.weekflex.Network.GlobalApplication
 import com.example.weekflex.Network.GlobalApplication.Companion.currentTodo
 import com.example.weekflex.Network.GlobalApplication.Companion.selectCategory
 import com.example.weekflex.R
-import kotlinx.android.synthetic.main.activity_add_todo.*
 import java.util.ArrayList
-
+import kotlinx.android.synthetic.main.activity_add_todo.*
 
 class AddTodoActivity : AppCompatActivity() {
-    private lateinit var categoryChoose_tv:TextView
-    private lateinit var categoryChoose_color:ImageView
+    private lateinit var categoryChoose_tv: TextView
+    private lateinit var categoryChoose_color: ImageView
     private lateinit var todoNameView: EditText
 
-    private lateinit var mon_btn:Button
-    private lateinit var tue_btn:Button
-    private lateinit var wed_btn:Button
-    private lateinit var thu_btn:Button
-    private lateinit var fri_btn:Button
-    private lateinit var sat_btn:Button
-    private lateinit var sun_btn:Button
+    private lateinit var mon_btn: Button
+    private lateinit var tue_btn: Button
+    private lateinit var wed_btn: Button
+    private lateinit var thu_btn: Button
+    private lateinit var fri_btn: Button
+    private lateinit var sat_btn: Button
+    private lateinit var sun_btn: Button
 
     private lateinit var timeSwitch: Switch
 
-    private lateinit var pickTime1:TimePicker
-    private lateinit var pickTime2:TimePicker
-    private lateinit var startTime:TextView
-    private lateinit var endTime:TextView
+    private lateinit var pickTime1: TimePicker
+    private lateinit var pickTime2: TimePicker
+    private lateinit var startTime: TextView
+    private lateinit var endTime: TextView
 
-    private lateinit var chooseEndTime_btn:TextView
-    private lateinit var chooseStartTime_btn:TextView
+    private lateinit var chooseEndTime_btn: TextView
+    private lateinit var chooseStartTime_btn: TextView
 
-    private lateinit var todoSave_btn:Button
+    private lateinit var todoSave_btn: Button
 
     private lateinit var category: Category
     private lateinit var todo: Todo
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +55,14 @@ class AddTodoActivity : AppCompatActivity() {
         setListener()
         OnClickTime()
 
-        category = Category(0,"",0)
-        todo = Todo("","", ArrayList(),"","")
+        category = Category(0, "", 0)
+        todo = Todo("", "", ArrayList(), "", "")
     }
 
-    private fun initView(){
-        categoryChoose_tv= findViewById(R.id.btn_categoryChoose)
-        categoryChoose_color =  findViewById(R.id.categoryColor)
-        todoNameView=findViewById(R.id.insertTodoName)
+    private fun initView() {
+        categoryChoose_tv = findViewById(R.id.btn_categoryChoose)
+        categoryChoose_color = findViewById(R.id.categoryColor)
+        todoNameView = findViewById(R.id.insertTodoName)
 
         todoSave_btn = findViewById(R.id.save_todo)
 
@@ -74,11 +74,11 @@ class AddTodoActivity : AppCompatActivity() {
         sat_btn = findViewById(R.id.btn_sat)
         sun_btn = findViewById(R.id.btn_sun)
 
-        timeSwitch=findViewById(R.id.timeSettingSwitch)    //시간 설정 할지 말지
+        timeSwitch = findViewById(R.id.timeSettingSwitch) // 시간 설정 할지 말지
 
-        pickTime1=findViewById(R.id.timepicker1)           //시작 시간 고르기 위젯
-        pickTime1.visibility = View.INVISIBLE              //안보이는게 디폴트
-        pickTime2=findViewById(R.id.timepicker2)
+        pickTime1 = findViewById(R.id.timepicker1) // 시작 시간 고르기 위젯
+        pickTime1.visibility = View.INVISIBLE // 안보이는게 디폴트
+        pickTime2 = findViewById(R.id.timepicker2)
         pickTime2.visibility = View.INVISIBLE
 
         startTime = findViewById(R.id.selectStartTime)
@@ -89,19 +89,19 @@ class AddTodoActivity : AppCompatActivity() {
         todoSave_btn = findViewById(R.id.save_todo)
     }
 
-    private fun setListener(){
+    private fun setListener() {
         categoryChoose_tv.setOnClickListener {
-            val bottomSheet=BottomSheetFragment()
+            val bottomSheet = BottomSheetFragment()
             bottomSheet.show(supportFragmentManager, bottomSheet.tag)
 
             var arraySelectCategory = selectCategory.toArray()
-            if (arraySelectCategory.size!=0){
+            if (arraySelectCategory.size != 0) {
                 var newtext = arraySelectCategory[0].toString()
-                var token = newtext.split("=",",")
-                Log.d("msg","$newtext")
-                Log.d("msg","$token")
+                var token = newtext.split("=", ",")
+                Log.d("msg", "$newtext")
+                Log.d("msg", "$token")
                 categoryChoose_tv.setText(token[1]) // bottom sheet에서 선택한 selectCategory(GlobalApplication에 선언된 변수 사용) 중 카테고리 이름
-                categoryChoose_color.setBackgroundColor(token[3].replace(")","").toInt())// 색상 int 값을 얻어서 해당 카테고리 색 넣어줌
+                categoryChoose_color.setBackgroundColor(token[3].replace(")", "").toInt()) // 색상 int 값을 얻어서 해당 카테고리 색 넣어줌
             }
         }
 
@@ -111,27 +111,27 @@ class AddTodoActivity : AppCompatActivity() {
         }
 
         tue_btn.setOnClickListener {
-            tue_btn.setSelected(!tue_btn.isSelected());
+            tue_btn.setSelected(!tue_btn.isSelected())
             todo.todoDates.add("tue")
         }
         wed_btn.setOnClickListener {
-            wed_btn.setSelected(!wed_btn.isSelected());
+            wed_btn.setSelected(!wed_btn.isSelected())
             todo.todoDates.add("wed")
         }
         thu_btn.setOnClickListener {
-            thu_btn.setSelected(!thu_btn.isSelected());
+            thu_btn.setSelected(!thu_btn.isSelected())
             todo.todoDates.add("thu")
         }
         fri_btn.setOnClickListener {
-            fri_btn.setSelected(!fri_btn.isSelected());
+            fri_btn.setSelected(!fri_btn.isSelected())
             todo.todoDates.add("fri")
         }
         sat_btn.setOnClickListener {
-            sat_btn.setSelected(!sat_btn.isSelected());
+            sat_btn.setSelected(!sat_btn.isSelected())
             todo.todoDates.add("sat")
         }
         sun_btn.setOnClickListener {
-            sun_btn.setSelected(!sun_btn.isSelected());
+            sun_btn.setSelected(!sun_btn.isSelected())
             todo.todoDates.add("sun")
         }
 
@@ -156,7 +156,6 @@ class AddTodoActivity : AppCompatActivity() {
             pickTime2.visibility = View.VISIBLE
             chooseStartTime_btn.setTextColor(Color.parseColor("#000000"))
             chooseEndTime_btn.setTextColor(Color.parseColor("#FD8B34"))
-
         }
 
         startTime.setOnClickListener {
@@ -173,11 +172,9 @@ class AddTodoActivity : AppCompatActivity() {
             todo.todoEnd = endTime.text as String
 
             GlobalApplication.currentTodo.add(todo)
-            Toast.makeText(this@AddTodoActivity, "${currentTodo}입니다 ",Toast.LENGTH_LONG).show()
+            Toast.makeText(this@AddTodoActivity, "${currentTodo}입니다 ", Toast.LENGTH_LONG).show()
             finish()
-
         }
-
     }
 
     private fun OnClickTime() {
@@ -188,7 +185,7 @@ class AddTodoActivity : AppCompatActivity() {
         pickTime1.setOnTimeChangedListener { _, hour, minute -> var hour = hour
             var am_pm = ""
             // AM_PM decider logic
-            when {hour == 0 -> { hour += 12
+            when { hour == 0 -> { hour += 12
                 am_pm = "AM"
             }
                 hour == 12 -> am_pm = "PM"
@@ -210,7 +207,7 @@ class AddTodoActivity : AppCompatActivity() {
         pickTime2.setOnTimeChangedListener { _, hour, minute -> var hour = hour
             var am_pm = ""
             // AM_PM decider logic
-            when {hour == 0 -> { hour += 12
+            when { hour == 0 -> { hour += 12
                 am_pm = "AM"
             }
                 hour == 12 -> am_pm = "PM"
@@ -230,11 +227,4 @@ class AddTodoActivity : AppCompatActivity() {
             }
         }
     }
-
-
-
-
-
-
-
 }

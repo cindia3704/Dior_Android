@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.weekflex.R
 
-class RoutineSettingFragment : Fragment(){
-    private var userId : Int? =1
-    companion object{
-        fun newInstance(userId:Int):RoutineSettingFragment{
-            var bundle= Bundle()
-            bundle.putInt("userId",userId)
+class RoutineSettingFragment : Fragment() {
+    private var userId: Int? = 1
+    companion object {
+        fun newInstance(userId: Int): RoutineSettingFragment {
+            var bundle = Bundle()
+            bundle.putInt("userId", userId)
             var fragment = RoutineSettingFragment()
             fragment.arguments = bundle
             return fragment
@@ -25,7 +25,7 @@ class RoutineSettingFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         userId = arguments?.getInt("userId")
-        return inflater.inflate(R.layout.routine_setting_fragment,container,false)
+        return inflater.inflate(R.layout.routine_setting_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

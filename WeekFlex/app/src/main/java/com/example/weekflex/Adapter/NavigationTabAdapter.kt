@@ -7,12 +7,12 @@ import com.example.weekflex.Fragment.CalendarFragment
 import com.example.weekflex.Fragment.RoutineSettingFragment
 import com.example.weekflex.Fragment.TodoMainFragment
 
-class NavigationTabAdapter (fragmentManager: FragmentManager, val fragmentCount:Int,val userId:Int) : FragmentStatePagerAdapter(fragmentManager){
+class NavigationTabAdapter(fragmentManager: FragmentManager, val fragmentCount: Int, val userId: Int) : FragmentStatePagerAdapter(fragmentManager) {
 
     override fun getItem(position: Int): Fragment {
-        when(position){
-            0-> return TodoMainFragment.newInstance(userId)
-            1-> return CalendarFragment.newInstance(userId)
+        when (position) {
+            0 -> return TodoMainFragment.newInstance(userId)
+            1 -> return CalendarFragment.newInstance(userId)
             else -> return RoutineSettingFragment.newInstance(userId)
         }
     }

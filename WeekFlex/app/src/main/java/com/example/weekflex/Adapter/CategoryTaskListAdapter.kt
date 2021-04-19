@@ -13,25 +13,26 @@ import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
-class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
-                               var categoryList:List<Category>,
-                               var searchedTaskString:String
-                                ):RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>(){
-    private var selectedCategoryId:Int=0
-    var selectedTaskList : List<Task> = listOf()
+class CategoryTaskListAdapter(
+    val activity: CompleteMakeRoutineActivity,
+    var categoryList: List<Category>,
+    var searchedTaskString: String
+) : RecyclerView.Adapter<CategoryTaskListAdapter.ViewHolder>() {
+    private var selectedCategoryId: Int = 0
+    var selectedTaskList: List<Task> = listOf()
     // property 찾아보기
     val taskList: List<Task> get() = getCategoryTaskList(categoryList, selectedCategoryId)
     val searchedTaskList: List<Task> get() = taskList.filter { t -> t.routineItemTitle.contains(searchedTaskString) }.toList()
 
-    class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
-        val bookmark : ImageView = itemView.findViewById(R.id.taskList_bookmarkImg)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val bookmark: ImageView = itemView.findViewById(R.id.taskList_bookmarkImg)
         val taskName: TextView = itemView.findViewById(R.id.taskList_taskName)
         val taskTime: TextView = itemView.findViewById(R.id.taskList_time)
-        val container: ConstraintLayout=itemView.findViewById(R.id.taskList_wholeLayout)
+        val container: ConstraintLayout = itemView.findViewById(R.id.taskList_wholeLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_list_item_view,parent,false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_list_item_view, parent, false)
         return ViewHolder(view)
     }
 
@@ -44,10 +45,10 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         val task = searchedTaskList[position]
 
         var isSelectedTask = task in selectedTaskList
-        holder.container.setBackgroundResource(if(isSelectedTask) R.color.task_gray else R.color.white)
+        holder.container.setBackgroundResource(if (isSelectedTask) R.color.task_gray else R.color.white)
 
         var isBookMarked = task.bookMarked
-        holder.bookmark.setImageResource(if(isBookMarked) R.drawable.bookmark_fill else R.drawable.bookmark_empty)
+        holder.bookmark.setImageResource(if (isBookMarked) R.drawable.bookmark_fill else R.drawable.bookmark_empty)
 
         holder.taskTime.setText("${getWeekDays(task.weekdaysScheduled)} ${task.startTime}-${task.endTime}")
         holder.taskName.setText(task.routineItemTitle)
@@ -56,36 +57,35 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
             notifyDataSetChanged()
         }
         holder.bookmark.setOnClickListener {
-            Log.d("msg","clicked!!!")
+            Log.d("msg", "clicked!!!")
             updateBookmark(task)
         }
-
     }
 
-    fun getWeekDays(days:List<String>):String{
-        val weekdays  = days.joinToString(", ")
-        Log.d("msg","weekday!!! $weekdays")
+    fun getWeekDays(days: List<String>): String {
+        val weekdays = days.joinToString(", ")
+        Log.d("msg", "weekday!!! $weekdays")
 
         return weekdays
     }
 
-    fun getCategoryTaskList(list:List<Category>, selectedCategoryId: Int):List<Task>{
-        var taskList :List<Task> = list.find { category ->category.categoryId==selectedCategoryId }?.taskList ?: emptyList()
+    fun getCategoryTaskList(list: List<Category>, selectedCategoryId: Int): List<Task> {
+        var taskList: List<Task> = list.find { category -> category.categoryId == selectedCategoryId }?.taskList ?: emptyList()
 
         return taskList
     }
 
-    fun updateBackgroundColor(holder:ViewHolder,item:Task){
-        if(item in selectedTaskList){
-            Log.d("msg","INCLUDED!!")
-        }else{
+    fun updateBackgroundColor(holder: ViewHolder, item: Task) {
+        if (item in selectedTaskList) {
+            Log.d("msg", "INCLUDED!!")
+        } else {
             holder.container.setBackgroundResource(R.color.task_gray)
             activity.addTaskToRoutine(item)
-            Log.d("msg","NOT INCLUDED!!")
+            Log.d("msg", "NOT INCLUDED!!")
         }
     }
 
-    fun updateBookmark(item:Task){
+    fun updateBookmark(item: Task) {
         taskList.find { i -> i.equals(item) }?.apply {
             bookMarked = !bookMarked
             Log.d("msg", "bookmarked: $bookMarked")
@@ -93,11 +93,11 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
         notifyDataSetChanged()
     }
 
-    fun changeSelectedCategoryId(id : Int){
+    fun changeSelectedCategoryId(id: Int) {
         selectedCategoryId = id
         notifyDataSetChanged()
     }
-    fun changeSelectedRoutineItemList(list : List<Task>){
+    fun changeSelectedRoutineItemList(list: List<Task>) {
         selectedTaskList = list
         notifyDataSetChanged()
     }
@@ -109,8 +109,8 @@ class CategoryTaskListAdapter (val activity: CompleteMakeRoutineActivity,
     // 검색해서 맞는거 가져오기 ->filtered~~
     // 검색결과가 있으면 searchDoesNotExist = true로 바꾸기 (false로 바꾸지 않음.)
 
-    fun changeSearchedRoutine(item : String){
-        searchedTaskString=item
+    fun changeSearchedRoutine(item: String) {
+        searchedTaskString = item
         notifyDataSetChanged()
     }
 }
