@@ -1,7 +1,5 @@
 package com.example.weekflex.Adapter
 
-package com.example.weekflex.Adapter
-
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +34,6 @@ class CategoryColorListAdapter(
         return availableColors.size
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
     }
