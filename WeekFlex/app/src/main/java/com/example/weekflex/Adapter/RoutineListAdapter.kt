@@ -31,7 +31,7 @@ class RoutineListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.`task_content.xml`, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_content, parent, false)
         return ViewHolder(view)
     }
 

@@ -8,7 +8,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Switch
 import android.widget.TextView
+import android.widget.TimePicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Todo
@@ -135,7 +138,7 @@ class AddTodoActivity : AppCompatActivity() {
             todo.todoDates.add("sun")
         }
 
-        timeSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        timeSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) {
                 pickTime1.visibility = View.INVISIBLE
                 chooseStartTime_btn.setTextColor(Color.parseColor("#000000"))
@@ -149,7 +152,7 @@ class AddTodoActivity : AppCompatActivity() {
                 pickTime1.visibility = View.VISIBLE
                 chooseStartTime_btn.setTextColor(Color.parseColor("#FD8B34"))
             }
-        })
+        }
 
         endTime.setOnClickListener {
             pickTime1.visibility = View.INVISIBLE
