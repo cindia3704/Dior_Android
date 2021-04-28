@@ -7,17 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.Adapter.AllCategoryListAdapter
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Task
 import com.example.weekflex.R
-val categoryLists = listOf(
+
+private val categories = listOf(
     Category(1, "언어", 0, listOf(
         Task("Speaking", 3, "10:00AM", "1:00PM", true, listOf("월", "화")),
         Task("전화영어", 2, "1:00PM", "1:30PM", false, listOf("수")),
@@ -32,11 +30,12 @@ val categoryLists = listOf(
         Task("하체", 2, "1:00PM", "1:30PM", false, listOf("토"))
     ))
 )
+
 class CategorySettingFragment : Fragment() {
     private var userId: Int? = 1
-//    lateinit var navController: NavController
     private lateinit var backBtn:ImageView
     private lateinit var categoryList: RecyclerView
+
     companion object {
         fun newInstance(userId: Int): CategorySettingFragment {
             var bundle = Bundle()
@@ -62,7 +61,11 @@ class CategorySettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        categoryList.adapter = AllCategoryListAdapter(this,categoryLists)
+        categoryList.setHasFixedSize(true)
+        Log.d("msg","category size bf: "+categories.size)
+        categoryList.adapter = AllCategoryListAdapter(this,categories)
+        categoryList.layoutManager = GridLayoutManager(activity,1,RecyclerView.VERTICAL,false)
+
         setListener()
     }
 

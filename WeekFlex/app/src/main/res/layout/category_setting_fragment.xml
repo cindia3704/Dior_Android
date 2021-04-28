@@ -28,9 +28,11 @@
         android:id="@+id/category_setting_categorylist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:orientation="vertical"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/category_setting_header"/>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

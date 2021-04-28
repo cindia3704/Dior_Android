@@ -1,10 +1,12 @@
 package com.example.weekflex.Adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Fragment.CategorySettingFragment
@@ -14,13 +16,17 @@ class AllCategoryListAdapter(
     var context: CategorySettingFragment,
     var categoryList: List<Category>
 ): RecyclerView.Adapter<AllCategoryListAdapter.ViewHolder>() {
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val categoryStarImg:ImageView
-        var categoryName:TextView
-
+        val categoryName:TextView
+        val moreBtn: ImageView
+        val view: ConstraintLayout
         init {
-           categoryStarImg = itemView.findViewById(R.id.all_category_category_image)
+            categoryStarImg = itemView.findViewById(R.id.all_category_category_image)
             categoryName = itemView.findViewById(R.id.all_category_category_name)
+            moreBtn = itemView.findViewById(R.id.all_category_more_btn)
+            view = itemView.findViewById(R.id.all_category_one_item_container)
         }
     }
 
@@ -37,5 +43,8 @@ class AllCategoryListAdapter(
         var category = categoryList[position]
         holder.categoryName.text = category.categoryName
         holder.categoryStarImg.setImageResource(R.drawable.yellowstar)
+        holder.moreBtn.setOnClickListener {
+
+        }
     }
 }
