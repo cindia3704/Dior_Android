@@ -7,6 +7,8 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.weekflex.Adapter.NavigationTabAdapter
+import com.example.weekflex.Fragment.CategorySettingFragment
+import com.example.weekflex.Fragment.ProfileFragment
 import com.example.weekflex.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -14,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     var userId: Int = 1
+    private lateinit var profileFragment: ProfileFragment
+    private lateinit var categorySettingFragment: CategorySettingFragment
     private lateinit var fragmentView: ViewPager
     private lateinit var navigationBar: TabLayout
     private lateinit var fragmentAdapter: NavigationTabAdapter
@@ -39,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         fragmentView.adapter = fragmentAdapter
         navigationBar.setupWithViewPager(fragmentView)
         fragmentView.currentItem = 0
+
+        profileFragment= ProfileFragment.newInstance(userId)
+        categorySettingFragment= CategorySettingFragment.newInstance(userId)
     }
 
     private fun makeNavigationBar() {
@@ -71,6 +78,14 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
+    fun changeFragment(index:Int){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        if(index == 1) {
+            fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
+        } else if(index == 2) {
+            fragmentTransaction.replace(R.id.profile_top_fragment, categorySettingFragment).commitAllowingStateLoss()
+        }
     }
 
     public fun makeDarkTabView() {

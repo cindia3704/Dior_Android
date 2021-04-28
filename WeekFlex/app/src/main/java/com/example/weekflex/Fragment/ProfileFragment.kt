@@ -7,6 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.viewpager2.adapter.FragmentViewHolder
+import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.R
 
 class ProfileFragment : Fragment() {
@@ -52,12 +60,15 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        navController = view.findNavController()
         setListener()
     }
 
     fun setListener(){
         categorySettingBtn.setOnClickListener {
-
+            (activity as MainActivity?)?.changeFragment(2)
+//            navController.navigate(R.id.action_profileFragment_to_categorySettingFragment)
+//            Navigation.createNavigateOnClickListener(R.id.action_profileFragment_to_categorySettingFragment,null)
         }
         taskSettingBtn.setOnClickListener {
 
