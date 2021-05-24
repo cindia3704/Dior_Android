@@ -14,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.WithdrawalFirstAcitivity"></activity>
+        <activity android:name=".Activity.WithdrawalSecondActivity"></activity>
+        <activity android:name=".Activity.WithdrawalFirstActivity" />
         <activity
             android:name=".Activity.RoutineFinalCheckActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
@@ -22,7 +23,7 @@
         <activity
             android:name=".Activity.CompleteMakeRoutineActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".Activity.InsertRoutineNameActivity"></activity>
+        <activity android:name=".Activity.InsertRoutineNameActivity" />
         <activity android:name=".Activity.AddTodoActivity" />
         <activity android:name=".Activity.AddRoutineActivity" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">

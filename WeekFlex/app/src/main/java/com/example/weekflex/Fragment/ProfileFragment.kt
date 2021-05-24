@@ -10,9 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Activity.MainActivity
-import com.example.weekflex.Activity.WithdrawalFirstAcitivity
+import com.example.weekflex.Activity.WithdrawalFirstActivity
 import com.example.weekflex.R
 
 class ProfileFragment : Fragment() {
@@ -91,7 +90,7 @@ class ProfileFragment : Fragment() {
             }
         }
         withdrawalBtn.setOnClickListener {
-            val intent = Intent(this.context, WithdrawalFirstAcitivity::class.java)
+            val intent = Intent(this.context, WithdrawalFirstActivity::class.java)
             startActivity(intent)
         }
         inquiryBtn.setOnClickListener {
