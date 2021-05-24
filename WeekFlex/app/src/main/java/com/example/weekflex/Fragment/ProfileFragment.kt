@@ -1,5 +1,6 @@
 package com.example.weekflex.Fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.weekflex.Activity.AddTodoActivity
 import com.example.weekflex.Activity.MainActivity
+import com.example.weekflex.Activity.WithdrawalFirstAcitivity
 import com.example.weekflex.R
 
 class ProfileFragment : Fragment() {
@@ -88,7 +91,8 @@ class ProfileFragment : Fragment() {
             }
         }
         withdrawalBtn.setOnClickListener {
-
+            val intent = Intent(this.context, WithdrawalFirstAcitivity::class.java)
+            startActivity(intent)
         }
         inquiryBtn.setOnClickListener {
 

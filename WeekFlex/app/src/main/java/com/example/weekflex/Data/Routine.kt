@@ -11,7 +11,7 @@ data class Routine(
 val categoryToStarImage = mapOf<Int, Int>(
         0 to R.drawable.graystar,
         1 to R.drawable.pinkstar,
-        2 to R.drawable.yellowstar,
+        2 to R.drawable.orange_star,
         3 to R.drawable.yellowstar,
         12 to R.drawable.bluestar
 )
