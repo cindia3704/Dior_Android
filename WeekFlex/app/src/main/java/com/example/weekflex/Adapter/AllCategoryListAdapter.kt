@@ -8,13 +8,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.chauthai.swipereveallayout.SwipeRevealLayout
+import com.chauthai.swipereveallayout.ViewBinderHelper
+import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.Data.Category
+import com.example.weekflex.Data.Routine
+import com.example.weekflex.Data.Task
 import com.example.weekflex.Fragment.CategorySettingFragment
 import com.example.weekflex.R
 
 class AllCategoryListAdapter(
-    var context: CategorySettingFragment,
-    var categoryList: List<Category>
+//    var context: CategorySettingFragment,
+    val inflater: LayoutInflater,
+    var categoryList: List<Category>,
+    val onClickCategoryMenuButton: (Category) -> Unit
 ): RecyclerView.Adapter<AllCategoryListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -44,7 +51,7 @@ class AllCategoryListAdapter(
         holder.categoryName.text = category.categoryName
         holder.categoryStarImg.setImageResource(R.drawable.yellowstar)
         holder.moreBtn.setOnClickListener {
-
+            onClickCategoryMenuButton(category)
         }
     }
 }

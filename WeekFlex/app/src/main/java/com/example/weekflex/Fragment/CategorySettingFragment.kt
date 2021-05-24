@@ -6,14 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Activity.MainActivity
+import com.example.weekflex.Activity.routineList
 import com.example.weekflex.Adapter.AllCategoryListAdapter
+import com.example.weekflex.Adapter.TodoMainRoutineViewAdapter
 import com.example.weekflex.Data.Category
+import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.Task
 import com.example.weekflex.R
+import kotlinx.android.synthetic.main.category_setting_fragment.*
+import kotlinx.android.synthetic.main.todo_main_fragment.*
 
 private val categories = listOf(
     Category(1, "언어", 0, listOf(
@@ -35,6 +42,7 @@ class CategorySettingFragment : Fragment() {
     private var userId: Int? = 1
     private lateinit var backBtn:ImageView
     private lateinit var categoryList: RecyclerView
+    private lateinit var inflater: LayoutInflater
 
     companion object {
         fun newInstance(userId: Int): CategorySettingFragment {
@@ -56,6 +64,7 @@ class CategorySettingFragment : Fragment() {
         val view = inflater.inflate(R.layout.category_setting_fragment, container, false)
         backBtn = view.findViewById(R.id.category_setting_goback)
         categoryList = view.findViewById(R.id.category_setting_categorylist)
+        this.inflater = inflater
         return view;
     }
 
@@ -63,15 +72,36 @@ class CategorySettingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         categoryList.setHasFixedSize(true)
         Log.d("msg","category size bf: "+categories.size)
-        categoryList.adapter = AllCategoryListAdapter(this,categories)
+        categoryList.adapter = AllCategoryListAdapter(inflater,categories, onClickCategoryMenuButton = ::onClickCategoryMenuButton
+        )
         categoryList.layoutManager = GridLayoutManager(activity,1,RecyclerView.VERTICAL,false)
-
         setListener()
     }
+
+//    fun initView(){
+//        category_setting_categorylist.adapter = AllCategoryListAdapter(
+//            this,
+//            categories,
+//            onClickCategoryMenuButton = ::onClickCategoryMenuButton,
+//        )
+//    }
 
     fun setListener(){
         backBtn.setOnClickListener {
             (activity as MainActivity?)?.changeFragment(1)
+        }
+    }
+
+    fun onClickCategoryMenuButton(category:Category) {
+        parentFragmentManager?.let {
+            (activity as MainActivity?)?.changeFragment(3)
+
+//            val result = "result"
+//            setFragmentResult(CategoryBottomFragment.requestKey(category), bundleOf(CategoryBottomFragment.bundleKey(category) to result))
+//            CategoryBottomFragment.showCategory(it, category)
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.category_list_view, CategoryBottomFragment.instance)
+//                .commit()
         }
     }
 
