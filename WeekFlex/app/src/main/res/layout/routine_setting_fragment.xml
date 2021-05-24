@@ -30,7 +30,7 @@
             android:id="@+id/myProfile_profileImg"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:src="@drawable/gray_circle"
+            android:src="@drawable/profile_default_img"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

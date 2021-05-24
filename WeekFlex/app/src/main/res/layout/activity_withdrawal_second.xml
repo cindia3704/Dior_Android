@@ -125,7 +125,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/vipBtn_withdrawal2"
             android:textSize="15dp"
-            android:text="이용이 불편하고 장애가 많아서"
+            android:text="VIP 구독의 실질적 혜택이 부족해서"
             android:layout_marginLeft="6dp"
             android:textColor="@color/semiBlack"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
