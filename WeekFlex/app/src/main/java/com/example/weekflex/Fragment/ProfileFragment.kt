@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.R
@@ -65,7 +67,25 @@ class ProfileFragment : Fragment() {
 
         }
         logoutBtn.setOnClickListener {
+            val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
 
+            builder.setMessage("로그아웃 하시겠습니까?")
+
+            builder.setPositiveButton("로그아웃") { dialog, which ->
+                // TODO: 서버 연결시 로그아웃 요청 보내기
+            }
+
+            builder.setNegativeButton("그만두기") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: android.app.AlertDialog = builder.create()
+            dialog.show()
+
+            this.context?.let {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(it, R.color.gray_4))
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(it, R.color.color6))
+            }
         }
         withdrawalBtn.setOnClickListener {
 

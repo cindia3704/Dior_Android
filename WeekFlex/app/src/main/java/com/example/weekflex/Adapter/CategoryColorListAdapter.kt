@@ -12,13 +12,16 @@ import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.content.ContextCompat.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weekflex.Data.categoryColors
+import com.example.weekflex.Fragment.CategoryBottomFragment
 import com.example.weekflex.R
 
 
 class CategoryColorListAdapter(
+    val fragment:CategoryBottomFragment,
     val inflater: LayoutInflater,
     val availableColors: List<Int>,
-    val selectedColor: Int?
+    var selectedColor: Int?,
+    val tag:String
 ) : RecyclerView.Adapter<CategoryColorListAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var colorCircle: ImageView
@@ -46,11 +49,15 @@ class CategoryColorListAdapter(
             Log.d("color: ",it.toString())
             holder.colorCircle.setBackgroundResource(it)
         }
+        holder.colorCircle.setOnClickListener {
+            if(tag.equals("A")){
+                selectedColor = availableColors[position]
+                notifyDataSetChanged()
+                fragment.changeStarImg(selectedColor!!)
+            }
+        }
 
         holder.checkImg.visibility = if(availableColors[position] == selectedColor) View.VISIBLE else View.INVISIBLE
-
-
-//        categoryToStarImage[CategoryBottomFragment.category.categoryColor]?.let { categoryImg.setImageResource(it) }
 
 
     }

@@ -74,14 +74,14 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
         categoryToStarImage[category.categoryColor]?.let { categoryImg.setImageResource(it) }
 
 
-        availableColors.adapter = CategoryColorListAdapter(inflater, availableColors = availColors,
-            selectedColor = category.categoryColor
+        availableColors.adapter = CategoryColorListAdapter(this,inflater, availableColors = availColors,
+            selectedColor = category.categoryColor, tag = "A"
         )
         availableColors.layoutManager = GridLayoutManager(this.context, 1,
             GridLayoutManager.HORIZONTAL, false)
 
-        notAvailableColors.adapter = CategoryColorListAdapter(inflater, availableColors = notAvailColors,
-            selectedColor = null
+        notAvailableColors.adapter = CategoryColorListAdapter(this,inflater, availableColors = notAvailColors,
+            selectedColor = null, tag = "NA"
         )
         notAvailableColors.layoutManager = GridLayoutManager(this.context, 2,
             GridLayoutManager.HORIZONTAL, false)
@@ -127,7 +127,7 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
                 if (cat.categoryName.equals(newCategoryName) && cat.categoryId!= category.categoryId) {
                     val builder: android.app.AlertDialog.Builder =
                         android.app.AlertDialog.Builder(context)
-
+                    builder.setTitle("존재하는 카테고리")
                     builder.setMessage(
                         "이미 존재하는 카테고리 이름입니다.\n" +
                                 "다른 이름을 입력해주세요."
@@ -156,6 +156,9 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
             }
         }
         }
+    }
+    fun changeStarImg(startImg:Int){
+        categoryToStarImage[startImg]?.let { categoryImg.setImageResource(it) }
     }
 
     fun getBottomSheetDialog(dialog: DialogInterface): BottomSheetBehavior<FrameLayout> {
