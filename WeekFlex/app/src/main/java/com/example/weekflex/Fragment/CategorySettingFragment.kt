@@ -15,8 +15,8 @@ import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
-private val categories = listOf(
-    Category(1, "언어", 3, listOf(
+val categories = listOf(
+    Category(1, "lang", 3, listOf(
         Task("Speaking", 3, "10:00AM", "1:00PM", true, listOf("월", "화")),
         Task("전화영어", 2, "1:00PM", "1:30PM", false, listOf("수")),
         Task("스피킹", 1, "5:00PM", "6:00PM", true, listOf("금", "일"))
@@ -71,6 +71,11 @@ class CategorySettingFragment : Fragment() {
         setListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        categoryList.adapter = AllCategoryListAdapter(inflater,categories, onClickCategoryMenuButton = ::onClickCategoryMenuButton
+        )
+    }
     fun setListener(){
         backBtn.setOnClickListener {
             (activity as MainActivity?)?.changeFragment(1,null)

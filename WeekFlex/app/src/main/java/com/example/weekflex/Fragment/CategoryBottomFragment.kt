@@ -86,9 +86,15 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
         notAvailableColors.layoutManager = GridLayoutManager(this.context, 2,
             GridLayoutManager.HORIZONTAL, false)
 
+        setListener()
+
+        return view
+    }
+    fun setListener(){
         with(cancleBtn) { setOnClickListener {
             dialog?.also { getBottomSheetDialog(it).state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN }
         } }
+
 
         categoryDeleteBtn.setOnClickListener {
             val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
@@ -106,14 +112,50 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
 
             val dialog: android.app.AlertDialog = builder.create()
             dialog.show()
-            
+
             this.context?.let {
                 dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(it, R.color.gray_4))
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(it, R.color.color6))
             }
         }
 
-        return view
+        with(okBtn){setOnClickListener {
+            val newCategoryName = categoryName.text.toString()
+            Log.d("NEW CATEGORY NAME", newCategoryName)
+            var found = false
+            for(cat in categories) {
+                if (cat.categoryName.equals(newCategoryName) && cat.categoryId!= category.categoryId) {
+                    val builder: android.app.AlertDialog.Builder =
+                        android.app.AlertDialog.Builder(context)
+
+                    builder.setMessage(
+                        "이미 존재하는 카테고리 이름입니다.\n" +
+                                "다른 이름을 입력해주세요."
+                    )
+
+                    builder.setPositiveButton("확인") { dialog, which ->
+                        dialog.dismiss()
+                    }
+
+
+                    val dialog: android.app.AlertDialog = builder.create()
+                    dialog.show()
+
+                    this.context?.let {
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                            .setTextColor(ContextCompat.getColor(it, R.color.color6))
+                    }
+                    found = true
+                }
+            }
+            if(!found) {
+                // TODO: 서버에 patch 요청!
+                category.categoryName=newCategoryName
+                dialog?.also { getBottomSheetDialog(it).state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN }
+                Log.d("NEW!!! ", category.categoryName)
+            }
+        }
+        }
     }
 
     fun getBottomSheetDialog(dialog: DialogInterface): BottomSheetBehavior<FrameLayout> {
