@@ -8,9 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weekflex.Activity.routineList
 import com.example.weekflex.Adapter.CategoryColorListAdapter
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.categoryToStarImage
@@ -37,6 +40,7 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
     private lateinit var dialogView : View
     private lateinit var availableColors: RecyclerView
     private lateinit var notAvailableColors: RecyclerView
+    private lateinit var categoryDeleteBtn : TextView
 
     companion object {
         private lateinit var category: Category
@@ -44,18 +48,6 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
             get() = CategoryBottomFragment()
         val TAG = "bottomSheet"
 
-//        fun showCategory(supportFragmentManager: FragmentManager, passedCategory: Category) {
-//            category = passedCategory
-//            instance.show(supportFragmentManager, TAG)
-//
-//            instance.setFragmentResultListener(requestKey(category)) { requestKey, bundle ->
-//                val result = bundle.getString(bundleKey(category))
-//                Log.e("와라", "$result")
-//            }
-//        }
-
-//        fun requestKey(category: Category) = "${category.categoryId}"
-//        fun bundleKey(category: Category) = "${category.categoryName}${category.categoryColor}"
     }
 
     fun showCategory(supportFragmentManager: FragmentManager, passedCategory: Category) {
@@ -63,11 +55,6 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
         instance.show(supportFragmentManager, TAG)
         Log.d("category Name:",passedCategory.categoryName.toString())
 
-
-//        instance.setFragmentResultListener(requestKey(category)) { requestKey, bundle ->
-//            val result = bundle.getString(bundleKey(category))
-//            Log.e("와라", "$result")
-//        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -81,6 +68,7 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
         categoryName = dialogView.findViewById(R.id.all_category_selectedCategory_name)
         availableColors = dialogView.findViewById(R.id.all_category_available_colors)
         notAvailableColors = dialogView.findViewById(R.id.all_category_not_available_colors)
+        categoryDeleteBtn = dialogView.findViewById(R.id.all_category_delete_category_btn)
 
         categoryName.setText(category.categoryName)
         categoryToStarImage[category.categoryColor]?.let { categoryImg.setImageResource(it) }
@@ -97,9 +85,33 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
         )
         notAvailableColors.layoutManager = GridLayoutManager(this.context, 2,
             GridLayoutManager.HORIZONTAL, false)
+
         with(cancleBtn) { setOnClickListener {
             dialog?.also { getBottomSheetDialog(it).state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN }
         } }
+
+        categoryDeleteBtn.setOnClickListener {
+            val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(context)
+
+            builder.setMessage("카테고리에 포함된 할 일 ("+ category.taskList.size+") 이 모두\n" +
+                    "삭제됩니다. 이대로 삭제를 진행할까요?")
+
+            builder.setPositiveButton("삭제하기") { dialog, which ->
+                // TODO: 서버 연결시 삭제 요청 보내기
+            }
+
+            builder.setNegativeButton("그만두기") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            val dialog: android.app.AlertDialog = builder.create()
+            dialog.show()
+            
+            this.context?.let {
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(it, R.color.gray_4))
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(it, R.color.color6))
+            }
+        }
 
         return view
     }
