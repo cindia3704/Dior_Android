@@ -3,16 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginRight="36dp">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="36dp"
+    android:layout_marginBottom="24dp">
     <ImageView
         android:id="@+id/category_color"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/color_circle"/>
+        android:background="@drawable/color1_circle"/>
     <ImageView
         android:id="@+id/category_color_check_img"
         android:layout_width="24dp"

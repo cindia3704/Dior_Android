@@ -16,16 +16,16 @@ import com.example.weekflex.Data.Task
 import com.example.weekflex.R
 
 private val categories = listOf(
-    Category(1, "언어", 0, listOf(
+    Category(1, "언어", 3, listOf(
         Task("Speaking", 3, "10:00AM", "1:00PM", true, listOf("월", "화")),
         Task("전화영어", 2, "1:00PM", "1:30PM", false, listOf("수")),
         Task("스피킹", 1, "5:00PM", "6:00PM", true, listOf("금", "일"))
     )),
-    Category(2, "Coding", 0, listOf(
+    Category(2, "Coding", 1, listOf(
         Task("CS", 3, "10:00AM", "1:00PM", false, listOf("수")),
         Task("알고리즘", 2, "1:00PM", "1:30PM", true, listOf("월", "화"))
     )),
-    Category(3, "운동", 0, listOf(
+    Category(3, "운동", 2, listOf(
         Task("코어", 1, "10:00AM", "1:00PM", false, listOf("일")),
         Task("하체", 2, "1:00PM", "1:30PM", false, listOf("토"))
     ))
@@ -78,15 +78,7 @@ class CategorySettingFragment : Fragment() {
     }
 
     fun onClickCategoryMenuButton(category:Category) {
-//        parentFragmentManager?.let {
             (activity as MainActivity?)?.changeFragment(3,category)
-//            val result = "result"
-//            setFragmentResult(CategoryBottomFragment.requestKey(category), bundleOf(CategoryBottomFragment.bundleKey(category) to result))
-//            CategoryBottomFragment.showCategory(it!!, category)
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.category_list_view, CategoryBottomFragment.instance)
-//                .commit()
-//        }
     }
 
 }

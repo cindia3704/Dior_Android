@@ -14,6 +14,7 @@ import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.Task
+import com.example.weekflex.Data.categoryToStarImage
 import com.example.weekflex.Fragment.CategoryBottomFragment
 import com.example.weekflex.Fragment.CategorySettingFragment
 import com.example.weekflex.R
@@ -50,7 +51,7 @@ class AllCategoryListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var category = categoryList[position]
         holder.categoryName.text = category.categoryName
-        holder.categoryStarImg.setImageResource(R.drawable.yellowstar)
+        categoryToStarImage[category.categoryColor]?.let { holder.categoryStarImg.setImageResource(it) }
         holder.moreBtn.setOnClickListener {
             onClickCategoryMenuButton(category)
         }
