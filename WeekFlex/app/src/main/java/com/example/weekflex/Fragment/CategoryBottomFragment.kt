@@ -28,31 +28,35 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
     private lateinit var notAvailableColors: RecyclerView
 
     companion object {
-        fun newInstance(userId: Int): CategoryBottomFragment {
-            var bundle = Bundle()
-            bundle.putInt("userId", userId)
-            var fragment = CategoryBottomFragment()
-            fragment.arguments = bundle
-            return fragment
-        }
-
         private lateinit var category: Category
         val instance: CategoryBottomFragment
             get() = CategoryBottomFragment()
         val TAG = "bottomSheet"
 
-        fun showCategory(fragmentManager: FragmentManager, passedCategory: Category) {
-            category = passedCategory
-            instance.show(fragmentManager, TAG)
+//        fun showCategory(supportFragmentManager: FragmentManager, passedCategory: Category) {
+//            category = passedCategory
+//            instance.show(supportFragmentManager, TAG)
+//
+//            instance.setFragmentResultListener(requestKey(category)) { requestKey, bundle ->
+//                val result = bundle.getString(bundleKey(category))
+//                Log.e("와라", "$result")
+//            }
+//        }
 
-            instance.setFragmentResultListener(requestKey(category)) { requestKey, bundle ->
-                val result = bundle.getString(bundleKey(category))
-                Log.e("와라", "$result")
-            }
-        }
+//        fun requestKey(category: Category) = "${category.categoryId}"
+//        fun bundleKey(category: Category) = "${category.categoryName}${category.categoryColor}"
+    }
 
-        fun requestKey(category: Category) = "${category.categoryId}"
-        fun bundleKey(category: Category) = "${category.categoryName}${category.categoryColor}"
+    fun showCategory(supportFragmentManager: FragmentManager, passedCategory: Category) {
+        category = passedCategory
+        instance.show(supportFragmentManager, TAG)
+        Log.d("category Name:",passedCategory.categoryName.toString())
+
+
+//        instance.setFragmentResultListener(requestKey(category)) { requestKey, bundle ->
+//            val result = bundle.getString(bundleKey(category))
+//            Log.e("와라", "$result")
+//        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -66,6 +70,8 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
         categoryName = dialogView.findViewById(R.id.all_category_selectedCategory_name)
         availableColors = dialogView.findViewById(R.id.all_category_available_colors)
         notAvailableColors = dialogView.findViewById(R.id.all_category_not_available_colors)
+
+        categoryName.setText(category.categoryName)
 
         with(cancleBtn) { setOnClickListener {
             dialog?.also { getBottomSheetDialog(it).state = com.google.android.material.bottomsheet.BottomSheetBehavior.STATE_HIDDEN }

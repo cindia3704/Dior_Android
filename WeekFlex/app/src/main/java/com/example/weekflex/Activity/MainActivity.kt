@@ -7,6 +7,7 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.weekflex.Adapter.NavigationTabAdapter
+import com.example.weekflex.Data.Category
 import com.example.weekflex.Fragment.CategoryBottomFragment
 import com.example.weekflex.Fragment.CategorySettingFragment
 import com.example.weekflex.Fragment.ProfileFragment
@@ -48,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
         profileFragment= ProfileFragment.newInstance(userId)
         categorySettingFragment= CategorySettingFragment.newInstance(userId)
-        categoryBottomFragment = CategoryBottomFragment.newInstance(userId)
     }
 
     private fun makeNavigationBar() {
@@ -82,14 +82,18 @@ class MainActivity : AppCompatActivity() {
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
     }
-    fun changeFragment(index:Int){
+    fun changeFragment(index:Int, category: Category?){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if(index == 1) {
             fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
         } else if(index == 2) {
             fragmentTransaction.replace(R.id.profile_top_fragment, categorySettingFragment).commitAllowingStateLoss()
         }else if (index == 3){
-            fragmentTransaction.replace(R.id.profile_top_fragment, categoryBottomFragment).commitAllowingStateLoss()
+//            fragmentTransaction.replace(R.id.profile_top_fragment, categoryBottomFragment).commitAllowingStateLoss()
+            categoryBottomFragment = CategoryBottomFragment.instance
+            if (category != null) {
+                categoryBottomFragment.showCategory(supportFragmentManager,category)
+            }
         }
     }
 

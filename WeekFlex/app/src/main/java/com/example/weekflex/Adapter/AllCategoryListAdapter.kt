@@ -14,6 +14,7 @@ import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.Data.Category
 import com.example.weekflex.Data.Routine
 import com.example.weekflex.Data.Task
+import com.example.weekflex.Fragment.CategoryBottomFragment
 import com.example.weekflex.Fragment.CategorySettingFragment
 import com.example.weekflex.R
 

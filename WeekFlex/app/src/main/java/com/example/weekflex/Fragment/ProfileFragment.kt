@@ -6,11 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import com.example.weekflex.Activity.MainActivity
-import com.example.weekflex.Data.Category
 import com.example.weekflex.R
 
 class ProfileFragment : Fragment() {
@@ -62,9 +59,7 @@ class ProfileFragment : Fragment() {
 
     fun setListener(){
         categorySettingBtn.setOnClickListener {
-            (activity as MainActivity?)?.changeFragment(2)
-//            navController.navigate(R.id.action_profileFragment_to_categorySettingFragment)
-//            Navigation.createNavigateOnClickListener(R.id.action_profileFragment_to_categorySettingFragment,null)
+            (activity as MainActivity?)?.changeFragment(2,null)
         }
         taskSettingBtn.setOnClickListener {
 
@@ -80,15 +75,5 @@ class ProfileFragment : Fragment() {
         }
 
     }
-//    fun onClickCategoryMenuButton(category:Category) {
-//        parentFragmentManager?.let {
-//            val result = "result"
-//            setFragmentResult(CategoryBottomFragment.requestKey(category), bundleOf(CategoryBottomFragment.bundleKey(category) to result))
-//            CategoryBottomFragment.showCategory(it, category)
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.category_list_view, CategoryBottomFragment.instance)
-//                .commit()
-//        }
-//    }
 
 }
