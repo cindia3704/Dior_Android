@@ -26,11 +26,11 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_bottom_sheet, container, false)
-        categoryListAdapter = CategoryListAdapter(context!!)
+        categoryListAdapter = CategoryListAdapter(requireContext())
 
         view.findViewById<RecyclerView>(R.id.categoryList).let {
             it.adapter = categoryListAdapter
-            it.layoutManager = LinearLayoutManager(context!!)
+            it.layoutManager = LinearLayoutManager(requireContext())
         }
         return view
     }

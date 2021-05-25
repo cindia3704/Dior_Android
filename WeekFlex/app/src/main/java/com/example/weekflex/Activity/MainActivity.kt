@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
         navigationBar.setupWithViewPager(fragmentView)
         fragmentView.currentItem = 0
 
-        profileFragment= ProfileFragment.newInstance(userId)
         categorySettingFragment= CategorySettingFragment.newInstance(userId)
     }
 
@@ -85,6 +84,7 @@ class MainActivity : AppCompatActivity() {
     fun changeFragment(index:Int, category: Category?){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         if(index == 1) {
+            profileFragment= ProfileFragment.newInstance(userId)
             fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
         } else if(index == 2) {
             fragmentTransaction.replace(R.id.profile_top_fragment, categorySettingFragment).commitAllowingStateLoss()
