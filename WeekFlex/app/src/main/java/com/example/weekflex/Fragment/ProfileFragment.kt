@@ -95,13 +95,17 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
         inquiryBtn.setOnClickListener {
-            val email = Intent(Intent.ACTION_SEND)
-            email.setType("plain/text")
             val receiverAddr:Array<String> = arrayOf("weekflex@gmail.com")
-            email.putExtra(Intent.EXTRA_EMAIL,receiverAddr)
-            email.putExtra(Intent.EXTRA_SUBJECT,"weekflex 1:1 문의")
-            email.putExtra(Intent.EXTRA_TEXT,"문의사항:")
+
+            val email = Intent(Intent.ACTION_SEND).apply {
+                setType("plain/text")
+                putExtra(Intent.EXTRA_EMAIL,receiverAddr)
+                putExtra(Intent.EXTRA_SUBJECT,"weekflex 1:1 문의")
+                putExtra(Intent.EXTRA_TEXT,"문의사항:")
+            }
             startActivity(email)
+
+
 
         }
 

@@ -124,7 +124,11 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
             Log.d("NEW CATEGORY NAME", newCategoryName)
             var found = false
             for(cat in categories) {
-                if (cat.categoryName.equals(newCategoryName) && cat.categoryId!= category.categoryId) {
+                val alreadyHasCategory = cat.categoryName.equals(newCategoryName) && cat.categoryId!= category.categoryId
+                if(!alreadyHasCategory){
+                    continue
+                }
+
                     val builder: android.app.AlertDialog.Builder =
                         android.app.AlertDialog.Builder(context)
                     builder.setTitle("존재하는 카테고리")
@@ -144,7 +148,7 @@ class CategoryBottomFragment : BottomSheetDialogFragment(), View.OnClickListener
                     this.context?.let {
                         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
                             .setTextColor(ContextCompat.getColor(it, R.color.color6))
-                    }
+
                     found = true
                 }
             }

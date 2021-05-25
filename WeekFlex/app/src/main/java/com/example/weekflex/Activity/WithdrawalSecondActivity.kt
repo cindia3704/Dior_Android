@@ -98,35 +98,38 @@ class WithdrawalSecondActivity : AppCompatActivity() {
 
 
     }
+
+
     private fun changeCheck(select: Int){
-        if(selected!=0){
+        val toggle = selected == select
+
+        if(toggle){
             val btn: ImageView? = withdrawReasons[selected]?.let { findViewById(it) }
             btn?.setImageResource(R.drawable.withdrawal_white_check)
-            if(selected == select){
-                selected = 0
-            }else{
-                selected = select
-                if(selected == 5){
-                    etcReason.visibility = View.VISIBLE
-                }
-                val newBtn: ImageView? = withdrawReasons[selected]?.let { findViewById(it) }
-                newBtn?.setImageResource(R.drawable.withdrawal_black_check)
-//                withdrawReasons[selected]?.setBackgroundResource(R.drawable.withdrawal_black_check)
-            }
-            if(selected != 5){
-                etcReason.visibility = View.INVISIBLE
-            }
-        }else {
-            selected = select
-            if(selected == 5){
-                etcReason.visibility = View.VISIBLE
-            }
-            val newBtn: ImageView? = withdrawReasons[selected]?.let { findViewById(it) }
-            newBtn?.setImageResource(R.drawable.withdrawal_black_check)
+            selected = 0
         }
+        else {
+            val btn: ImageView? = withdrawReasons[selected]?.let { findViewById(it) }
+            btn?.setImageResource(R.drawable.withdrawal_white_check)
+            selected = select
+        }
+
+        setSelectedButton(selected)
+
+    }
+
+    private fun setSelectedButton(selected: Int){
+        if(selected == 5){
+            etcReason.visibility = View.VISIBLE
+        }else{
+            etcReason.visibility = View.INVISIBLE
+        }
+
+        val newBtn: ImageView? = withdrawReasons[selected]?.let { findViewById(it) }
+        newBtn?.setImageResource(R.drawable.withdrawal_black_check)
+
 
         val img = if(selected==0) R.drawable.gray_border_background else R.drawable.black_task_corner_background
         withdrawBtn.setBackgroundResource(img)
-
     }
 }

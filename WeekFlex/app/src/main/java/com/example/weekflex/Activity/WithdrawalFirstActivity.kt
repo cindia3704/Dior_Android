@@ -26,8 +26,8 @@ class WithdrawalFirstActivity : AppCompatActivity() {
     private fun setListener(){
         agreeCheck.setOnClickListener {
             agree = !agree
-            var img = if(agree) R.drawable.withdrawal_black_check else R.drawable.withdrawal_white_check
-            var btnImg = if(agree) R.drawable.black_task_corner_background else R.drawable.gray_border_background
+            val img = if(agree) R.drawable.withdrawal_black_check else R.drawable.withdrawal_white_check
+            val btnImg = if(agree) R.drawable.black_task_corner_background else R.drawable.gray_border_background
 
             agreeCheck.setImageResource(img)
             nextBtn.setBackgroundResource(btnImg)

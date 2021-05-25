@@ -22,7 +22,7 @@ import com.example.weekflex.R
 class AllCategoryListAdapter(
 //    var context: CategorySettingFragment,
     val inflater: LayoutInflater,
-    var categoryList: List<Category>,
+    val categoryList: List<Category>,
     val onClickCategoryMenuButton: (Category) -> Unit
 ): RecyclerView.Adapter<AllCategoryListAdapter.ViewHolder>() {
 

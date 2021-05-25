@@ -83,18 +83,26 @@ class MainActivity : AppCompatActivity() {
     }
     fun changeFragment(index:Int, category: Category?){
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        if(index == 1) {
-            profileFragment= ProfileFragment.newInstance(userId)
-            fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
-        } else if(index == 2) {
-            fragmentTransaction.replace(R.id.profile_top_fragment, categorySettingFragment).commitAllowingStateLoss()
-        }else if (index == 3){
-//            fragmentTransaction.replace(R.id.profile_top_fragment, categoryBottomFragment).commitAllowingStateLoss()
-            categoryBottomFragment = CategoryBottomFragment.instance
-            if (category != null) {
-                categoryBottomFragment.showCategory(supportFragmentManager,category)
+        when(index){
+            1->{
+                profileFragment= ProfileFragment.newInstance(userId)
+                fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
+            }
+            2->{
+                fragmentTransaction.replace(R.id.profile_top_fragment, categorySettingFragment).commitAllowingStateLoss()
+            }
+            3->{
+                categoryBottomFragment = CategoryBottomFragment.instance
+                if (category != null) {
+                    categoryBottomFragment.showCategory(supportFragmentManager,category)
+                }
+            }
+            else->{
+                profileFragment= ProfileFragment.newInstance(userId)
+                fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
             }
         }
+
     }
 
     public fun makeDarkTabView() {
