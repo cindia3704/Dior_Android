@@ -1,6 +1,7 @@
 package com.example.weekflex.Fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -94,6 +95,13 @@ class ProfileFragment : Fragment() {
             startActivity(intent)
         }
         inquiryBtn.setOnClickListener {
+            val email = Intent(Intent.ACTION_SEND)
+            email.setType("plain/text")
+            val receiverAddr:Array<String> = arrayOf("weekflex@gmail.com")
+            email.putExtra(Intent.EXTRA_EMAIL,receiverAddr)
+            email.putExtra(Intent.EXTRA_SUBJECT,"weekflex 1:1 문의")
+            email.putExtra(Intent.EXTRA_TEXT,"문의사항:")
+            startActivity(email)
 
         }
 
