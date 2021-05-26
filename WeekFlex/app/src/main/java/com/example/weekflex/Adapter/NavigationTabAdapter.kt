@@ -4,7 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.example.weekflex.Fragment.CalendarFragment
-import com.example.weekflex.Fragment.RoutineSettingFragment
+import com.example.weekflex.Fragment.ProfileFragment
+import com.example.weekflex.Fragment.ProfileTopFragment
 import com.example.weekflex.Fragment.TodoMainFragment
 
 class NavigationTabAdapter(fragmentManager: FragmentManager, val fragmentCount: Int, val userId: Int) : FragmentStatePagerAdapter(fragmentManager) {
@@ -13,7 +14,7 @@ class NavigationTabAdapter(fragmentManager: FragmentManager, val fragmentCount: 
         when (position) {
             0 -> return TodoMainFragment.newInstance(userId)
             1 -> return CalendarFragment.newInstance(userId)
-            else -> return RoutineSettingFragment.newInstance(userId)
+            else -> return ProfileTopFragment.newInstance(userId)
         }
     }
 

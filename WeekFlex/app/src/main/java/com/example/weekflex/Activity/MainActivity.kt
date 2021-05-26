@@ -7,6 +7,10 @@ import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.weekflex.Adapter.NavigationTabAdapter
+import com.example.weekflex.Data.Category
+import com.example.weekflex.Fragment.CategoryBottomFragment
+import com.example.weekflex.Fragment.CategorySettingFragment
+import com.example.weekflex.Fragment.ProfileFragment
 import com.example.weekflex.R
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -14,6 +18,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     var userId: Int = 1
+    private lateinit var profileFragment: ProfileFragment
+    private lateinit var categorySettingFragment: CategorySettingFragment
+    private lateinit var categoryBottomFragment: CategoryBottomFragment
     private lateinit var fragmentView: ViewPager
     private lateinit var navigationBar: TabLayout
     private lateinit var fragmentAdapter: NavigationTabAdapter
@@ -39,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         fragmentView.adapter = fragmentAdapter
         navigationBar.setupWithViewPager(fragmentView)
         fragmentView.currentItem = 0
+
+        categorySettingFragment= CategorySettingFragment.newInstance(userId)
     }
 
     private fun makeNavigationBar() {
@@ -71,6 +80,29 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+    }
+    fun changeFragment(index:Int, category: Category?){
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        when(index){
+            1->{
+                profileFragment= ProfileFragment.newInstance(userId)
+                fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
+            }
+            2->{
+                fragmentTransaction.replace(R.id.profile_top_fragment, categorySettingFragment).commitAllowingStateLoss()
+            }
+            3->{
+                categoryBottomFragment = CategoryBottomFragment.instance
+                if (category != null) {
+                    categoryBottomFragment.showCategory(supportFragmentManager,category)
+                }
+            }
+            else->{
+                profileFragment= ProfileFragment.newInstance(userId)
+                fragmentTransaction.replace(R.id.profile_top_fragment,profileFragment ).commitAllowingStateLoss()
+            }
+        }
+
     }
 
     public fun makeDarkTabView() {

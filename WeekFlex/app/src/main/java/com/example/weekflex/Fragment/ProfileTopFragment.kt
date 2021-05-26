@@ -5,15 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.weekflex.Activity.MainActivity
 import com.example.weekflex.R
 
-class RoutineSettingFragment : Fragment() {
+class ProfileTopFragment : Fragment() {
     private var userId: Int? = 1
+
     companion object {
-        fun newInstance(userId: Int): RoutineSettingFragment {
+        fun newInstance(userId: Int): ProfileTopFragment {
             var bundle = Bundle()
             bundle.putInt("userId", userId)
-            var fragment = RoutineSettingFragment()
+            var fragment = ProfileTopFragment()
             fragment.arguments = bundle
             return fragment
         }
@@ -25,10 +27,13 @@ class RoutineSettingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         userId = arguments?.getInt("userId")
-        return inflater.inflate(R.layout.routine_setting_fragment, container, false)
+        val view = inflater.inflate(R.layout.profile_top_fragment, container, false)
+        return view;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as MainActivity?)?.changeFragment(1,null)
+
     }
 }

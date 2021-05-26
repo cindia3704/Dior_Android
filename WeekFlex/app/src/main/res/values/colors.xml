@@ -16,8 +16,24 @@
     <color name="yellowBorder">#f9eb88</color>
     <color name="mintBorder">#6ec9c4</color>
     <color name="modifyPink">#ff9999</color>
-    <color name="color1">#ff6868</color>
     <color name="color6">#684ffc</color>
+
+    <color name="color1">#ff6868</color>
+    <color name="color2">#ff9d43</color>
+    <color name="color3">#ffd643</color>
+    <color name="color4">#ff6641</color>
+    <color name="color5">#fb65d1</color>
+    <color name="color06">#f4afce</color>
+    <color name="color7">#f9eb88</color>
+    <color name="color8">#00d779</color>
+    <color name="color9">#8f72e1</color>
+    <color name="color10">#8da6ff</color>
+    <color name="color11">#2ab5f1</color>
+    <color name="color12">#6ec9c4</color>
+    <color name="color13">#22b9b0</color>
+    <color name="color14">#684ffc</color>
+    <color name="color15">#4d51f6</color>
+
 
 
     <string-array name="colors">

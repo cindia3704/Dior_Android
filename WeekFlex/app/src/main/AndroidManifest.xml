@@ -14,14 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.RoutineFinalCheckActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity android:name=".Activity.WithdrawalSecondActivity"></activity>
+        <activity android:name=".Activity.WithdrawalFirstActivity" />
+        <activity
+            android:name=".Activity.RoutineFinalCheckActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Activity.AddCategory" />
         <activity
             android:name=".Activity.CompleteMakeRoutineActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name=".Activity.InsertRoutineNameActivity">
-        </activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".Activity.InsertRoutineNameActivity" />
         <activity android:name=".Activity.AddTodoActivity" />
         <activity android:name=".Activity.AddRoutineActivity" />
         <activity android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity">
@@ -36,8 +38,8 @@
                     android:scheme="kakaoa6e7d1dfcdab3e23056bbced8c2e7097" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.LoginActivity"></activity>
-        <activity android:name=".Activity.SplashActivity"></activity>
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.SplashActivity" />
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
