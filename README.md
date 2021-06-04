@@ -1,8 +1,23 @@
 # Dior
 ### This is for WeekFlex Project.
 
+## Explanation for Folders 
+1. Activity - 액티비티로 구성된 화면들의 파일들을 모아 둔 디렉토리  
+2. Adapter - 리싸이클러뷰에서 필요한 여러 adapter들을 모아 둔 디렉토리 
+3. Data - 서버와 연동시 주고 받는 데이터 구조를 통일 시키기 위해 기본적 데이터 파일을 모아 둔 디렉토리 
+4. Fragment - 프라그먼트로 구성된 화면들의 파일들을 모아 둔 디렉토리 
+5. Network - 서버와 연동하기 위해 retrofit을 사용할 예정. 따라서 api를 정의하는 파일을 모아 둔 디렉토리 
 
-### Completed Functions 
+## Rules when coding
+1. 코틀린의 !! 최대한 피하기 - 예외처리 추가 이용
+2. Pull Request 올리기 전, 무의미한 코드 (formatting 만 바뀐 부분)들은 모두 원상복귀 시킨 후 올림 
+3. 공통부분은 최대한 이미 만들어진 코드 활용
+4. ArrayList 사용 X - List 사용! 
+5. for 문 대신 map 등 사용 - kotlin stream 
+6. var보단 최대한 val 사용 
+
+
+## Completed Functions 
 |**기능**|**관련 화면**|**담당자**|
 |---|------|---|
 |카카오 로그인| X |김지수|
@@ -28,7 +43,7 @@
 |계정 탈퇴 화면 1 & 2|<img width="720" alt="스크린샷 2021-06-01 오후 7 06 43" src="https://user-images.githubusercontent.com/52744390/120306136-83037d80-c30c-11eb-98e9-b563b29e5d8b.png">|김지수|
 |마이페이지 로그아웃 및 1:1 문의|<img width="146" alt="스크린샷 2021-06-01 오후 7 08 49" src="https://user-images.githubusercontent.com/52744390/120306406-cd84fa00-c30c-11eb-9ef5-555d1978abde.png">|김지수|
 
-### To be continued Functions 
+## To be continued Functions 
 - [ ] 스플레쉬 화면 및 애니메이션 
 - [ ] 로그인 화면 디자인 반영
 - [ ] 제플린 0410수정 태그 반영 (할 일 리스트 & 루틴 최종 점검 디자인 수정 및 할 일 선택 시 시간 수정)
@@ -42,7 +57,7 @@
 - [ ] 그 외에 자잘한 작업들 (자잘한 디자인 수정, 영어 폰트 적용,네비게이션 바 스와이프 시 안움직이게 수정)
      
 
-### Members
+## Members
 |**이름**|**연락처**|**담당 기능 요약**|
 |---|------|---|
 |김지수|Github: [cindia3704](https://github.com/cindia3704) <br>Contact: cindia3704@gmail.com| - 카카오 로그인<br>- 루틴 목록 뷰<br>- 루틴 이름 입력 뷰 <br>- 할 일 리스트 화면 <br>- 루틴 최종 화면 <br>- 마이페이지 할 일 관리뷰를 제외한 모든 기능<br>- 홈 뷰 자잘한 작업(달력 & 버튼 애니메이션)
